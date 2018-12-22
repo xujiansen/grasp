@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:showDividers="beginning|middle|end"
+    android:divider="@drawable/ic_divider_horizontal_bright"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle"
+        android:divider="@drawable/ic_divider_horizontal_bright"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnNum0"
+            style="@style/keypadStyle"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/btnNum1"
+            style="@style/keypadStyle"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/btnNum2"
+            style="@style/keypadStyle"
+            android:text="3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle"
+        android:divider="@drawable/ic_divider_horizontal_bright"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnNum3"
+            style="@style/keypadStyle"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/btnNum4"
+            style="@style/keypadStyle"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/btnNum5"
+            style="@style/keypadStyle"
+            android:text="6" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle"
+        android:divider="@drawable/ic_divider_horizontal_bright"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnNum6"
+            style="@style/keypadStyle"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/btnNum7"
+            style="@style/keypadStyle"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/btnNum8"
+            style="@style/keypadStyle"
+            android:text="9" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle"
+        android:divider="@drawable/ic_divider_horizontal_bright"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnNum9"
+            style="@style/keypadStyle"
+            android:text="." />
+
+        <Button
+            android:id="@+id/btnNum10"
+            style="@style/keypadStyle"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/btnNum11"
+            style="@style/keypadStyle"
+            android:text="-" />
+    </LinearLayout>
+
+</LinearLayout>

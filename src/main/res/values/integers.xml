@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <integer name="previewPad">8</integer>
+    <integer name="txtSize">18</integer>
+    <integer name="pageTitle">18</integer>
+    <integer name="briefHeader">40</integer>
+    <integer name="briefHeight">56</integer>
+
+</resources>

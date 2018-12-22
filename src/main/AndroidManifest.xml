@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="lib.grasp">
+
+    <!--<uses-sdk-->
+    <!--android:minsdkversion="14"-->
+    <!--android:targetsdkversion="23"/>-->
+    <!--<uses-feature android:name="android.hardware.camera" />-->
+    <!--<uses-feature android:name="android.hardware.camera.autofocus" />-->
+
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- tools:replace="android:icon, android:theme" -->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_grasp"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.App">
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+
+        <!--<meta-data-->
+        <!--android:name="com.amap.api.v2.apikey"-->
+        <!--android:value="a6229387bb6ece52235df6eaca9e7733"/>-->
+        <!--<service android:name="com.amap.api.location.APSService"/>-->
+
+        <activity android:name="com.zxing.android.CaptureActivity" />
+        <activity android:name="cn.com.rooten.sys.AppAbout" />
+        <activity android:name="cn.com.rooten.sys.AppChangePassword" />
+        <activity android:name="cn.com.rooten.ctrl.image.ImagePreviewActivity" />
+
+
+        <!-- 一一一一一一一一一一一一一一一一一一一一一一一一一一支付宝支付一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <!-- 一一一一一一一一一一一一一一一一一一一一一一一一一一测试一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一 -->
+        <activity
+            android:name=".widget.recyclerview.group.activity.RecyclerViewTestMainActivity"
+            android:label="测试各种列表">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".widget.recyclerview.group.activity.StickyActivity" />
+        <activity android:name=".widget.recyclerview.group.activity.GroupedListActivity" />
+        <activity android:name=".widget.recyclerview.group.activity.NoHeaderActivity" />
+        <activity android:name=".widget.recyclerview.group.activity.NoFooterActivity" />
+        <activity android:name=".widget.recyclerview.group.activity.Grid1Activity" />
+        <activity android:name=".widget.recyclerview.group.activity.Grid2Activity" />
+        <activity android:name=".widget.recyclerview.group.activity.ExpandableActivity" />
+        <activity android:name=".widget.recyclerview.group.activity.VariousActivity" />
+        <activity android:name=".widget.recyclerview.group.activity.VariousChildActivity" />
+
+        <activity
+            android:name=".test.LoadTestActivity"
+            android:label="测试">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+    </application>
+</manifest>

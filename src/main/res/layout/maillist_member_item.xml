@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_vertical"
+	    android:padding="7dip"
+	    android:orientation="horizontal">
+	    
+	    <cn.com.rooten1.ctrl.widget.RoundImageView
+	        android:id="@+id/maillist_member_item_icon"
+	        android:layout_width="45dip"
+	        android:layout_height="45dip"
+	        android:src="@drawable/ic_tz_tx"
+	        android:layout_marginLeft="9dip"/>
+	    
+	    <TextView 
+	        android:id="@+id/maillist_member_item_name"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:paddingRight="6dip"
+	        android:textColor="@color/black"
+	        android:layout_marginLeft="9dip"
+	        android:textSize="18sp"/>
+
+		<android.support.v7.widget.AppCompatCheckedTextView
+			android:id="@+id/maillist_member_item_select_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingRight="9dip"
+			android:checkMark="?android:attr/listChoiceIndicatorMultiple"/>
+	</LinearLayout>
+	
+</LinearLayout>

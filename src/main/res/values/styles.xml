@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item name="android:statusBarColor">状态栏颜色</item>-->
+    <!--<item name="android:navigationBarColor">虚拟安卓三按钮背景色</item>-->
+    <!--<item name="android:textColorPrimary">应用的主要文字颜色,ToolBar的标题文字默认使用该颜色</item>-->
+
+    <!--<item name="android:colorPrimary">主题色(状态栏)</item>-->
+    <!--<item name="android:colorPrimaryDark">主题色(标题栏)</item>-->
+    <!--<item name="android:colorAccent">CheckBox,RadioButton,SwitchCompat等一般控件的选中效果默认采用该颜色(效果同于colorControlActivated)/item>-->
+    <!--<item name="android:colorControlNormal">Toolbar返回按钮,CheckBox,RadioButton,SwitchCompat等默认状态的颜色</item>-->
+    <!--<item name="android:colorControlActivated">控件选中状态颜色(效果同于colorAccent)</item>-->
+    <!--<item name="android:colorButtonNormal">按钮默认时的背景颜色</item>-->
+    <!--<item name="android:colorControlHighlight">控件按压(点击)时的色调</item>-->
+    <!--<item name="android:colorForeground">应用的前景色,ListView的分割线,switch滑动区默认使用该颜色</item>-->
+    <!--<item name="android:colorBackground">应用的背景色,popMenu的背景默认使用该颜色</item>-->
+
+    <!--<item name="android:windowBackground">"主界面背景色"</item>-->
+    <!--<item name="android:editTextColor">默认EditView输入框字体的颜色</item>-->
+    <!--<item name="android:textColor">Button,textView的文字颜色</item>-->
+    <!--<item name="android:colorSwitchThumbNormal">switch thumbs 默认状态的颜色</item>-->
+
+    <!--<item name="android:textColorPrimaryDisableOnly">RadioButton checkbox等控件的文字</item>-->
+
+    <style name="MessageBoxTheme" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/ic_panel_background</item>
+    </style>
+
+    <style name="ImageSelectTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/img_select_dlg_bg</item>
+    </style>
+
+    <style name="ToastTheme" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@drawable/ic_toast_frame</item>
+    </style>
+
+    <style name="CameraTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/NoEnterExitAnimation</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="CameraImageTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="android:windowAnimationStyle">@style/NoEnterExitAnimation</item>
+    </style>
+
+    <style name="SearchDialogTheme">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="BaDialogTheme">
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogThemeForInput" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="windowMinWidthMajor">100%</item>
+        <item name="windowMinWidthMinor">100%</item>
+        <item name="windowFixedHeightMajor">100%</item>
+        <item name="windowFixedHeightMinor">100%</item>
+    </style>
+
+    <style name="NoEnterExitAnimation">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+    </style>
+
+    <style name="ActivityAnim" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+    <style name="dialogWindowAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+    </style>
+
+    <style name="CustomTheme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowAnimationStyle">@style/NoEnterExitAnimation</item>
+    </style>
+
+    <style name="CtlrToastTheme" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@drawable/ic_toast_frame</item>
+    </style>
+
+    <style name="CtlrToastAnimations" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="setting_layout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/setting_background</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8.0dip</item>
+        <item name="android:layout_marginTop">10.0dip</item>
+        <item name="android:layout_marginRight">8.0dip</item>
+        <item name="android:layout_marginBottom">10.0dip</item>
+    </style>
+
+    <style name="setting_item">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">16.0dip</item>
+        <item name="android:paddingBottom">16.0dip</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="buttonStyle">
+        <item name="android:textColor">@color/button_text_dark_white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/btn_default</item>
+    </style>
+
+    <style name="layoutStyle">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:minHeight">45dip</item>
+        <item name="android:paddingBottom">6dip</item>
+        <item name="android:paddingLeft">9dip</item>
+        <item name="android:paddingRight">9dip</item>
+        <item name="android:paddingTop">6dip</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="keypadStyle">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:minHeight">60dip</item>
+        <item name="android:background">?attr/listChoiceBackgroundIndicator</item>
+    </style>
+
+    <style name="menuItemStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/primary_text_black_white</item>
+        <item name="android:minHeight">@dimen/listItem_minHeight</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:drawablePadding">3dip</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">6dip</item>
+        <!--
+             <item name="android:drawableRight">@drawable/setting_arrow</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:gravity">center_vertical</item>
+        -->
+        <item name="android:background">@drawable/list_selector_background</item>
+    </style>
+
+    <!-- segmented button -->
+    <style name="RadioButton">
+        <item name="android:minHeight">45dip</item>
+        <item name="android:minWidth">60dip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="LinearItem">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/listChoiceBackgroundIndicator</item>
+    </style>
+
+    <style name="LinearItem_Tel">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- org button -->
+    <style name="OrgLayout">
+        <item name="android:background">@drawable/list_selector_background</item>
+    </style>
+
+    <style name="ActionTabTextStyle" parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Theme.App.ImageView" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/ToolbarActionText</item>
+    </style>
+
+    <!-- Toolbar theme -->
+    <style name="Theme_Home_Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">#BEFFFFFF</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/ToolbarActionText</item>
+        <item name="searchViewStyle">@style/ToolbarSearchView</item>
+    </style>
+
+    <style name="ToolbarSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@drawable/ic_toolbar_search_bg</item>
+        <item name="submitBackground">@drawable/ic_toolbar_search_bg</item>
+        <item name="closeIcon">@drawable/ic_toolbar_search_clear</item>
+        <item name="searchIcon">@drawable/ic_toolbar_search_fdj</item>
+        <item name="searchHintIcon">@drawable/ic_toolbar_search_fdj</item>
+    </style>
+
+    <!-- Toolbar theme -->
+    <style name="Theme_Toolbar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--  返回键的颜色  -->
+        <item name="colorControlNormal">#BEFFFFFF</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/ToolbarActionText</item>
+    </style>
+
+    <!-- App theme -->
+    <style name="Theme.App" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Theme.App.Login" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/dark_gray</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="Theme.App.CheckCode" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Theme.App.Main" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="ToolbarActionText" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!--  AlterDialog Theme -->
+    <style name="Theme.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/AlertDialog.Button</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+    </style>
+
+    <style name="AlertDialog.Button" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!--  底部弹出动画 -->
+    <style name="popupFromBottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/translate_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/translate_bottom_out</item>
+    </style>
+
+    <!--自定义seekbarstyle-->
+    <style name="CustomSeekbarStyle" >
+        <item name="android:maxHeight">10dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@color/colorAccent</item>
+        <item name="android:progressDrawable">@drawable/seekbar_progress</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:thumb">@drawable/ic_chat_icon_smiles</item>
+    </style>
+
+    <style name="charge_item_radiobutton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/gaqu_radius_charge_item_radiobuttom</item>
+        <item name="android:textColor">@drawable/gaqu_radius_charge_item_textcolor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+
+    <!-- 去除箭头到标题之间间隔 -->
+    <style name="NoSpaceActionBarTheme" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <!-- grasp弹出框风格 -->
+    <style name="Dialogstyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 显示对话框时当前的屏幕是否变暗 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!--  AlterDialog Theme -  grasp -->
+    <style name="dialog_grasp" parent="@android:style/Theme.Dialog">
+        <!--边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--半透明-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="gaqu_sys_about_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <style name="gaqu_sys_about_line_key">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:paddingLeft">6dip</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="gaqu_sys_about_line_value">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:paddingRight">6dip</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="Theme_Toolbar_paopao_left">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/ToolbarActionText</item>
+    </style>
+
+</resources>

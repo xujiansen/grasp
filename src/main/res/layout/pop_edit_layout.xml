@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/pop_edit_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/pop_edit_layout_edt"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:minHeight="54dip"
+            android:layout_weight="1"
+            android:paddingLeft="6dip"
+            android:paddingTop="6dip"
+            android:paddingRight="6dip"
+            android:paddingBottom="6dip"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/pop_edit_layout_btn"
+            android:layout_width="48dip"
+            android:layout_height="50dip"
+            android:background="@drawable/pop_edit_selector_background"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/pop_edit_layout_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#c9c9c9"/>
+</LinearLayout>

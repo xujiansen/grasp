@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <!--<item android:state_pressed="true">-->
+                <!--<shape>-->
+                    <!--<corners android:radius="3dip" />-->
+                    <!--<solid android:color="@color/cs_progress_margin_pressed"/>-->
+                <!--</shape>-->
+            <!--</item>-->
+            <item>
+                <shape>
+                    <corners android:radius="3dip" />
+                    <solid android:color="@color/cs_progress_background"/>
+                </shape>
+            </item>
+        </selector>
+    </item>
+
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="3dip" />
+                <solid android:color="@color/cs_progress_progress"/>
+            </shape>
+        </clip>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="3dip" />
+                <solid android:color="@color/head_bar"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

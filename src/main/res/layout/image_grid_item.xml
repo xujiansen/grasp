@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/image_grid_item_all"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_background_white"
+    android:padding="2dip">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#c9c9c9"
+        android:orientation="vertical"
+        android:padding="1dip">
+
+        <ImageView
+            android:id="@+id/image_grid_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_grid_item_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:paddingRight="9dip"
+        android:paddingTop="9dip"
+        android:src="@drawable/ic_tick"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="1dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#88000000"
+            android:orientation="vertical"
+            android:paddingBottom="3dip"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
+            android:paddingTop="3dip">
+
+            <TextView
+                android:id="@+id/image_grid_item_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2M"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/image_grid_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-02-03 18:00"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

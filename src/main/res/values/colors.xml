@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#61aeed</color>
+    <color name="colorPrimary">#6fb6f0</color>
+    <color name="colorAccent">#f2f2f2</color>
+    <color name="colorControlNormal">#c7c7c7</color>
+
+    <color name="colorPrimaryTransparent">#EE6fb6f0</color>
+
+    <color name="black">#ff000000</color>
+    <color name="red">#FE0113</color>
+    <color name="orange">#fc9e2c</color>
+    <color name="yellow">#ffff4c</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#000099</color>
+    <color name="gray">#ff888888</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="camera_bg">#FF2E2E2E</color>
+    <color name="window_color">#FFF3F3F3</color>
+    <color name="dlg_title_color">#D65639</color>
+    <color name="dlg_div_color">#D65639</color>
+
+    <color name="btn_text_color">#FF000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="safe_mode_text">#80ffffff</color>
+    <color name="milk_white">#F6F6F6</color>
+    <color name="background_dark">#ff000000</color>
+    <color name="bright_foreground_dark">#FFFFFFFF</color>
+    <color name="bright_foreground_dark_disabled">#80ffffff</color>
+    <color name="bright_foreground_dark_inverse">#ff000000</color>
+    <color name="dim_foreground_dark">#BEBEBE</color>
+    <color name="dim_foreground_dark_disabled">#80BEBEBE</color>
+    <color name="dim_foreground_dark_inverse">#323232</color>
+    <color name="dim_foreground_dark_inverse_disabled">#80323232</color>
+    <color name="hint_foreground_dark">#808080</color>
+    <color name="background_light">#FFFFFFFF</color>
+    <color name="bright_foreground_light">#ff000000</color>
+    <color name="bright_foreground_light_inverse">#FFFFFFFF</color>
+    <color name="bright_foreground_light_disabled">#80000000</color>
+    <color name="dim_foreground_light">#323232</color>
+    <color name="dim_foreground_light_disabled">#80323232</color>
+    <color name="dim_foreground_light_inverse">#BEBEBE</color>
+    <color name="dim_foreground_light_inverse_disabled">#80BEBEBE</color>
+    <color name="hint_foreground_light">#808080</color>
+    <color name="title_blue">#015FA5</color>
+    <color name="version_copyright_fg_color">#404040</color>
+
+    <color name="main_bg_color">#ffffff</color>
+    <color name="main_text_color">#595757</color>
+    <color name="main_text_pressed_bg">#aeddeb</color>
+    <color name="page_title_text">#2c81ba</color>
+
+    <!--     <color name="button_selected">#FF33B5E5</color> -->
+    <color name="button_selected">#D65639</color>
+    <color name="button_zhong">#69c9c9c9</color>
+    <color name="action_bar_bottom_line">#adadad</color>
+
+    <color name="dark_gray">#c9c9c9</color>
+    <color name="light_gray">#22c9c9c9</color>
+    <color name="horizontal_divider">#8f8f8f</color>
+    <color name="horizontal_vertical">#939393</color>
+
+    <color name="shape_line">#FFCCCCCC</color>
+    <color name="login_bg">#FFEEEFF3</color>
+    <color name="title_bg">#FF4D4F52</color>
+    <color name="setting_name">#FF333333</color>
+    <color name="setting_value">#FF888888</color>
+    <color name="briefview_title_bg">#99BCE1</color>
+    <color name="needvisittask_title">#313131</color>
+    <color name="needvisittask_item_bg">#FBF9E5</color>
+    <color name="list_item_pressed">#fff2f2f2</color>
+
+    <color name="menu_bg">#ffcacfd2</color>
+    <color name="module_menu_bg">#dedede</color>
+    <color name="actionbaritem_bg">#69c9c9c9</color>
+    <color name="item_lable">#e1e1e1</color>
+
+    <color name="text1">#f1f1f1</color>
+    <color name="line">#c9c9c9</color>
+    <color name="detail_tz_item">#fafafa</color>
+    <color name="online_noti">#fff3bb</color>
+
+    <color name="radio_button_selected_color">#1692f6</color>
+    <color name="radio_button_unselected_color">@android:color/transparent</color>
+
+    <color name="tabTextNormal">#595656</color>
+    <color name="tabTextPressed">#1692f6</color>
+
+    <color name="tabStripColor">#ffffe57f</color>
+    <color name="light_yellow">#11ffe57f</color>
+
+
+    <!-- 边框按下去 -->
+    <color name="cs_progress_margin_pressed">#7cbbfe</color>
+    <!-- 边框常规 -->
+    <color name="cs_progress_margin">#97c9fd</color>
+
+
+    <!-- 进度条按下去 -->
+    <color name="cs_progress_pressed">#ff888888</color>
+    <!-- 进度条常规 -->
+    <color name="cs_progress_background">#ffffff</color>
+    <!-- 进度条已下载部分 -->
+    <color name="cs_progress_progress">#d6e9fc</color>
+
+
+    <color name="creditcolor">#b2e866</color>
+    <color name="creditid_pressed">#779c42</color>
+    <color name="creditcolor_normal">#0aca27</color>
+    <color name="creditcolor_pressed">#07971d</color>
+    <color name="wechat_green">#5eb972</color>
+    <color name="head_bar">#69d0ff</color>
+
+    <!-- 蓟色 -->
+    <color name="lightgray">#D3D3D3</color>
+
+    <!-- 半透灰 -->
+    <color name="transparent_gray">#88000000</color>
+
+</resources>

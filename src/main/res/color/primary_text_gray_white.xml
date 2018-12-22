@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Half-way between #FFF and #000 -->
+    <item android:state_enabled="false" android:color="#888"/>
+    <item android:state_pressed="true" android:color="@color/white"/>
+
+    <item android:color="@color/gray"/> <!-- not selected -->
+</selector>
