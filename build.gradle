@@ -92,8 +92,8 @@ dependencies {
     implementation 'com.joanzapata.iconify:android-iconify-material-community:2.1.0'
 
     implementation 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
-    implementation files('E:/Project/Android/grasp/libs/core.jar')
-    implementation files('E:/Project/Android/grasp/libs/gson-2.7.jar')
-    implementation files('E:/Project/Android/grasp/libs/json-smart-1.2.jar')
-    implementation files('E:/Project/Android/grasp/libs/volley.jar')
+    implementation files('libs/core.jar')
+    implementation files('libs/gson-2.7.jar')
+    implementation files('libs/json-smart-1.2.jar')
+    implementation files('libs/volley.jar')
 }
