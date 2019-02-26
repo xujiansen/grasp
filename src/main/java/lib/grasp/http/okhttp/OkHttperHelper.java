@@ -3,7 +3,6 @@ package lib.grasp.http.okhttp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -11,7 +10,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -24,9 +22,8 @@ import cn.com.rooten.Constant;
 import cn.com.rooten.ctrl.widget.SwipeRefreshLayout;
 import cn.com.rooten.help.LocalBroadMgr;
 import cn.com.rooten.util.Utilities;
-import lib.grasp.entity.biz_entity.Version;
 import lib.grasp.http.BaseResponse;
-import lib.grasp.http.volley.gsonrequest.GsonRequest;
+import lib.grasp.http.volley.gsonrequest.ParamRequest;
 import lib.grasp.util.L;
 import lib.grasp.util.TOAST;
 import lib.grasp.widget.MessageBoxGrasp;
@@ -131,7 +128,7 @@ public class OkHttperHelper<T> {
             mURL = encodeParameters(mURL, mParam);
         }
 
-        GsonRequest mRequest = new GsonRequest<T>(
+        ParamRequest mRequest = new ParamRequest<T>(
                 mMethod,
                 mURL,
                 type,
@@ -352,24 +349,12 @@ public class OkHttperHelper<T> {
 
             if (res.code == 402 || res.code == 403) {
                 String verStr = res.msg;
-                if(!TextUtils.isEmpty(verStr)){
-                    try{
-                        Version version = new Gson().fromJson(verStr, Version.class);
-//                        version.downloadPath = "http://192.168.1.20:8080/MyUrlSample/mobileqq_android.apk";
-                        MessageBoxGrasp.infoMsg(mContext, "提示", "发现新版本" + version.versionName + ",请升级!", false, v -> {
-                            BaApp app = (BaApp)mContext.getApplicationContext();
-                            LocalBroadMgr localBroadMgr = new LocalBroadMgr(app);
-
-                            Bundle bundle = new Bundle();
-
-                            bundle.putString("versionName",     version.versionName);
-                            bundle.putLong("size",              version.size);
-                            bundle.putString("downloadPath",    version.downloadPath);
-                            localBroadMgr.broadAction(Constant.ARG_NEW_VERSION);
-                        });
-                        return false;
-                    }
-                    catch (Exception e){}
+                if(!TextUtils.isEmpty(verStr)) {
+                    Intent intent = new Intent();
+                    intent.setAction(Constant.ARG_NEW_VERSION);
+                    intent.putExtra("data", verStr);
+                    mContext.sendBroadcast(intent);
+                    return false;
                 }
 
                 MessageBoxGrasp.infoMsg(mContext, "当前应用版本已过期, 请联系管理员");

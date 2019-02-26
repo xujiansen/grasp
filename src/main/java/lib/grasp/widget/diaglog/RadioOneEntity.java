@@ -11,9 +11,17 @@ public class RadioOneEntity {
     public String id;
     public String name;
 
+    private Object tag;
+
     public RadioOneEntity(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public RadioOneEntity(String id, String name, Object tag) {
+        this.id = id;
+        this.name = name;
+        this.tag = tag;
     }
 
     public static List<RadioOneEntity> getTestDatas(){
@@ -33,5 +41,13 @@ public class RadioOneEntity {
 //        list.add(new RadioOneEntity(UUID.randomUUID().toString(), "选项13"));
 //        list.add(new RadioOneEntity(UUID.randomUUID().toString(), "选项14"));
         return list;
+    }
+
+    public Object getTag() {
+        return tag;
+    }
+
+    public void setTag(Object tag) {
+        this.tag = tag;
     }
 }

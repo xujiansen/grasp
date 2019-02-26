@@ -98,9 +98,6 @@
 -keep class com.github.warkiz.widget.** { *; }  # JSON(选择器用)
 -keep class com.google.zxing.** { *; }          # 二维码
 -keep class com.google.gson.** { *; }           # gson
--keep class okhttp3.** { *; }                   # okhttp
--keep class com.zhy.http.okhttp.** { *; }       # okhttp_util
--keep class okio.** { *; }                      # okio
 -keep class voice.** { *; }                     # 语音
 -keep class com.android.volley.** { *; }        # volley
 
@@ -131,6 +128,18 @@
 -keep class qalsdk.**{*;}
 -dontwarn qalsdk.**
 
+#okhttp
+-dontwarn okhttp3.**
+-keep class okhttp3.**{*;}
+
+#okio
+-dontwarn okio.**
+-keep class okio.**{*;}
+
+#okioUtil
+-keep class okhttp3.** { *; }                   # okhttp
+-keep class com.zhy.http.okhttp.** { *; }       # okhttp_util
+
 #微信支付
 -keep class com.tencent.mm.opensdk.** { *; }
 -keep class com.tencent.wxop.** { *; }
@@ -157,5 +166,13 @@
 -keep class com.ta.utdid2.** { *;}
 -keep class com.ut.device.** { *;}
 
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
+
 # 权限
 -dontwarn com.hjq.permissions.**
+
+-keep class cn.com.rooten.** { *; }
+-keep class com.multi.image.** { *; }
+-keep class com.zxing.** { *; }
+-keep class lib.grasp.** { *; }

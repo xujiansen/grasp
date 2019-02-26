@@ -7,19 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import cn.com.rooten.util.Utilities;
 
 public class DBBase {
-    private String DB_NAME = "";
     protected static SQLiteDatabase mDB = null;
 
-    public DBBase(String dbName) {
-        DB_NAME = dbName;
-    }
+    /** 初始化库 */
+    public static void initDatabase(String dbPath, String dbName) {
+        if (Utilities.isEmpty(dbPath)) return;
+        if (!Utilities.ensurePathExists(dbPath)) return;
 
-    public void initDatabase(String strNotePath) {
-        if (Utilities.isEmpty(strNotePath)) return;
-        if (!Utilities.ensurePathExists(strNotePath)) return;
-
-        String strDictName = strNotePath + DB_NAME;
-        mDB = SQLiteDatabase.openOrCreateDatabase(strDictName, null);
+        String strPathName = dbPath + dbName;
+        mDB = SQLiteDatabase.openOrCreateDatabase(strPathName, null);
     }
 
     public boolean tableExists(final String strTableName) {
@@ -57,6 +53,11 @@ public class DBBase {
     public void insert(String tbName, ContentValues cv) {
         if (mDB == null) return;
         mDB.insert(tbName, null, cv);
+    }
+
+    public void replace(String tbName, ContentValues cv) {
+        if (mDB == null) return;
+        mDB.replace(tbName, null, cv);
     }
 
     public void execSQL(String sql) {

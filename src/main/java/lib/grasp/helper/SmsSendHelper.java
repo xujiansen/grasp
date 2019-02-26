@@ -67,12 +67,12 @@ public class SmsSendHelper {
                 .setSwip(null)
                 .setRequestCode("")
                 .onSuccess((Response.Listener<ObjResponse<String>>) response -> {
-                    if (response == null || response.code != 0) {
+                    if (response == null || response.code != 200) {
                         TOAST.showShort(mAct, "获取失败" + ((response != null && !TextUtils.isEmpty(response.msg)) ? "," + response.msg : ""));
                         mCodeHelper.doSendResult(false);
                         return;
                     }
-                    TOAST.showShort(mAct, "获取成功" + ((!TextUtils.isEmpty(response.msg)) ? "," + response.msg.contains(", " + response.data) : ""));
+                    TOAST.showShort(mAct, "获取成功" + ((!TextUtils.isEmpty(response.msg)) ? ("," + response.msg) : ""));
                     mCodeHelper.doSendResult(true);
                     mCode = response.data;
                 })

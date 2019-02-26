@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
+import android.widget.Toast;
 
 import lib.grasp.widget.MessageBoxGrasp;
 
@@ -100,7 +101,7 @@ public class PermissionUtil {
             // 用户上次拒绝时是否没有选中"不再提醒"
             boolean isCanRequireAgain = ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permission); // 7.1(25|小米), 8.1(27|小米), 360手机权限管理失败(一直false)
             if(!isCanRequireAgain){ // 不能再弹出申请框了
-                MessageBoxGrasp.infoMsg(context, " 本应用未能获取权限:" + permission + ", 请手动设置");
+                TOAST.showShort(context, "本应用未能获取权限:" + permission + ", 请手动设置");
             }
             else{
                 requireDangerousPermission((Activity)context, permission);

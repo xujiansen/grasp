@@ -13,4 +13,7 @@ public class BaseResponse {
 
     @SerializedName("code")
     public int code;
+
+    @SerializedName("timeStamp")
+    public long timeStamp;
 }

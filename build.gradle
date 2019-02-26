@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "0.1"
 
-        multiDexEnabled true  // this line will solve this problem
+        multiDexEnabled true
     }
 
     sourceSets{
@@ -36,11 +36,10 @@ android {
     buildTypes {
         debug{
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
         }
     }
 
@@ -85,23 +84,16 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:palette-v7:28.0.0'
 
-    implementation 'com.github.bumptech.glide:glide:3.6.1'  // glide
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'                                  // 这里如果用jar包的话,RN项目就依赖冲突
+    implementation 'com.squareup.okio:okio:1.13.0'
+    implementation 'com.github.bumptech.glide:glide:3.6.1'                              // glide
     implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     implementation 'com.joanzapata.iconify:android-iconify-material:2.1.0'
     implementation 'com.joanzapata.iconify:android-iconify-material-community:2.1.0'
 
     implementation 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
-    implementation files('E:/Project/Android/grasp/libs/alipaySdk-20170922.jar')
     implementation files('E:/Project/Android/grasp/libs/core.jar')
     implementation files('E:/Project/Android/grasp/libs/gson-2.7.jar')
     implementation files('E:/Project/Android/grasp/libs/json-smart-1.2.jar')
-    implementation files('E:/Project/Android/grasp/libs/okhttp-3.9.0.jar')
-    implementation files('E:/Project/Android/grasp/libs/okhttputils-2_6_2.jar')
-    implementation files('E:/Project/Android/grasp/libs/okio-1.13.0.jar')
     implementation files('E:/Project/Android/grasp/libs/volley.jar')
-
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'
-//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
-
-//    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'    // 微信支付
 }

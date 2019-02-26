@@ -44,7 +44,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--排序系统任务权限	重新排序系统Z轴运行中的任务-->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <!-- tools:replace="android:icon, android:theme" -->
     <application
@@ -58,41 +60,13 @@
             android:name="android.max_aspect"
             android:value="2.1" />
 
-        <!--<meta-data-->
-        <!--android:name="com.amap.api.v2.apikey"-->
-        <!--android:value="a6229387bb6ece52235df6eaca9e7733"/>-->
-        <!--<service android:name="com.amap.api.location.APSService"/>-->
-
         <activity android:name="com.zxing.android.CaptureActivity" />
         <activity android:name="cn.com.rooten.sys.AppAbout" />
         <activity android:name="cn.com.rooten.sys.AppChangePassword" />
-        <activity android:name="cn.com.rooten.ctrl.image.ImagePreviewActivity" />
-
-
-        <!-- 一一一一一一一一一一一一一一一一一一一一一一一一一一支付宝支付一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一 -->
         <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:name="cn.com.rooten.ctrl.image.ImagePreviewActivity"
+            android:theme="@style/Theme.App" />
 
-        <activity
-            android:name="com.alipay.sdk.app.H5AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-
-        <!-- 一一一一一一一一一一一一一一一一一一一一一一一一一一测试一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一一 -->
-        <activity
-            android:name=".widget.recyclerview.group.activity.RecyclerViewTestMainActivity"
-            android:label="测试各种列表">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
         <activity android:name=".widget.recyclerview.group.activity.StickyActivity" />
         <activity android:name=".widget.recyclerview.group.activity.GroupedListActivity" />
         <activity android:name=".widget.recyclerview.group.activity.NoHeaderActivity" />
@@ -103,13 +77,30 @@
         <activity android:name=".widget.recyclerview.group.activity.VariousActivity" />
         <activity android:name=".widget.recyclerview.group.activity.VariousChildActivity" />
 
-        <activity
-            android:name=".test.LoadTestActivity"
-            android:label="测试">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+
+        <receiver android:name="cn.com.rooten.help.apploop.imp.AppLoopReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote"/>
+
+        <service
+            android:name="cn.com.rooten.help.apploop.imp.AppLoopJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote"/>
+
+
+        <service android:name="cn.com.rooten.help.apploop.AppLoopService"
+            android:label="@string/service_name"
+            android:description="@string/service_desc"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="cn.com.rooten.help.apploop.AppLoopService" />
+            </intent-filter>
+        </service>
+
     </application>
 </manifest>

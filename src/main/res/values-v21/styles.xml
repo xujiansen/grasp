@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 21 Android 5.0 -->
     <!--<item name="android:statusBarColor">状态栏颜色</item>-->
     <!--<item name="android:navigationBarColor">虚拟安卓三按钮背景色</item>-->
     <!--<item name="android:textColorPrimary">应用的主要文字颜色,ToolBar的标题文字默认使用该颜色</item>-->
@@ -23,6 +22,9 @@
 
     <!--<item name="android:textColorPrimaryDisableOnly">RadioButton checkbox等控件的文字</item>-->
 
+
+
+    <!-- 21 Android 5.0 -->
     <!-- App theme -->
     <style name="Theme.App" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
@@ -31,57 +33,6 @@
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:colorControlNormal">@color/colorAccent</item>
         <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="Theme.App.Login" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
-        <item name="android:colorAccent">@color/colorPrimaryDark</item>
-        <item name="android:colorControlNormal">@color/dark_gray</item>
-        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="Theme.App.CheckCode" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/colorAccent</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
-        <item name="android:colorAccent">@color/colorPrimaryDark</item>
-        <item name="android:colorControlNormal">@color/colorPrimary</item>
-        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="Theme.App.Main" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:colorPrimary">@color/white</item>
-        <item name="android:colorPrimaryDark">@color/white</item>
-        <item name="android:colorAccent">@color/colorPrimaryDark</item>
-        <item name="android:colorControlNormal">@color/colorAccent</item>
-        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
-    </style>
-
-    <!-- org button -->
-    <style name="OrgLayout">
-        <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
-    </style>
-
-    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--Android 5.x开始需要把颜色设置透明,否则导航栏会呈现系统默认的浅灰色-->
-        <item name="android:statusBarColor">#00FFFFFF</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-    </style>
-
-
-    <style name="Theme_Toolbar_gaqu_main">
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:colorControlNormal">@color/white</item>
-        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="android:actionMenuTextColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:actionMenuTextAppearance">@style/ToolbarActionText</item>
     </style>
 
 </resources>

@@ -57,7 +57,7 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
     private void writeError(String error) {
 //        if (!Constant.APP_DEBUG) return;
 
-        String errorParent = PathUtil.PATH_APP_ERROR;
+        String errorParent = PathUtil.PATH_LOG_ERROR;
         String filename = Utilities.getDateTimeEx(new Date()) + ".txt";
 
         FileOutputStream out = null;

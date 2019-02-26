@@ -3,11 +3,8 @@ package cn.com.rooten.help.apploop.timetick;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import cn.com.rooten.AppParamsMgr;
 import cn.com.rooten.BaApp;
-import cn.com.rooten.Constant;
 import cn.com.rooten.help.BroadReceiverImpl;
-import cn.com.rooten.help.apploop.AppLoopImpl;
 
 /**
  * 注册timeTick帮助类,这边是系统的接收器

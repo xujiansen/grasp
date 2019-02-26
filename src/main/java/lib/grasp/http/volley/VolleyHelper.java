@@ -3,7 +3,6 @@ package lib.grasp.http.volley;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -11,7 +10,8 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
+
+import net.minidev.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -24,9 +24,9 @@ import cn.com.rooten.Constant;
 import cn.com.rooten.ctrl.widget.SwipeRefreshLayout;
 import cn.com.rooten.help.LocalBroadMgr;
 import cn.com.rooten.util.Utilities;
-import lib.grasp.entity.biz_entity.Version;
 import lib.grasp.http.BaseResponse;
-import lib.grasp.http.volley.gsonrequest.GsonRequest;
+import lib.grasp.http.volley.gsonrequest.ParamRequest;
+import lib.grasp.http.volley.gsonrequest.JsonObjRequest;
 import lib.grasp.util.L;
 import lib.grasp.util.TOAST;
 import lib.grasp.widget.MessageBoxGrasp;
@@ -47,12 +47,18 @@ public class VolleyHelper<T> {
     private SwipeRefreshLayout mSwip;
 
 
-    /** 是否取消 */
-    private boolean     mIsCancel = false;
-    /** 是否显示prog */
-    private boolean     mIsShowProg = false;
-    /** 超时秒 */
-    private int         mTimeout = 30;
+    /**
+     * 是否取消
+     */
+    private boolean mIsCancel = false;
+    /**
+     * 是否显示prog
+     */
+    private boolean mIsShowProg = false;
+    /**
+     * 超时秒
+     */
+    private int mTimeout = 30;
 
     /**
      * 本次请求的请求ID
@@ -84,11 +90,11 @@ public class VolleyHelper<T> {
     /**
      * 成功监听器
      */
-    private Response.Listener<T>    mSuccessListener;
+    private Response.Listener<T> mSuccessListener;
     /**
      * 失败监听器
      */
-    private Response.ErrorListener  mErrorListener;
+    private Response.ErrorListener mErrorListener;
 
     public static VolleyHelper with(Context context) {
         BaApp mApp = (BaApp) context.getApplicationContext();
@@ -119,7 +125,7 @@ public class VolleyHelper<T> {
     }
 
     public void execute(Type type) {
-        if (mIsShowProg){
+        if (mIsShowProg) {
             initProgressDlg();
             mProgressDlg.show();
             mProgressDlg.setMessage(TextUtils.isEmpty(mInfoStr) ? "正在操作" : mInfoStr);
@@ -127,70 +133,83 @@ public class VolleyHelper<T> {
 
         mIsCancel = false;
 
-        if(mMethod == Request.Method.GET) {
+        if (mMethod == Request.Method.GET) {
             mURL = encodeParameters(mURL, mParam);
         }
 
-        GsonRequest mRequest = new GsonRequest<T>(
-                mMethod,
-                mURL,
-                type,
-                orderResponse -> {
-                    if (mSwip != null) {
-                        mSwip.setRefreshing(false);
-                        mSwip.setLoading(false);
-                    }
-                    if (orderResponse == null) {
-                        TOAST.showShort(mContext, "请求失败");
-                        return;
-                    }
-
-                    if(!filterCode(orderResponse)){
-                        if (mProgressDlg != null) {
-                            mProgressDlg.dismiss();
-                            mProgressDlg = null;
-                        }
-                        return;
-                    }
-
-                    if (mSuccessListener != null) mSuccessListener.onResponse(orderResponse);
-                    onPostExecute();
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        L.logOnly(this.getClass(), "请求URL", mURL);
-                        L.logOnly(this.getClass(), "请求异常", volleyError.toString());
-
-                        if (mSwip != null) {
-                            mSwip.setRefreshing(false);
-                            mSwip.setLoading(false);
-                        }
-
-                        if (volleyError.networkResponse == null) {
-                            TOAST.showShort(mContext, "网络异常\n" + volleyError.toString());
-                            return;
-                        }
-
-                        if (mErrorListener != null) mErrorListener.onErrorResponse(volleyError);
-                        noti(volleyError.toString());
-                        onPostExecute();
-                    }
-                }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                if (mParam == null) mParam = new HashMap<>();
-                return mParam;
+        Response.Listener<T> listener = orderResponse -> {
+            if (mSwip != null) {
+                mSwip.setRefreshing(false);
+                mSwip.setLoading(false);
+            }
+            if (orderResponse == null) {
+                TOAST.showShort(mContext, "请求失败");
+                return;
             }
 
+            if (!filterCode(orderResponse)) {
+                if (mProgressDlg != null) {
+                    mProgressDlg.dismiss();
+                    mProgressDlg = null;
+                }
+                return;
+            }
+
+            if (mSuccessListener != null) mSuccessListener.onResponse(orderResponse);
+            onPostExecute();
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
-            public Map<String, String> getHeaders() {
-                if (mHeadParam == null) mHeadParam = new HashMap<>();
-                return mHeadParam;
+            public void onErrorResponse(VolleyError volleyError) {
+                L.logOnly(this.getClass(), "请求URL", mURL);
+                L.logOnly(this.getClass(), "请求异常", volleyError.toString());
+
+                if (mSwip != null) {
+                    mSwip.setRefreshing(false);
+                    mSwip.setLoading(false);
+                }
+
+                if (volleyError.networkResponse == null) {
+                    TOAST.showShort(mContext, "网络异常\n" + volleyError.toString());
+                    return;
+                }
+
+                if (mErrorListener != null) mErrorListener.onErrorResponse(volleyError);
+                noti(volleyError.toString());
+                onPostExecute();
             }
         };
+
+        Request mRequest = null;
+        if (TextUtils.equals(mHeadParam.get("Content-Type"), "application/json"))
+            mRequest = new JsonObjRequest<>(
+                    mMethod,
+                    mURL,
+                    JSONObject.toJSONString(mParam),
+                    type,
+                    listener,
+                    errorListener
+            );
+        else mRequest = new ParamRequest<T>(
+                    mMethod,
+                    mURL,
+                    type,
+                    listener,
+                    errorListener) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    if (mParam == null) mParam = new HashMap<>();
+                    return mParam;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    if (mHeadParam == null) mHeadParam = new HashMap<>();
+                    return mHeadParam;
+                }
+            };
         mRequest.setRetryPolicy(new DefaultRetryPolicy(mTimeout * 1000, 1, 1.0f));
         mApp.getRequestQueue().add(mRequest).setTag(mRequestCode);
     }
@@ -217,38 +236,50 @@ public class VolleyHelper<T> {
     }
 
 
-    /** 设置请求成功之后的回调 */
+    /**
+     * 设置请求成功之后的回调
+     */
     public VolleyHelper<T> onSuccess(Response.Listener listener) {
         this.mSuccessListener = listener;
         return this;
     }
 
-    /** 设置请求失败之后的回调 */
+    /**
+     * 设置请求失败之后的回调
+     */
     public VolleyHelper<T> onError(Response.ErrorListener listener) {
         this.mErrorListener = listener;
         return this;
     }
 
-    /** 设置Swip */
+    /**
+     * 设置Swip
+     */
     public VolleyHelper<T> setSwip(SwipeRefreshLayout mSwip) {
         this.mSwip = mSwip;
         return this;
     }
 
-    /** 设置请求成功之后的跳转 */
+    /**
+     * 设置请求成功之后的跳转
+     */
     public VolleyHelper<T> setIntent(Intent mIntent) {
         this.mIntent = mIntent;
         return this;
     }
 
-    /** 设置是否显示加载提示框, 通知栏显示文字 */
+    /**
+     * 设置是否显示加载提示框, 通知栏显示文字
+     */
     public VolleyHelper<T> setIsShowProg(boolean mIsShowProg, String msg) {
         this.mIsShowProg = mIsShowProg;
         this.mInfoStr = msg;
         return this;
     }
 
-    /** 本次请求的URL */
+    /**
+     * 本次请求的URL
+     */
     public VolleyHelper<T> setURL(String mURL) {
         this.mURL = mURL;
         return this;
@@ -294,7 +325,9 @@ public class VolleyHelper<T> {
         return this;
     }
 
-    /** 编辑get参数-方式1 */
+    /**
+     * 编辑get参数-方式1
+     */
     private String encodeParameters(String url, Map<String, String> params) {
         StringBuilder encodedParams = new StringBuilder("?");
         try {
@@ -306,7 +339,7 @@ public class VolleyHelper<T> {
                 encodedParams.append('&');
             }
             String newUrl = url + encodedParams.toString();
-            if(newUrl.endsWith("&")){
+            if (newUrl.endsWith("&")) {
                 int index = newUrl.lastIndexOf("&");
                 newUrl = newUrl.substring(0, index);
             }
@@ -317,16 +350,18 @@ public class VolleyHelper<T> {
         }
     }
 
-    /** 编辑get参数-方式2 */
+    /**
+     * 编辑get参数-方式2
+     */
     protected String encodeParameters2(String url, Map<String, String> params) {
         if (url != null && params != null && !params.isEmpty()) {
             Uri.Builder builder = Uri.parse(url).buildUpon();
             Set<String> keys = params.keySet();
             Iterator iterator = keys.iterator();
 
-            while(iterator.hasNext()) {
-                String key = (String)iterator.next();
-                builder.appendQueryParameter(key, (String)params.get(key));
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+                builder.appendQueryParameter(key, (String) params.get(key));
             }
 
             return builder.build().toString();
@@ -335,14 +370,16 @@ public class VolleyHelper<T> {
         }
     }
 
-    /** 业务的code是否有效 */
-    private boolean filterCode(Object orderRes){
-        if(orderRes instanceof BaseResponse){
-            BaseResponse res = (BaseResponse)orderRes;
+    /**
+     * 业务的code是否有效
+     */
+    private boolean filterCode(Object orderRes) {
+        if (orderRes instanceof BaseResponse) {
+            BaseResponse res = (BaseResponse) orderRes;
 
             if (res.code == 401) {
                 MessageBoxGrasp.infoMsg(mContext, "提示", "会话已过期,请重新登录!", false, v -> {
-                    BaApp app = (BaApp)mContext.getApplicationContext();
+                    BaApp app = (BaApp) mContext.getApplicationContext();
                     LocalBroadMgr localBroadMgr = new LocalBroadMgr(app);
                     localBroadMgr.broadAction(Constant.ARG_TOKEN_EXPIRE);
                 });
@@ -351,33 +388,13 @@ public class VolleyHelper<T> {
 
             if (res.code == 402 || res.code == 403) {
                 String verStr = res.msg;
-                if(!TextUtils.isEmpty(verStr)){
-                    try{
-                        Version version = new Gson().fromJson(verStr, Version.class);
-//                        version.downloadPath = "http://192.168.1.20:8080/MyUrlSample/mobileqq_android.apk";
-                        MessageBoxGrasp.infoMsg(mContext, "提示", "发现新版本" + version.versionName + ",请升级!", false, v -> {
-                            BaApp app = (BaApp)mContext.getApplicationContext();
-//                            LocalBroadMgr localBroadMgr = new LocalBroadMgr(app);
-
-                            Bundle bundle = new Bundle();
-
-                            bundle.putString("versionName",     version.versionName);
-                            bundle.putLong("size",              version.size);
-                            bundle.putString("downloadPath",    version.downloadPath);
-
-
-//                            localBroadMgr.broadAction(Constant.ARG_NEW_VERSION);
-
-                            Intent intent = new Intent();
-                            intent.putExtras(bundle);
-                            intent.setAction(Constant.ARG_NEW_VERSION);
-                            mContext.sendBroadcast(intent);
-                        });
-                        return false;
-                    }
-                    catch (Exception e){}
+                if (!TextUtils.isEmpty(verStr)) {
+                    Intent intent = new Intent();
+                    intent.setAction(Constant.ARG_NEW_VERSION);
+                    intent.putExtra("data", verStr);
+                    mContext.sendBroadcast(intent);
+                    return false;
                 }
-
                 MessageBoxGrasp.infoMsg(mContext, "当前应用版本已过期, 请联系管理员");
                 return false;
             }

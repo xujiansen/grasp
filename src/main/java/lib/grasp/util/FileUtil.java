@@ -263,7 +263,7 @@ public class FileUtil {
             delAllFile(folderPath); //删除完里面所有内容
             String filePath = folderPath;
             filePath = filePath.toString();
-            java.io.File myFilePath = new java.io.File(filePath);
+            File myFilePath = new File(filePath);
             myFilePath.delete(); //删除空文件夹
         } catch (Exception e) {
             e.printStackTrace();
@@ -401,8 +401,15 @@ public class FileUtil {
         }
     }
 
-    // 保存文件到手机
-    public static void saveFile(Context context, String fileName, String textContent) {
+    // 追加保存文字到手机
+    public static void appendStrToFile(Context context, String fileName, String textContent){
+        StringBuffer oldStr = new StringBuffer(readStrFromFile(context, fileName));
+        StringBuffer newStr = oldStr.append("\n").append(textContent);
+        saveStrToFile(context, fileName, newStr.toString());
+    }
+
+    // 保存文字到手机
+    public static void saveStrToFile(Context context, String fileName, String textContent) {
         FileOutputStream outStream = null;
         try {
             outStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -422,8 +429,8 @@ public class FileUtil {
         }
     }
 
-    // 从手机读取文件
-    public static String readFile(Context context, String fileName) {
+    // 从手机读取文字
+    public static String readStrFromFile(Context context, String fileName) {
         byte[] content = null;
         try {
             FileInputStream fis = context.openFileInput(fileName);

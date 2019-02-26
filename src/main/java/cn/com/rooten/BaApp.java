@@ -1,5 +1,6 @@
 package cn.com.rooten;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -25,25 +26,30 @@ import cn.com.rooten.base.UserData;
 import cn.com.rooten.help.ActivityMgr;
 import cn.com.rooten.help.LocalBroadMgr;
 import cn.com.rooten.help.NotificationHelper;
+import cn.com.rooten.help.apploop.util.LoopHelper;
 import cn.com.rooten.help.filehttp.FileDownloadMgr;
 import cn.com.rooten.help.filehttp.FileUploadMgr;
 import lib.grasp.util.PathUtil;
+import lib.grasp.util.PermissionUtil;
 
-public class BaApp extends Application{
+public class BaApp extends Application {
     private Handler mHandler = new Handler();                // 主线程执行  　
     protected UserData mUserData;                // 用户数据
     private Map<String, Object> mIntentParams = new HashMap<>();
     private ActivityMgr mActivityMgr = null; // Activity管理辅助类
     private NotificationHelper mNotiHelper = null; // Notification辅助类
     private LocalBroadMgr mLocalBroadMgr = null; // 本地广播管理
-    private FileUploadMgr mFileUploadMgr  = null; // 文件上传管理
-    private FileDownloadMgr mFileDownloadMgr  = null; // 文件下载管理
+    private FileUploadMgr mFileUploadMgr = null; // 文件上传管理
+    private FileDownloadMgr mFileDownloadMgr = null; // 文件下载管理
 
     private volatile boolean mIsFirstLogin = false;  // 是否是第一次登陆
 
     private RequestQueue mRequestQueue;
 
     public ExecutorService AppThreadPool = Executors.newFixedThreadPool(3);
+
+    /** 系统轮训帮助类 */
+    public LoopHelper mLoopHelper = new LoopHelper();
 
     public String mLoadId;
 
@@ -72,11 +78,11 @@ public class BaApp extends Application{
     }
 
     private void initAppParams() {
-        mLocalBroadMgr  = new LocalBroadMgr(this);          // 本地广播管理
+        mLocalBroadMgr = new LocalBroadMgr(this);          // 本地广播管理
         mActivityMgr = new ActivityMgr();                // Activity管理辅助类
         mNotiHelper = new NotificationHelper(this);
-        mFileUploadMgr  = new FileUploadMgr();        // 文件上传管理器
-        mFileDownloadMgr  = new FileDownloadMgr();        // 文件上传管理器
+        mFileUploadMgr = new FileUploadMgr();        // 文件上传管理器
+        mFileDownloadMgr = new FileDownloadMgr();        // 文件上传管理器
 
         mLoadId = getFileDownloadMgr().registerCategory("下载图片", 1);
         startFileHttp();
@@ -109,21 +115,20 @@ public class BaApp extends Application{
         AppParamsMgr.setDefaultLocateState(this);
     }
 
-    public void startFileHttp()
-    {
+    public void startFileHttp() {
         mFileUploadMgr.startUpload();    // 开启文件上传
         mFileDownloadMgr.startDownload();    // 开启文件上传
     }
 
-    public void stopFileHttp()
-    {
+    public void stopFileHttp() {
         mFileUploadMgr.stopUpload();    // 停止文件上传
         mFileDownloadMgr.stopDownload();    // 停止文件上传
     }
 
     synchronized public String getIMEI() {
-        TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        return tm.getDeviceId();
+        if(!PermissionUtil.checkDangerousPermission(this, Manifest.permission.READ_PHONE_STATE)) return "";
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
     }
 
     public String getAppVersionName() {
@@ -215,10 +220,20 @@ public class BaApp extends Application{
         return mFileDownloadMgr;
     }
 
+    public LoopHelper getLoopHelper() {
+        return mLoopHelper;
+    }
+
+    public void setLoopHelper(LoopHelper mLoopHelper) {
+        this.mLoopHelper = mLoopHelper;
+    }
+
+
     /**
      * 重新启动App
      */
-    public static void reLaunchApp(Context context) { }
+    public static void reLaunchApp(Context context) {
+    }
 
     /**
      * 完全退出App，如果不把当前所未关闭的Activity关闭，在杀死进程之后，会重新启动栈顶的Activity
@@ -228,7 +243,7 @@ public class BaApp extends Application{
         mActivityMgr.onDestroy();
 
         // 杀死本进程
-        if(isKillProcess) android.os.Process.killProcess(Process.myPid());
+        if (isKillProcess) android.os.Process.killProcess(Process.myPid());
     }
 }
 

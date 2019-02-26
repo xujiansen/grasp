@@ -2,6 +2,7 @@ package cn.com.rooten.ctrl;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -115,8 +116,8 @@ public class EditDialog {
 
         builder.setPositiveButton("确定", y);
         builder.setNegativeButton("取消", n);
-        AlertDialog dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
+
+        AlertDialog dialog = builder.create();dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
         mAlertDlg = dialog;

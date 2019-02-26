@@ -1,88 +1,14 @@
 <resources>
-    <dimen name="setting_Left">6dip</dimen>
-    <dimen name="setting_marginLeft">12dip</dimen>
-    <dimen name="setting_marginRight">12dip</dimen>
-    <dimen name="input_textSize">30sp</dimen>
-    <dimen name="input_butontSize">18sp</dimen>
-    <dimen name="activityTitle_minHeight">48dip</dimen>
-    <dimen name="dialogHeader_minHeight">50dip</dimen>
-    <dimen name="dialog_minWidth">200dip</dimen>
     <dimen name="listItem_minHeight">60dip</dimen>
-    <dimen name="keyboard_num_height">60dip</dimen>
-
-    <!-- The default gap between components in a layout. -->
-    <dimen name="default_gap">16dip</dimen>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="gridItem_height">98dip</dimen>
-
-    <!-- 登录界面布局位置 -->
-    <dimen name="login_icon_margin_top">25dip</dimen>
-    <dimen name="login_icon_margin_bottom">9dip</dimen>
-    <dimen name="login_frame_margin_top">80dip</dimen>
-    <dimen name="login_frame_margin_left">25dip</dimen>
-    <dimen name="login_frame_margin_right">25dip</dimen>
-    <dimen name="login_frame_padding_top">20dip</dimen>
-    <dimen name="login_frame_padding_left">20dip</dimen>
-    <dimen name="login_frame_padding_right">20dip</dimen>
-    <dimen name="login_frame_padding_bottom">10dip</dimen>
-
-    <dimen name="login_title_padding_top">5dip</dimen>
-    <dimen name="login_title_padding_bottom">5dip</dimen>
-    <dimen name="login_input_margin_bottom">5dip</dimen>
-    <dimen name="login_button_margin_top">15dip</dimen>
-
-    <dimen name="action_button_min_width">56dip</dimen>
-    <dimen name="divider">6dip</dimen>
 
     <dimen name="text_name">18px</dimen>
     <dimen name="text_value">18px</dimen>
 
     <!-- 头像的高度 -->
-    <dimen name="person_img_height">100dip</dimen>
-    <dimen name="person_img_detail_height">120dip</dimen>
     <dimen name="radio_button_conner_radius">5dip</dimen>
-
-    <dimen name="list_item_title_size">16sp</dimen>
-    <dimen name="list_item_value_size">14sp</dimen>
-    <dimen name="list_item_btn_size">16sp</dimen>
 
     <dimen name="linear_item_minheight">60dip</dimen>
     <dimen name="page_bottom_tab_height">60dip</dimen>
-
-    <dimen name="float_btn_margin">0dip</dimen>
-
-    <!-- FolderBar-text -->
-    <dimen name="folder_bar_text">18sp</dimen>
-
-    <!-- FolderHeadView-text -->
-    <dimen name="folder_head_text">16sp</dimen>
-
-    <!-- 主页-消息列表 -->
-    <dimen name="home_msg_list_icon">48dip</dimen>
-    <dimen name="home_msg_list_title">16sp</dimen>
-    <dimen name="home_msg_list_time">13sp</dimen>
-    <dimen name="home_msg_list_content">14sp</dimen>
-    <dimen name="home_msg_list_num">12sp</dimen>
-
-    <!-- 主页-联系人-好友 -->
-    <dimen name="home_contacts_lxr_group_name">16sp</dimen>
-    <dimen name="home_contacts_lxr_group_num">16sp</dimen>
-    <dimen name="home_contacts_lxr_child_icon">48dip</dimen>
-    <dimen name="home_contacts_lxr_child_name">16sp</dimen>
-    <dimen name="home_contacts_lxr_child_online">14sp</dimen>
-    <dimen name="home_contacts_lxr_child_sign">14sp</dimen>
-
-    <!-- 主页-联系人-群组 -->
-    <dimen name="home_contacts_lxr_chat_room_name">16sp</dimen>
-
-    <!-- 主页-联系人-通讯录 -->
-    <dimen name="home_mail_list_org_name">16sp</dimen>
-    <dimen name="home_mail_list_org_num">16sp</dimen>
-    <dimen name="home_mail_list_member_icon">48dip</dimen>
-    <dimen name="home_mail_list_member_name">16sp</dimen>
-    <dimen name="home_mail_list_member_org">14sp</dimen>
-    <dimen name="home_mail_list_member_add_lable">18sp</dimen>
 
     <!-- 主页-AppFragment -->
     <dimen name="home_app_fragment_title">18px</dimen>
@@ -91,111 +17,9 @@
     <!-- 主页-SlidingMenu -->
     <dimen name="home_app_sliding_menu_text">18px</dimen>
 
-    <!-- 主页-SlidingMenu-我 -->
-    <dimen name="home_app_sliding_menu_own_name">18px</dimen>
-    <dimen name="home_app_sliding_menu_own_value">18px</dimen>
-
     <!-- 主页-SlidingMenu-设置 -->
     <dimen name="home_app_sliding_menu_setting_head">19px</dimen>
     <dimen name="home_app_sliding_menu_setting_name">18px</dimen>
-    <dimen name="home_app_sliding_menu_setting_value">18px</dimen>
-
-    <!-- 主页-SlidingMenu-设置-修改密码 -->
-    <dimen name="home_app_sliding_menu_setting_pwd_name">18sp</dimen>
-    <dimen name="home_app_sliding_menu_setting_pwd_value">18sp</dimen>
-
-    <!-- 聊天界面-AudioHolder -->
-    <dimen name="message_list_audio_user">12sp</dimen>
-    <dimen name="message_list_audio_time">18sp</dimen>
-
-    <!-- 聊天界面-FileHolder -->
-    <dimen name="message_list_file_user">14sp</dimen>
-    <dimen name="message_list_file_filename">15sp</dimen>
-    <dimen name="message_list_file_size">14sp</dimen>
-    <dimen name="message_list_file_desc">14sp</dimen>
-
-    <!-- 聊天界面-NotiHolder -->
-    <dimen name="message_list_noti_text">16sp</dimen>
-
-    <!-- 聊天界面-TextHolder -->
-    <dimen name="message_list_text_user">12sp</dimen>
-    <dimen name="message_list_text_content">16sp</dimen>
-
-    <!-- 聊天界面-YyspHolder -->
-    <dimen name="message_list_video_user">12sp</dimen>
-    <dimen name="message_list_video_content">16sp</dimen>
-
-    <!-- 好友申请-RosterApplyActivity -->
-    <dimen name="roster_apply_fname">18sp</dimen>
-    <dimen name="roster_apply_req_msg">18sp</dimen>
-    <dimen name="roster_apply_btn_yse">18sp</dimen>
-    <dimen name="roster_apply_btn_no">18sp</dimen>
-
-    <!-- 好友申请-RosterReqManagerActivity -->
-    <dimen name="roster_req_manager_req_from">18sp</dimen>
-    <dimen name="roster_req_manager_name">18sp</dimen>
-    <dimen name="roster_req_manager_value">18sp</dimen>
-
-    <!-- 群组申请-ChatRoomApplyActivity -->
-    <dimen name="chat_room_apply_name">18sp</dimen>
-    <dimen name="chat_room_apply_inviter">16sp</dimen>
-    <dimen name="chat_room_apply_btn_lable">18sp</dimen>
-
-    <!-- 群组公告-ChatRoomNoticeListActivity -->
-    <dimen name="chat_room_notice_list_title">18sp</dimen>
-    <dimen name="chat_room_notice_list_content">16sp</dimen>
-
-    <!-- 群组公告详情-ChatRoomNoticeDetailActivity -->
-    <dimen name="chat_room_notice_detail_title">18sp</dimen>
-    <dimen name="chat_room_notice_detail_time">16sp</dimen>
-    <dimen name="chat_room_notice_detail_content">16sp</dimen>
-    <dimen name="chat_room_notice_detail_extra">18sp</dimen>
-
-    <!-- 群组解散-ChatRoomDelActivity -->
-    <dimen name="chat_room_del_name">18sp</dimen>
-    <dimen name="chat_room_del_time">16sp</dimen>
-    <dimen name="chat_room_del_desc">16sp</dimen>
-
-    <!-- 系统通知-AppPush -->
-    <dimen name="app_push_list_title">18sp</dimen>
-    <dimen name="app_push_list_content">16sp</dimen>
-    <dimen name="app_push_list_all_content">16sp</dimen>
-    <dimen name="app_push_list_ack">16sp</dimen>
-
-    <!-- 系统通知-AppPushDetail -->
-    <dimen name="app_push_detail_title">18sp</dimen>
-    <dimen name="app_push_detail_time">16sp</dimen>
-    <dimen name="app_push_detail_content">16sp</dimen>
-
-    <!-- 添加好友-CreateContactsActivity -->
-    <dimen name="create_contacts_query">18sp</dimen>
-    <dimen name="create_contacts_user">18sp</dimen>
-    <dimen name="create_contacts_org">18sp</dimen>
-    <dimen name="create_contacts_btn_query">18sp</dimen>
-
-    <!-- 添加好友-QueryUserList -->
-    <dimen name="query_user_icon">56dip</dimen>
-
-    <!-- 添加好友-RosterAddActivity -->
-    <dimen name="roster_add_name">18sp</dimen>
-    <dimen name="roster_add_value">18sp</dimen>
-
-    <!-- 好友列表-UsersListActivity -->
-    <dimen name="user_list_name">18sp</dimen>
-    <dimen name="user_list_jgmc">16sp</dimen>
-    <dimen name="user_list_lable">16sp</dimen>
-
-    <!-- 机构列表-OrgSelectActivity -->
-    <dimen name="org_list_name">18sp</dimen>
-    <dimen name="org_list_num">16sp</dimen>
-
-    <!-- 群组管理-GroupManagerActivity -->
-    <dimen name="room_manager_list_name">18sp</dimen>
-    <dimen name="room_manager_list_del">16sp</dimen>
-
-    <!-- 分组管理-GroupManagerActivity -->
-    <dimen name="group_manager_list_name">18sp</dimen>
-    <dimen name="group_manager_list_del">16sp</dimen>
 
     <!-- 图片选择列表-ImagePathListActivity -->
     <dimen name="image_list_path_info">18sp</dimen>
@@ -204,73 +28,4 @@
     <!-- 图片grid列表-MediaImageActivity -->
     <dimen name="image_grid_btn_preview">18sp</dimen>
     <dimen name="image_grid_btn_send">18sp</dimen>
-
-    <!-- 文件选择管理-FileManagerActivity -->
-    <dimen name="file_list_label">16sp</dimen>
-    <dimen name="file_list_label2">14sp</dimen>
-    <dimen name="file_list_label3">14sp</dimen>
-
-    <!-- 文件下载状态-FileStatusBrower -->
-    <dimen name="file_status_filename">18sp</dimen>
-    <dimen name="file_status_file_size">18sp</dimen>
-    <dimen name="file_status_btn_download">18sp</dimen>
-    <dimen name="file_status_file_info">18sp</dimen>
-
-    <!-- 群成员列表-GroupMembersActivity -->
-    <dimen name="group_member_list_name">18sp</dimen>
-    <dimen name="group_member_list_level">14sp</dimen>
-
-    <!-- 好友主页-RosterHomeActivity -->
-    <dimen name="roster_home_name">18px</dimen>
-    <dimen name="roster_home_value">18px</dimen>
-    <dimen name="roster_home_user">20sp</dimen>
-    <dimen name="roster_home_sex">18sp</dimen>
-    <dimen name="roster_home_sign">18sp</dimen>
-    <dimen name="roster_home_ypth">16sp</dimen>
-    <dimen name="roster_home_spth">16sp</dimen>
-    <dimen name="roster_home_msg">16sp</dimen>
-
-    <!-- 好友设置-RosterSettingActivity -->
-    <dimen name="roster_setting_name">18sp</dimen>
-    <dimen name="roster_setting_value">18sp</dimen>
-    <dimen name="roster_setting_btn_del">18sp</dimen>
-
-    <!-- 非好友主页-StrangerHomeActivity -->
-    <dimen name="strange_home_name">18px</dimen>
-    <dimen name="strange_home_value">18px</dimen>
-    <dimen name="strange_home_user">20sp</dimen>
-    <dimen name="strange_home_sex">18sp</dimen>
-    <dimen name="strange_home_btn_add">16sp</dimen>
-    <dimen name="strange_home_btn_msg">16sp</dimen>
-
-    <!-- 朋友圈-FriendMsgListActivity -->
-    <dimen name="function_topic_list_noti">18sp</dimen>
-    <dimen name="function_topic_list_btn_send">18sp</dimen>
-    <dimen name="function_topic_list_fbr">14sp</dimen>
-    <dimen name="function_topic_list_fbsj">13sp</dimen>
-    <dimen name="function_topic_list_fbnr">15sp</dimen>
-    <dimen name="function_topic_list_comment_icon">17sp</dimen>
-    <dimen name="function_topic_list_comment">15sp</dimen>
-    <dimen name="function_topic_list_query_more">18sp</dimen>
-    <dimen name="function_topic_list_add_comment">15sp</dimen>
-
-    <!-- 朋友圈详情-FriendMsgDetailActivity -->
-    <dimen name="function_topic_detail_fbr">14sp</dimen>
-    <dimen name="function_topic_detail_fbsj">13sp</dimen>
-    <dimen name="function_topic_detail_fbnr">15sp</dimen>
-    <dimen name="function_topic_detail_comment">15sp</dimen>
-    <dimen name="function_topic_detail_query_more">18sp</dimen>
-    <dimen name="function_topic_detail_add_comment">15sp</dimen>
-    <dimen name="function_topic_detail_comment_fbr">14sp</dimen>
-    <dimen name="function_topic_detail_comment_fbsj">13sp</dimen>
-    <dimen name="function_topic_detail_comment_fbnr">15sp</dimen>
-    <dimen name="function_topic_detail_comment_comment">15sp</dimen>
-
-    <!-- 应用市场-已安装列表-AppInstalledPage -->
-    <dimen name="appstore_install_app_list_item_icon">56dip</dimen>
-
-    <!-- 应用市场-未安装列表-AppMarketPage -->
-    <dimen name="appstore_market_app_list_item_icon">56dip</dimen>
-
-
 </resources>

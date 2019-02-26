@@ -4,81 +4,10 @@
     <item name="type_footer" type="integer"/>
     <item name="type_child" type="integer"/>
 
-    <string name="hello">Hello World, BaLogin!</string>
     <string name="app_name">JS_grasp</string>
-    <string name="title_name">JS_grasp</string>
     <string name="service_name">守护服务</string>
-    <string name="service_desc">守护服务----------------</string>
-    <string name="login_btn_login_text">登录</string>
-    <string name="login_btn_exit_text">退出</string>
-    <string name="login_txt_password">密　码</string>
-    <string name="rememberpwd">记住密码</string>
-    <string name="version_title">版本:</string>
-    <string name="version_name">V1.1.2</string>
-    <string name="copyright">Copyright ©2016-2018 扬州商道科技发展有限公司</string>
-    <string name="pregress_dlg_title">请稍候</string>
-    <string name="pregress_dlg_cancel">取消</string>
-    <string name="assistant_title">输入助手</string>
-    <string name="dict_title">请选择</string>
-    <string name="dict_filter_label">搜索</string>
-    <string name="image_dlg_close">关闭</string>
-    <string name="notification_title">系统通知</string>
-    <string name="notification_btn_close">关闭</string>
-    <string name="date_time_set">设置</string>
-    <string name="cancel">取消</string>
-    <string name="btn_ok">"确定"</string>
-    <string name="btn_yes">"是"</string>
-    <string name="btn_no">"否"</string>
-    <string name="login_txt_user">用户名</string>
-    <string name="pass">密码</string>
-    <string name="title_activity_daily_work_record">DailyWorkRecordActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="load_empty">暂无数据</string>
+    <string name="service_desc">[graspLib]守护服务----------------</string>
 
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_camera">CameraActivity</string>
-
-    <!-- 客户拜访 -->
-    <string name="create_time">创建时间</string>
-       	<!-- 任务详情界面 -->
-    <string name="creater">创建人</string>
-    <string name="operator">经办人</string>
-    <string name="start_time">开始时间</string>
-    <string name="terminal_time">结束时间</string>
-    <string name="task_type">任务类型</string>
-    <string name="task_status">任务状态</string>
-    <string name="task_summary">任务标题</string>
-    <string name="task_content">任务内容</string>
-    <string name="execute">执行任务</string>
-    <string name="customer_name">客户名称</string>
-    <string name="ok">确定</string>
-
-    <!-- Description of the icon that opens the navigation drawer, used by accessibility. -->
-    <string name="drawer_open">Open navigation drawer</string>
-
-    <!-- Description of the icon that closes the navigation drawer, used by accessibility. -->
-    <string name="drawer_close">Close navigation drawer</string>
-    
-    	<!-- 客户拜访-需拜访提醒 -->
-    <string name="needvisitedtask_customerlevel">客户等级：</string>
-    <string name="needvisitedtask_visitinteval">拜访间隔：</string>
-    <string name="needvisitedtask_days">天</string>
-    <string name="needvisitedtask_lastvisittime">上次拜访时间：</string>
-    <string name="needvisitedtask_expire">即将到期：</string>
-    
-    	<!-- 客戶拜訪-需拜訪提醒详情 -->
-    <string name="needvisitedtask_item_customerid">客户ID</string>
-    <string name="needvisitedtask_item_customername">客户名称</string>
-    <string name="needvisitedtask_item_customerlevel">客户等级</string>
-    <string name="needvisitedtask_item_visittime">上次拜访时间</string>
-    <string name="needvisitedtask_item_interval">拜访间隔</string>
-    <string name="needvisitedtask_item_delay">即将到期</string>
-    
-    <string name="iminfo">嘠趣嘠趣嘠趣嘠趣嘠趣嘠趣嘠趣嘠趣嘠趣</string>
-
-    <string name="appName">多图选择器</string>
     <string name="folder_all">所有照片</string>
     <string name="preview">预览</string>
     <string name="msg_no_camera">没有系统相机</string>

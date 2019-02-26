@@ -19,7 +19,7 @@ public class GsonRequestHelper {
     /**
      * 请求
      */
-    private GsonRequest mGsonRequest;
+    private ParamRequest mGsonRequest;
     /**
      * 请求队列
      */
@@ -47,7 +47,7 @@ public class GsonRequestHelper {
      * @param type 对象的类型
      */
     public <T> GsonRequestHelper get(String url, Type type, final SuccessListener<T> successListener) {
-        mGsonRequest = new GsonRequest<>(
+        mGsonRequest = new ParamRequest<>(
                 url,
 
                 type,
@@ -72,7 +72,7 @@ public class GsonRequestHelper {
      * @param clazz 对象的类型
      */
     public <T> GsonRequestHelper get(String url, Class<T> clazz, final SuccessListener<T> successListener) {
-        mGsonRequest = new GsonRequest<>(
+        mGsonRequest = new ParamRequest<>(
                 url,
 
                 clazz,
@@ -107,7 +107,7 @@ public class GsonRequestHelper {
             }
         };
 
-        mGsonRequest = new GsonRequest<T>(Request.Method.POST, url, clazz, listener, VolleyUtil.getErrorListener()) {
+        mGsonRequest = new ParamRequest<T>(Request.Method.POST, url, clazz, listener, VolleyUtil.getErrorListener()) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
@@ -137,7 +137,7 @@ public class GsonRequestHelper {
             }
         };
 
-        mGsonRequest = new GsonRequest<T>(Request.Method.POST, url, type, listener, VolleyUtil.getErrorListener()) {
+        mGsonRequest = new ParamRequest<T>(Request.Method.POST, url, type, listener, VolleyUtil.getErrorListener()) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();

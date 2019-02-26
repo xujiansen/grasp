@@ -89,9 +89,11 @@ final public class MessageBoxGrasp {
         if (list == null || list.size() == 0) return;
         BaApp app = (BaApp) ctx.getApplicationContext();
         View view = View.inflate(ctx, R.layout.alertdialog_radio, null);
+        LinearLayout llTitle = view.findViewById(R.id.ll_title);
         TextView tvTitle = view.findViewById(R.id.title);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         tvTitle.setText(TextUtils.isEmpty(title) ? "请选择" : title);
+        llTitle.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.dialog_grasp);
         builder.setView(view);
@@ -116,7 +118,6 @@ final public class MessageBoxGrasp {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)recyclerView.getLayoutParams();
         params.height = Math.min(maxHeight, recyclerView.getMeasuredHeight());
         recyclerView.setLayoutParams(params);
-
         showDlg(dlg);
     }
 

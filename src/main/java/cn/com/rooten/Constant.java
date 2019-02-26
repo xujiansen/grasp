@@ -10,10 +10,7 @@ public class Constant {
     public static final int PAGE_PADDING = 1;               // 页内填充
 
     // 定期任务的时间和执行任务ID
-    public static final int TIME_HEARTBEAT = 5;         // 心跳时间5分钟
-    public static final int TIME_RELOGIN = 5;           // 重连时间
-    public static final int TIME_POLL = 5;              // 轮询，service监听app是否在
-    public static final int TIME_APPUPGRADE = 30;       // app安装时间
+    public static final int TIME_POLL = 30;             // 轮询，service监听app是否在(秒)
 
     public final static int ID_HEARTBEAT = 1003;        // 心跳id
     public final static int ID_RELOGIN = 1009;          // 重连id
@@ -23,9 +20,13 @@ public class Constant {
     private Constant() { }
 
     /** token失效广播 */
-    public static final String ARG_TOKEN_EXPIRE = "grasp.arg.token.expire";
+    public static final String ARG_TOKEN_EXPIRE         = "grasp.arg.token.expire";
     /** 版本升级 */
-    public static final String ARG_NEW_VERSION = "grasp.arg.new.version";
+    public static final String ARG_NEW_VERSION          = "grasp.arg.new.version";
+    /** 轮询广播(必须播放)-保活 */
+    public static final String ARG_BROADCAST_LOOP       = "grasp.arg.loop";
+    /** 轮询广播-调起远程服务 */
+    public static final String ARG_ACTION_REMOTE_SERVICE= "cn.com.rooten.help.apploop.AppLoopService";
 
 
     /** 验证码获取间隔(秒) */
@@ -40,10 +41,6 @@ public class Constant {
     /** 裁切图片后罪名 */
     public static final String SUFFIX_AVATAR_NAME = ".gqpng";
 
-    /** 支付类型(1:微信;2:支付宝) */
-    public static final String PAY_TYPE_WECHAT      = "1";
-    public static final String PAY_TYPE_ALIPAY      = "2";
-
     /** 阿里云（测试机-windows） */
     public static final String PROTOCOL = "http";
     public static final String IP       = "192.168.1.78";
@@ -52,8 +49,4 @@ public class Constant {
     /** 上传图片 */
 //    public static final String UPLOAD_PIC               = PROTOCOL + "://" + IP + ":" + PORT + "/api/upload";
     public static final String UPLOAD_PIC               = PROTOCOL + "://" + "192.168.1.20" + ":" + "8080" + "/MyUrlSample/upload";
-
-    /** 获取可充值项 */
-    public static final String GET_CHARGE_ITEM          = PROTOCOL + "://" + IP + ":" + PORT + "/api/listOfCz";
-
 }
