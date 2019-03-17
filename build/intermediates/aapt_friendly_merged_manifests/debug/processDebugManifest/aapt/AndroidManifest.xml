@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="lib.grasp"
+    android:versionCode="1"
+    android:versionName="0.1" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="28" />
+
+    <!-- <uses-sdk -->
+    <!-- android:minsdkversion="14" -->
+    <!-- android:targetsdkversion="23"/> -->
+    <!-- <uses-feature android:name="android.hardware.camera" /> -->
+    <!-- <uses-feature android:name="android.hardware.camera.autofocus" /> -->
+
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!-- 排序系统任务权限	重新排序系统Z轴运行中的任务 -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <!-- tools:replace="android:icon, android:theme" -->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_grasp"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.App" >
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+
+        <activity android:name="com.zxing.android.CaptureActivity" />
+        <activity android:name="cn.com.rooten.sys.AppAbout" />
+        <activity android:name="cn.com.rooten.sys.AppChangePassword" />
+        <activity
+            android:name="cn.com.rooten.ctrl.image.ImagePreviewActivity"
+            android:theme="@style/Theme.App" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.StickyActivity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.GroupedListActivity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.NoHeaderActivity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.NoFooterActivity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.Grid1Activity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.Grid2Activity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.ExpandableActivity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.VariousActivity" />
+        <activity android:name="lib.grasp.widget.recyclerview.group.activity.VariousChildActivity" />
+
+        <receiver
+            android:name="cn.com.rooten.help.apploop.imp.AppLoopReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <service
+            android:name="cn.com.rooten.help.apploop.imp.AppLoopJob"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":remote" />
+        <service
+            android:name="cn.com.rooten.help.apploop.AppLoopService"
+            android:description="@string/service_desc"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/service_name"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="cn.com.rooten.help.apploop.AppLoopService" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

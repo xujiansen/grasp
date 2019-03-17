@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:clickable="true"
+    android:background="@drawable/radius_circle_gray">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_btn_capture_disable"
+        android:gravity="center"
+        android:scaleType="center"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="{md-cancel}"
+        android:textSize="20sp"
+        android:layout_gravity="right|top"/>
+
+    <cn.com.rooten.ctrl.widget.RoundProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:layout_gravity="center"
+        app:roundColor="@color/light_gray"
+        app:roundProgressColor="@color/head_bar"
+        app:roundWidth="1dp"
+        app:textSize="13sp"
+        app:textColor="@color/gray"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="#1889ff"
+        android:textSize="40sp"
+        android:text="{md-autorenew}"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"/>
+
+</FrameLayout>
