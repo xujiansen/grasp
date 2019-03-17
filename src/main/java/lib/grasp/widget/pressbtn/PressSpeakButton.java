@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 import lib.grasp.R;
 
 public class PressSpeakButton extends AppCompatButton {

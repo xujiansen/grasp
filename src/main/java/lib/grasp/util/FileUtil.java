@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 import okhttp3.Response;
 
 /**

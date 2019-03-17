@@ -10,14 +10,13 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.com.rooten.BaApp;
-import cn.com.rooten.Constant;
-import cn.com.rooten.frame.AppHandler;
-import cn.com.rooten.frame.IHandler;
+import com.rooten.BaApp;
+import com.rooten.Constant;
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
 import lib.grasp.R;
 
 /** 验证码 */

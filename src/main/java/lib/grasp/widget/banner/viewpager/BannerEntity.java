@@ -12,7 +12,7 @@ import com.joanzapata.iconify.widget.IconTextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.rooten.ctrl.widget.RoundImageView;
+import com.rooten.ctrl.widget.RoundImageView;
 import lib.grasp.R;
 import lib.grasp.util.GlideUtils;
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cn.com.rooten.BaApp;
+import com.rooten.BaApp;
 import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
 import lib.grasp.util.GlideUtils;

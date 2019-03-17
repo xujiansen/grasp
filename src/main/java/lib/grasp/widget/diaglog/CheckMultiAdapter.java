@@ -1,21 +1,15 @@
 package lib.grasp.widget.diaglog;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.widget.IconTextView;
 
-import org.w3c.dom.Text;
-
-import cn.com.rooten.BaApp;
+import com.rooten.BaApp;
 import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
 

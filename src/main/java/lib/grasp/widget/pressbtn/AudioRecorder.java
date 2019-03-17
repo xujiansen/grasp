@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.UUID;
 
-import cn.com.rooten.BaApp;
+import com.rooten.BaApp;
 
 public class AudioRecorder {
 

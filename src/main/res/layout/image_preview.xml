@@ -9,7 +9,7 @@
         android:layout_height="0dip"
         android:layout_weight="1" >
 
-        <cn.com.rooten.ctrl.widget.HackyViewPager
+        <com.rooten.ctrl.widget.HackyViewPager
             android:id="@+id/image_preview_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

@@ -29,7 +29,7 @@
             android:textSize="12sp"/>
     </LinearLayout>
 
-    <cn.com.rooten.ctrl.tab.AppTabTextView
+    <com.rooten.ctrl.tab.AppTabTextView
         android:id="@+id/app_tab_item_pop"
         android:layout_width="8dp"
         android:layout_height="8dp"

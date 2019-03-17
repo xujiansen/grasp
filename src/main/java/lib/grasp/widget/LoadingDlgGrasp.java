@@ -4,30 +4,23 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.com.rooten.ctrl.widget.RoundProgressBar;
-import cn.com.rooten.frame.AppHandler;
-import cn.com.rooten.frame.IHandler;
-import cn.com.rooten.help.filehttp.HttpUploadRequest;
-import cn.com.rooten.help.filehttp.HttpUtil;
-import cn.com.rooten.util.Util;
+import com.rooten.ctrl.widget.RoundProgressBar;
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
+import com.rooten.util.Util;
 import lib.grasp.R;
 import lib.grasp.util.L;
 import lib.grasp.util.NumberUtil;
-
-import static cn.com.rooten.help.filehttp.FileDownloadMgr.DownloadStatus_FALIURE;
-import static cn.com.rooten.help.filehttp.FileDownloadMgr.DownloadStatus_SUCCESS;
 
 /** 带进度回调的弹窗 */
 public class LoadingDlgGrasp extends AlertDialog implements IHandler, View.OnClickListener {

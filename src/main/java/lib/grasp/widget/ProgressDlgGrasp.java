@@ -14,8 +14,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.com.rooten.frame.AppHandler;
-import cn.com.rooten.frame.IHandler;
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
 import lib.grasp.R;
 
 public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnClickListener {

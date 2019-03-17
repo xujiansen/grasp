@@ -24,7 +24,7 @@
         android:textSize="20sp"
         android:layout_gravity="right|top"/>
 
-    <cn.com.rooten.ctrl.widget.RoundProgressBar
+    <com.rooten.ctrl.widget.RoundProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

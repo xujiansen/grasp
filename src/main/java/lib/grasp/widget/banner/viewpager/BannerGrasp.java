@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.com.rooten.frame.AppHandler;
-import cn.com.rooten.frame.IHandler;
-import cn.com.rooten.util.Utilities;
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
+import com.rooten.util.Utilities;
 
 /*
         BannerGrasp mBanner = mView.findViewById(R.id.name);

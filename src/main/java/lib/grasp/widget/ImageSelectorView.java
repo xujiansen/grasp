@@ -15,30 +15,29 @@ import com.google.gson.Gson;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import cn.com.rooten.BaApp;
-import cn.com.rooten.Constant;
-import cn.com.rooten.ctrl.widget.RoundProgressBar;
-import cn.com.rooten.frame.ActivityEx;
-import cn.com.rooten.frame.AppHandler;
-import cn.com.rooten.frame.IHandler;
-import cn.com.rooten.help.filehttp.FileUploadMgr;
-import cn.com.rooten.help.filehttp.HttpUploadRequest;
-import cn.com.rooten.help.filehttp.HttpUtil;
-import cn.com.rooten.util.Utilities;
+import com.rooten.BaApp;
+import com.rooten.Constant;
+import com.rooten.ctrl.widget.RoundProgressBar;
+import com.rooten.frame.ActivityEx;
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
+import com.rooten.help.filehttp.FileUploadMgr;
+import com.rooten.help.filehttp.HttpUploadRequest;
+import com.rooten.help.filehttp.HttpUtil;
+import com.rooten.util.Utilities;
 import lib.grasp.R;
 import lib.grasp.entity.UploadPicRes;
 import lib.grasp.helper.AvatarHelper;
 import lib.grasp.util.GlideUtils;
 import lib.grasp.util.NumberUtil;
 
-import static cn.com.rooten.help.filehttp.FileUploadMgr.UploadStatus_FALIURE;
-import static cn.com.rooten.help.filehttp.FileUploadMgr.UploadStatus_SUCCESS;
+import static com.rooten.help.filehttp.FileUploadMgr.UploadStatus_FALIURE;
+import static com.rooten.help.filehttp.FileUploadMgr.UploadStatus_SUCCESS;
 
 /**
  * 选择图片上传(进度监听)
@@ -232,9 +231,9 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
     @Override
     public boolean handleMessage(Message msg) {
         Bundle bundle 	= msg.getData();
-        String uuid 	= cn.com.rooten.util.Util.getString(bundle, "uuid");
-        long curSize 	= cn.com.rooten.util.Util.getLong(bundle, "curSize");
-        long allLen 	= cn.com.rooten.util.Util.getLong(bundle, "allLen");
+        String uuid 	= com.rooten.util.Util.getString(bundle, "uuid");
+        long curSize 	= com.rooten.util.Util.getLong(bundle, "curSize");
+        long allLen 	= com.rooten.util.Util.getLong(bundle, "allLen");
 
         HttpUploadRequest targetEntity = null;
         for (HttpUploadRequest entity : mSelected) {

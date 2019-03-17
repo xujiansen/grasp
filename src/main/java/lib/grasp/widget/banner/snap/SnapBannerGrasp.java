@@ -1,8 +1,6 @@
 package lib.grasp.widget.banner.snap;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -20,14 +18,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.com.rooten.BaApp;
-import cn.com.rooten.frame.ActivityEx;
-import cn.com.rooten.frame.AppHandler;
-import cn.com.rooten.frame.IHandler;
-import cn.com.rooten.util.Utilities;
+import com.rooten.BaApp;
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
+import com.rooten.util.Utilities;
 import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
-import lib.grasp.util.TOAST;
 
 /*
         BannerGrasp mBanner = mView.findViewById(R.id.name);

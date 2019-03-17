@@ -172,7 +172,7 @@
 # 权限
 -dontwarn com.hjq.permissions.**
 
--keep class cn.com.rooten.** { *; }
+-keep class com.rooten.** { *; }
 -keep class com.multi.image.** { *; }
 -keep class com.zxing.** { *; }
 -keep class lib.grasp.** { *; }

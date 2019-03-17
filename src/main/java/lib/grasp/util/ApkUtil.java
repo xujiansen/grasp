@@ -14,18 +14,16 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
 
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 

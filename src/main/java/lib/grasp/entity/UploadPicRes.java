@@ -2,8 +2,6 @@ package lib.grasp.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import cn.com.rooten.base.UserData;
-
 /**
  * 登录返回
  */

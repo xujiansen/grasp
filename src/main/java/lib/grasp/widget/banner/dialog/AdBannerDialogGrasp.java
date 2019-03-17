@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import com.joanzapata.iconify.widget.IconTextView;
 
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 import lib.grasp.R;
 import lib.grasp.widget.banner.viewpager.BannerGrasp;
 

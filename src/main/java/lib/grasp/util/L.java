@@ -1,7 +1,6 @@
 package lib.grasp.util;
 
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 
 /**
  * 带日志文件输入的，又可控开关的日志调试

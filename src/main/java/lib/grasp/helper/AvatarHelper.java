@@ -17,11 +17,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-import cn.com.rooten.BaApp;
-import cn.com.rooten.Constant;
-import cn.com.rooten.frame.ActivityEx;
-import cn.com.rooten.frame.IResultListener;
-import cn.com.rooten.util.Utilities;
+import com.rooten.BaApp;
+import com.rooten.Constant;
+import com.rooten.frame.ActivityEx;
+import com.rooten.frame.IResultListener;
+import com.rooten.util.Utilities;
 import lib.grasp.util.FileUtil;
 
 import static android.app.Activity.RESULT_OK;

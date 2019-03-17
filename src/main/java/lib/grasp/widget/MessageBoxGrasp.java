@@ -1,30 +1,20 @@
 package lib.grasp.widget;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.rooten.BaApp;
-import cn.com.rooten.util.LinearLayoutHelper;
-import cn.com.rooten.util.Utilities;
+import com.rooten.BaApp;
+
 import lib.grasp.R;
 import lib.grasp.widget.diaglog.CheckMultiAdapter;
 import lib.grasp.widget.diaglog.CheckMultiEntity;

@@ -16,8 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import cn.com.rooten.util.Util;
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 import lib.grasp.R;
 import lib.grasp.widget.LastInputEditText;
 

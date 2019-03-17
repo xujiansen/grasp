@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import cn.com.rooten.util.Utilities;
+import com.rooten.util.Utilities;
 
 /**
  * 时间格式化

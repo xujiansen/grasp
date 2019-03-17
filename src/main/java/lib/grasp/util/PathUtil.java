@@ -5,8 +5,8 @@ import android.os.Environment;
 
 import java.util.List;
 
-import cn.com.rooten.util.ListAvailableStorage;
-import cn.com.rooten.util.StorageInfo;
+import com.rooten.util.ListAvailableStorage;
+import com.rooten.util.StorageInfo;
 
 /**
  * 系统路径

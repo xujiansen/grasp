@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <cn.com.rooten.ctrl.widget.SwipeRefreshLayout
+    <com.rooten.ctrl.widget.SwipeRefreshLayout
         android:id="@+id/swip_recycle_page_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,5 +15,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
-    </cn.com.rooten.ctrl.widget.SwipeRefreshLayout>
+    </com.rooten.ctrl.widget.SwipeRefreshLayout>
 </FrameLayout>

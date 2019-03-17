@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <cn.com.rooten.camera.PreviewFrameLayout
+    <com.rooten.camera.PreviewFrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -27,19 +27,19 @@
                 android:scaleType="fitCenter"
                 android:visibility="gone"/>
 
-            <cn.com.rooten.camera.CameraMaskView
+            <com.rooten.camera.CameraMaskView
                 android:id="@+id/camera_mask"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="invisible" />
 
-            <cn.com.rooten.camera.CameraMaskViewVer
+            <com.rooten.camera.CameraMaskViewVer
                 android:id="@+id/camera_mask_ver"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="invisible" />
 
-            <cn.com.rooten.camera.FocusRectangle
+            <com.rooten.camera.FocusRectangle
                 android:id="@+id/camera_focus_rectangle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -55,13 +55,13 @@
 
             </LinearLayout>
         </FrameLayout>
-    </cn.com.rooten.camera.PreviewFrameLayout>
+    </com.rooten.camera.PreviewFrameLayout>
 
     <include
         android:id="@+id/camera_capture_bar"
         layout="@layout/camera_control" />
 
-    <cn.com.rooten.camera.VerticalSeekBar
+    <com.rooten.camera.VerticalSeekBar
         android:id="@+id/seekBar_zoom"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

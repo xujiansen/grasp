@@ -3,16 +3,15 @@ package lib.grasp.helper;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
 
-import cn.com.rooten.BaApp;
-import cn.com.rooten.Constant;
-import cn.com.rooten.camera.TakeCamera;
-import cn.com.rooten.help.CompressImage;
-import cn.com.rooten.util.Utilities;
+import com.rooten.BaApp;
+import com.rooten.Constant;
+import com.rooten.camera.TakeCamera;
+import com.rooten.help.CompressImage;
+import com.rooten.util.Utilities;
 import lib.grasp.widget.ProgressDlgGrasp;
 
 public class CompressImageTask extends AsyncTask<Void, Void, String> {

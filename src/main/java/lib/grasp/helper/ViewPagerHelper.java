@@ -2,21 +2,17 @@ package lib.grasp.helper;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.rooten.Constant;
-import cn.com.rooten.util.LinearLayoutHelper;
-import cn.com.rooten.util.Utilities;
+import com.rooten.Constant;
+import com.rooten.util.Utilities;
 import lib.grasp.R;
 
 /**
