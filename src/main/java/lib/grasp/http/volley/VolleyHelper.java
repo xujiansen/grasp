@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -18,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import cn.com.rooten.BaApp;
 import cn.com.rooten.Constant;
@@ -25,8 +25,8 @@ import cn.com.rooten.ctrl.widget.SwipeRefreshLayout;
 import cn.com.rooten.help.LocalBroadMgr;
 import cn.com.rooten.util.Utilities;
 import lib.grasp.http.BaseResponse;
-import lib.grasp.http.volley.gsonrequest.ParamRequest;
 import lib.grasp.http.volley.gsonrequest.JsonObjRequest;
+import lib.grasp.http.volley.gsonrequest.ParamRequest;
 import lib.grasp.util.L;
 import lib.grasp.util.TOAST;
 import lib.grasp.widget.MessageBoxGrasp;
@@ -38,10 +38,6 @@ import lib.grasp.widget.ProgressDlgGrasp;
 public class VolleyHelper<T> {
     protected BaApp mApp;
     protected Context mContext;
-    /**
-     * 请求成功之后跳转
-     */
-    private Intent mIntent;
 
     private ProgressDlgGrasp mProgressDlg;
     private SwipeRefreshLayout mSwip;
@@ -58,12 +54,12 @@ public class VolleyHelper<T> {
     /**
      * 超时秒
      */
-    private int mTimeout = 30;
+    private int mTimeout = 10;
 
     /**
      * 本次请求的请求ID
      */
-    private String mRequestCode = "";
+    private String mRequestCode = UUID.randomUUID().toString();
     /**
      * 本次请求的URL
      */
@@ -102,13 +98,12 @@ public class VolleyHelper<T> {
     }
 
     public VolleyHelper(BaApp app, Context context) {
-        this(app, context, null, false);
+        this(app, context, false);
     }
 
-    public VolleyHelper(BaApp app, Context context, Intent it, boolean isShowProg) {
+    public VolleyHelper(BaApp app, Context context, boolean isShowProg) {
         this.mApp = app;
         this.mContext = context;
-        this.mIntent = it;
         this.mIsShowProg = isShowProg;
     }
 
@@ -117,10 +112,7 @@ public class VolleyHelper<T> {
         mProgressDlg.setCanBeCancel(true);
         mProgressDlg.setCancelListener(v -> {
             mIsCancel = true;
-            if (mProgressDlg != null) {
-                mProgressDlg.dismiss();
-                mProgressDlg = null;
-            }
+            dismissView();
         });
     }
 
@@ -137,61 +129,50 @@ public class VolleyHelper<T> {
             mURL = encodeParameters(mURL, mParam);
         }
 
-        Response.Listener<T> listener = orderResponse -> {
-            if (mSwip != null) {
-                mSwip.setRefreshing(false);
-                mSwip.setLoading(false);
-            }
-            if (orderResponse == null) {
-                TOAST.showShort(mContext, "请求失败");
-                return;
-            }
-
-            if (!filterCode(orderResponse)) {
-                if (mProgressDlg != null) {
-                    mProgressDlg.dismiss();
-                    mProgressDlg = null;
-                }
-                return;
-            }
+        Response.Listener<T> listener = orderResponse -> {  // 成功回调
+            dismissView();
+            if (mIsCancel) mIsCancel = false;
+            if (orderResponse == null)      return;
+            if (!filterCode(orderResponse)) return; // 在网络层通信成功的基础上, 判断业务层是否成功(捕捉业务失败)
 
             if (mSuccessListener != null) mSuccessListener.onResponse(orderResponse);
-            onPostExecute();
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new Response.ErrorListener() {   // 失败回调
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 L.logOnly(this.getClass(), "请求URL", mURL);
                 L.logOnly(this.getClass(), "请求异常", volleyError.toString());
 
-                if (mSwip != null) {
-                    mSwip.setRefreshing(false);
-                    mSwip.setLoading(false);
-                }
-
+                dismissView();
+                if (mIsCancel) mIsCancel = false;
                 if (volleyError.networkResponse == null) {
                     TOAST.showShort(mContext, "网络异常\n" + volleyError.toString());
                     return;
                 }
 
                 if (mErrorListener != null) mErrorListener.onErrorResponse(volleyError);
-                noti(volleyError.toString());
-                onPostExecute();
             }
         };
 
-        Request mRequest = null;
-        if (TextUtils.equals(mHeadParam.get("Content-Type"), "application/json"))
-            mRequest = new JsonObjRequest<>(
+        Request mRequest;
+        if("application/json".equalsIgnoreCase(mHeadParam.get("Content-Type"))) {   // POST - Json
+            mRequest = new JsonObjRequest<T>(
                     mMethod,
                     mURL,
-                    JSONObject.toJSONString(mParam),
+                    JSONObject.toJSONString(mParam),    // 将请求参数添加到body
                     type,
                     listener,
                     errorListener
-            );
-        else mRequest = new ParamRequest<T>(
+            ) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    if (mHeadParam == null) mHeadParam = new HashMap<>();
+                    return mHeadParam;
+                }
+            };
+        }
+        else mRequest = new ParamRequest<T>(                                        // POST - Param
                     mMethod,
                     mURL,
                     type,
@@ -210,31 +191,22 @@ public class VolleyHelper<T> {
                     return mHeadParam;
                 }
             };
-        mRequest.setRetryPolicy(new DefaultRetryPolicy(mTimeout * 1000, 1, 1.0f));
+        mRequest.setRetryPolicy(new DefaultRetryPolicy(mTimeout * 1000, 0, 1.0f));
         mApp.getRequestQueue().add(mRequest).setTag(mRequestCode);
     }
 
-    private void onPostExecute() {
+    /** 清除所有的加载界面的显示 */
+    private void dismissView() {
+        if (mSwip != null) {
+            mSwip.setRefreshing(false);
+            mSwip.setLoading(false);
+        }
+
         if (mProgressDlg != null) {
             mProgressDlg.dismiss();
             mProgressDlg = null;
         }
-
-        if (mIsCancel) {
-            mIsCancel = false;
-            return;
-        }
-
-        if (mIntent != null) {
-            mContext.startActivity(mIntent);
-        }
     }
-
-    private void noti(String strMsg) {
-        if (mIsCancel) return;
-        Toast.makeText(mContext, strMsg, Toast.LENGTH_SHORT).show();
-    }
-
 
     /**
      * 设置请求成功之后的回调
@@ -257,14 +229,6 @@ public class VolleyHelper<T> {
      */
     public VolleyHelper<T> setSwip(SwipeRefreshLayout mSwip) {
         this.mSwip = mSwip;
-        return this;
-    }
-
-    /**
-     * 设置请求成功之后的跳转
-     */
-    public VolleyHelper<T> setIntent(Intent mIntent) {
-        this.mIntent = mIntent;
         return this;
     }
 
@@ -391,6 +355,7 @@ public class VolleyHelper<T> {
                 if (!TextUtils.isEmpty(verStr)) {
                     Intent intent = new Intent();
                     intent.setAction(Constant.ARG_NEW_VERSION);
+                    intent.setPackage(mContext.getPackageName());
                     intent.putExtra("data", verStr);
                     mContext.sendBroadcast(intent);
                     return false;

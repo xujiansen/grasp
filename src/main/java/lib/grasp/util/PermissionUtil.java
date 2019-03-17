@@ -1,15 +1,14 @@
 package lib.grasp.util;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
-import android.hardware.Camera;
-import android.location.LocationManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
-import android.widget.Toast;
-
-import lib.grasp.widget.MessageBoxGrasp;
+import android.text.TextUtils;
 
 /**
  * 权限工具类
@@ -87,68 +86,134 @@ public class PermissionUtil {
     public static boolean checkDangerousPermission(Context context, String permission) {
         boolean isGranted = false;
 
-        if(Build.VERSION.SDK_INT >= 23){    // 6.0及以上
+        if (Build.VERSION.SDK_INT >= 23) {    // 6.0及以上
             isGranted = PermissionChecker.checkSelfPermission(context, permission) == PermissionChecker.PERMISSION_GRANTED; // 6.0(23|360手机), 7.1(25|小米), 8.1(27|小米)
 //            boolean isGranted = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;       // 7.1(25|小米), 8.1(27|小米)
-        }
-        else {
+        } else {
             isGranted = true;
         }
 
-        if(!(context instanceof Activity)) return isGranted;
+        if (!(context instanceof Activity)) return isGranted;
 
-        if(!isGranted){ // 没有授予权限
+        if (!isGranted) { // 没有授予权限
             // 用户上次拒绝时是否没有选中"不再提醒"
             boolean isCanRequireAgain = ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permission); // 7.1(25|小米), 8.1(27|小米), 360手机权限管理失败(一直false)
-            if(!isCanRequireAgain){ // 不能再弹出申请框了
+            if (!isCanRequireAgain) { // 不能再弹出申请框了
                 TOAST.showShort(context, "本应用未能获取权限:" + permission + ", 请手动设置");
-            }
-            else{
-                requireDangerousPermission((Activity)context, permission);
+            } else {
+                requireDangerousPermission((Activity) context, permission);
             }
         }
         return isGranted;
     }
 
 
-    /** 申请权限 */
-    public static void requireDangerousPermission(Activity context, String permission){
+    /**
+     * 申请权限
+     */
+    public static void requireDangerousPermission(Activity context, String permission) {
         ActivityCompat.requestPermissions(context, new String[]{permission}, 123);
     }
 
-    /** 申请权限 */
-    public static void requireDangerousPermission(Activity context, String[] permission){
+    /**
+     * 申请权限
+     */
+    public static void requireDangerousPermission(Activity context, String[] permission) {
         ActivityCompat.requestPermissions(context, permission, 123);
     }
 
+    private void gotoPermissionSetting(Context context) {
+        String sdk = android.os.Build.VERSION.SDK; // SDK号
+
+        String model = android.os.Build.MODEL; // 手机型号
+
+        String release = android.os.Build.VERSION.RELEASE; // android系统版本号
+        String brand = Build.BRAND;//手机厂商
+        if (TextUtils.equals(brand.toLowerCase(), "redmi") || TextUtils.equals(brand.toLowerCase(), "xiaomi")) {
+            gotoMiuiPermission(context);//小米
+        } else if (TextUtils.equals(brand.toLowerCase(), "meizu")) {
+            gotoMeizuPermission(context);
+        } else if (TextUtils.equals(brand.toLowerCase(), "huawei") || TextUtils.equals(brand.toLowerCase(), "honor")) {
+            gotoHuaweiPermission(context);
+        } else {
+            context.startActivity(getAppDetailSettingIntent(context));
+        }
+
+    }
 
     /**
-     * 测试-摄像头
+     * 跳转到miui的权限管理页面
      */
-    public static boolean isCameraEnable() {
-        boolean canUse = true;
-        Camera mCamera = null;
-        try {
-            mCamera = Camera.open(0);
-            mCamera.setDisplayOrientation(90);
+    private void gotoMiuiPermission(Context context) {
+        if (context == null) return;
+        try { // MIUI 8
+            Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+            localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+            localIntent.putExtra("extra_pkgname", context.getPackageName());
+            context.startActivity(localIntent);
         } catch (Exception e) {
-            canUse = false;
+            try { // MIUI 5/6/7
+                Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+                localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
+                localIntent.putExtra("extra_pkgname", context.getPackageName());
+                context.startActivity(localIntent);
+            } catch (Exception e1) { // 否则跳转到应用详情
+                context.startActivity(getAppDetailSettingIntent(context));
+            }
         }
-        if (canUse) {
-            mCamera.release();
-            mCamera = null;
-        }
-        return canUse;
     }
 
     /**
-     * 测试-定位
+     * 跳转到魅族的权限管理系统
      */
-    public static boolean isLocateEnable(Context context) {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if(locationManager == null) return false;
-        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        return gps || network;
+    private void gotoMeizuPermission(Context context) {
+        if (context == null) return;
+        try {
+            Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.putExtra("packageName", context.getPackageName());
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            context.startActivity(getAppDetailSettingIntent(context));
+        }
     }
+
+    /**
+     * 华为的权限管理页面
+     */
+    private void gotoHuaweiPermission(Context context) {
+        if (context == null) return;
+        try {
+            Intent intent = new Intent();
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ComponentName comp = new ComponentName("com.huawei.systemmanager", "com.huawei.permissionmanager.ui.MainActivity");//华为权限管理
+            intent.setComponent(comp);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            context.startActivity(getAppDetailSettingIntent(context));
+        }
+    }
+
+    /**
+     * 获取应用详情页面intent（如果找不到要跳转的界面，也可以先把用户引导到系统设置页面）
+     *
+     * @return
+     */
+    private Intent getAppDetailSettingIntent(Context context) {
+        if (context == null) return null;
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.setAction(Intent.ACTION_VIEW);
+            localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+        }
+        return localIntent;
+    }
+
 }

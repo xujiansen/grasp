@@ -62,12 +62,10 @@ public class SmsSendHelper {
                 .setMethod(Request.Method.GET)
                 .setHeadParam(headMap)
                 .setParam(map)
-                .setIntent(null)
                 .setIsShowProg(false, "正在加载")
                 .setSwip(null)
-                .setRequestCode("")
                 .onSuccess((Response.Listener<ObjResponse<String>>) response -> {
-                    if (response == null || response.code != 200) {
+                    if (response == null || response.code != 0) {
                         TOAST.showShort(mAct, "获取失败" + ((response != null && !TextUtils.isEmpty(response.msg)) ? "," + response.msg : ""));
                         mCodeHelper.doSendResult(false);
                         return;

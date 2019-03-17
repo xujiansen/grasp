@@ -54,7 +54,8 @@
         android:icon="@drawable/ic_grasp"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.App">
+        android:theme="@style/Theme.App"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
             android:name="android.max_aspect"
