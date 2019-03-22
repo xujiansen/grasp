@@ -23,6 +23,7 @@ public class Constant {
     public static final String ARG_TOKEN_EXPIRE         = "grasp.arg.token.expire";
     /** 版本升级 */
     public static final String ARG_NEW_VERSION          = "grasp.arg.new.version";
+
     /** 轮询广播(必须播放)-保活 */
     public static final String ARG_BROADCAST_LOOP       = "grasp.arg.loop";
     /** 轮询广播-调起远程服务 */
