@@ -102,7 +102,8 @@ public class LoopHelper implements IHandler {
         }
     }
 
-    private void doSendBroadCast(Context context, String str){
+    private void
+    doSendBroadCast(Context context, String str){
         Message msg = handler.obtainMessage();
         msg.obj = context;
 
@@ -124,7 +125,7 @@ public class LoopHelper implements IHandler {
 
         Intent intent = new Intent();
         intent.setAction(broadcast);
-        intent.setPackage("com.gaqu.adplayer65");
+        intent.setPackage(context.getPackageName());
         context.sendBroadcast(intent);
         return true;
     }

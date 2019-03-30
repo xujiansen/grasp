@@ -39,4 +39,6 @@
     <color name="head_bar">#69d0ff</color>
     <color name="text1">#f1f1f1</color>
 
+    <color name="alpha_white">#88FFFFFF</color>
+
 </resources>

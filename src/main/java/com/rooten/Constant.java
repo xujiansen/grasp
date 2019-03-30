@@ -27,7 +27,7 @@ public class Constant {
     /** 轮询广播(必须播放)-保活 */
     public static final String ARG_BROADCAST_LOOP       = "grasp.arg.loop";
     /** 轮询广播-调起远程服务 */
-    public static final String ARG_ACTION_REMOTE_SERVICE= "com.rooten.help.apploop.AppLoopService";
+    public static final String ARG_ACTION_REMOTE_SERVICE= "grasp.apploop.AppLoopService";
 
 
     /** 验证码获取间隔(秒) */

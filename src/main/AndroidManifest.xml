@@ -99,7 +99,7 @@
             android:exported="true"
             android:process=":remote" >
             <intent-filter>
-                <action android:name="cn.com.rooten.help.apploop.AppLoopService" />
+                <action android:name="grasp.apploop.AppLoopService" />
             </intent-filter>
         </service>
 

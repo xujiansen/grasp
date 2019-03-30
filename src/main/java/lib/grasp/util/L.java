@@ -34,6 +34,15 @@ public class L {
     /**
      * 打印
      */
+    public static void logOnly(Object msg) {
+        if (!IS_SHOW_LOG_AND_PRINT) return;
+        showLogCompletion(defaultTag(), msg.toString(), MAX_LENGTH);
+    }
+
+
+    /**
+     * 打印
+     */
     public static void logOnly(String tag, Object msg) {
         if (!IS_SHOW_LOG_AND_PRINT) return;
         showLogCompletion(tag, msg.toString(), MAX_LENGTH);
@@ -55,6 +64,14 @@ public class L {
         show(clazz.getClass().getName(), tag + "," + msg.toString());
     }
 
+    /**
+     * 打印
+     */
+    public static void logAndWrite(Object msg) {
+        String tag = defaultTag();
+        logOnly(tag, msg);
+        if (IS_WRITE_TO_FILE) writeLogToFile("", tag, msg.toString());
+    }
 
     /**
      * 打印, 写入文件
@@ -165,5 +182,28 @@ public class L {
     private static void show(String tag, String log) {
         System.out.println(tag + ":" + log);
 //        Log.i(tag, log);
+    }
+
+    private static String defaultTag() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement e : stackTrace) {
+            System.out.println(e.getClassName() + "\t"
+                    + e.getMethodName() + "\t" + e.getLineNumber());
+        }
+        StackTraceElement log = stackTrace[1];
+        String tag = null;
+        for (int i = 1; i < stackTrace.length; i++) {
+            StackTraceElement e = stackTrace[i];
+            if (!e.getClassName().equals(log.getClassName())) {
+                tag = e.getClassName() + "." + e.getMethodName();
+                break;
+            }
+        }
+        if (tag == null) {
+            tag = log.getClassName() + "." + log.getMethodName();
+
+        }
+        System.out.println(tag);
+        return tag;
     }
 }
