@@ -1,6 +1,7 @@
 package lib.grasp.util;
 
 import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -186,10 +187,9 @@ public class L {
 
     private static String defaultTag() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        for (StackTraceElement e : stackTrace) {
-            System.out.println(e.getClassName() + "\t"
-                    + e.getMethodName() + "\t" + e.getLineNumber());
-        }
+//        for (StackTraceElement e : stackTrace) {
+//            System.out.println(e.getClassName() + "\t" + e.getMethodName() + "\t" + e.getLineNumber());
+//        }
         StackTraceElement log = stackTrace[1];
         String tag = null;
         for (int i = 1; i < stackTrace.length; i++) {
@@ -200,8 +200,7 @@ public class L {
             }
         }
         if (tag == null) {
-            tag = log.getClassName() + "." + log.getMethodName();
-
+            tag = log.getClassName() + ".2" + log.getMethodName();
         }
         System.out.println(tag);
         return tag;
