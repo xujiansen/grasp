@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "0.1"
 
-        multiDexEnabled true
+        multiDexEnabled true // 主APP视情况决定开机分包
     }
 
     sourceSets{

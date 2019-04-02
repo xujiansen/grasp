@@ -55,7 +55,7 @@ public class ParamRequest<T> extends Request<T> {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             if (!TextUtils.isEmpty(jsonString)) L.logOnly(ParamRequest.class, "jsonString", jsonString);
-
+            L.logOnly("服务器: --- " + jsonString);
             T result = null;
             if((mType != null) && new TypeToken<byte[]>() {}.getType().equals(mType))   result = (T)response.data;
             else if (mType != null)                                                     result = mGson.fromJson(jsonString, mType);

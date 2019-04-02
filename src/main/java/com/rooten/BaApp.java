@@ -245,6 +245,8 @@ public class BaApp extends Application {
         // 杀死本进程
         if (isKillProcess) android.os.Process.killProcess(Process.myPid());
     }
+
+
 }
 
 

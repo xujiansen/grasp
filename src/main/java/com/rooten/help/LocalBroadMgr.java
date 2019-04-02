@@ -98,6 +98,7 @@ public class LocalBroadMgr {
     // 发送普通广播
     public void broadAction(String action) {
         Intent intent = new Intent(action);
+        intent.setPackage(mApp.getPackageName());
         intent.putExtra(PACKAGE_NAME, mPckName);
         mLocalBroad.sendBroadcast(intent);
     }
@@ -105,6 +106,7 @@ public class LocalBroadMgr {
     // 发送带参数广播
     public void broadActionWithData(String action, String data) {
         Intent intent = new Intent(action);
+        intent.setPackage(mApp.getPackageName());
         intent.putExtra(PACKAGE_NAME, mPckName);
         intent.putExtra("data", data);
         mLocalBroad.sendBroadcast(intent);
@@ -113,6 +115,7 @@ public class LocalBroadMgr {
     // 发送带参数广播
     public void broadActionWithData(String action, Bundle data) {
         Intent intent = new Intent(action);
+        intent.setPackage(mApp.getPackageName());
         intent.putExtra(PACKAGE_NAME, mPckName);
         if (data != null) intent.putExtras(data);
         mLocalBroad.sendBroadcast(intent);
@@ -121,6 +124,7 @@ public class LocalBroadMgr {
     // 发送带参数广播
     public void broadActionWithListData(String action, ArrayList<String> data) {
         Intent intent = new Intent(action);
+        intent.setPackage(mApp.getPackageName());
         intent.putExtra(PACKAGE_NAME, mPckName);
         intent.putStringArrayListExtra("data", data);
         mLocalBroad.sendBroadcast(intent);
@@ -129,6 +133,7 @@ public class LocalBroadMgr {
     // 发送带参数广播
     public void broadActionWithListCharData(String action, ArrayList<CharSequence> data) {
         Intent intent = new Intent(action);
+        intent.setPackage(mApp.getPackageName());
         intent.putExtra(PACKAGE_NAME, mPckName);
         intent.putCharSequenceArrayListExtra("data", data);
         mLocalBroad.sendBroadcast(intent);
@@ -137,6 +142,7 @@ public class LocalBroadMgr {
     // 发送带参数广播
     public void broadActionWithListCharData(String action, ArrayList<CharSequence> data, String arg1) {
         Intent intent = new Intent(action);
+        intent.setPackage(mApp.getPackageName());
         intent.putExtra(PACKAGE_NAME, mPckName);
         intent.putExtra("targetPath", arg1);
         intent.putCharSequenceArrayListExtra("data", data);
