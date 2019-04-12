@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
 
-import com.rooten.AppParamsMgr;
 import com.rooten.BaApp;
 import com.rooten.Constant;
 import com.rooten.help.apploop.loopentity.TaskItem;
@@ -50,13 +49,8 @@ public class AppLoopService extends Service {
 
     @Override
     public void onDestroy() {
-        boolean isQuit = AppParamsMgr.isQuit(this);
-        if (!isQuit) {      // 如果没有设置本轮训进程服务设置[停止]标志位, 本进程将会重启,不会停止
-            Intent intent = new Intent(this, AppLoopService.class);
-            startService(intent);
-        } else {
-            mLoopHelper.stopAppPoll(this);
-        }
+        Intent intent = new Intent(this, AppLoopService.class);
+        startService(intent);
     }
 
     @Override

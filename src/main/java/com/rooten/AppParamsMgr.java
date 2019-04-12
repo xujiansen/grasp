@@ -53,7 +53,7 @@ public class AppParamsMgr {
             String data = obj.toJSONString();
             out.write(data.getBytes("utf-8"));
         } catch (Exception e) {
-            L.logOnly(AppParamsMgr.class, "saveUserInfo::Exception", e.toString());
+            L.logOnly("saveUserInfo::Exception" + e.toString());
         } finally {
             Utilities.closeOutputStream(out);
         }
@@ -72,7 +72,7 @@ public class AppParamsMgr {
             }
             return (JSONObject) JSONValue.parse(buf.toString());
         } catch (Exception e) {
-            L.logOnly(AppParamsMgr.class, "getUserInfo::Exception", e.toString());
+            L.logOnly("getUserInfo::Exception" + e.toString());
         } finally {
             Utilities.closeInputStream(in);
         }

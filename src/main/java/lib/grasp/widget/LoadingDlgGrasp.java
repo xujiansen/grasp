@@ -77,7 +77,7 @@ public class LoadingDlgGrasp extends AlertDialog implements IHandler, View.OnCli
             int newProgress = NumberUtil.getProgress(curSize, allLen);
             if(mProgressBar.getProgress() == newProgress) return true;
             mProgressBar.setProgress(newProgress);
-            L.logOnly("下载进度", NumberUtil.getProgress(curSize, allLen));
+            L.logOnly("下载进度:" + NumberUtil.getProgress(curSize, allLen));
         }
         return true;
     }

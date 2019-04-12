@@ -2,12 +2,15 @@ package lib.grasp.util;
 
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -37,65 +40,15 @@ public class L {
      */
     public static void logOnly(Object msg) {
         if (!IS_SHOW_LOG_AND_PRINT) return;
-        showLogCompletion(defaultTag(), msg.toString(), MAX_LENGTH);
-    }
-
-
-    /**
-     * 打印
-     */
-    public static void logOnly(String tag, Object msg) {
-        if (!IS_SHOW_LOG_AND_PRINT) return;
-        showLogCompletion(tag, msg.toString(), MAX_LENGTH);
-    }
-
-    /**
-     * 打印
-     */
-    public static void logOnly(Class clazz, String tag, Object msg) {
-        if (!IS_SHOW_LOG_AND_PRINT) return;
-        show(clazz.getName(), tag + "," + msg.toString());
-    }
-
-    /**
-     * 打印
-     */
-    public static void logOnly(Object clazz, String tag, Object msg) {
-        if (!IS_SHOW_LOG_AND_PRINT) return;
-        show(clazz.getClass().getName(), tag + "," + msg.toString());
+        showLogCompletion(msg.toString(), MAX_LENGTH);
     }
 
     /**
      * 打印
      */
     public static void logAndWrite(Object msg) {
-        String tag = defaultTag();
-        logOnly(tag, msg);
-        if (IS_WRITE_TO_FILE) writeLogToFile("", tag, msg.toString());
-    }
-
-    /**
-     * 打印, 写入文件
-     */
-    public static void logAndWrite(String tag, Object msg) {
-        logOnly(tag, msg);
-        if (IS_WRITE_TO_FILE) writeLogToFile("", tag, msg.toString());
-    }
-
-    /**
-     * 打印, 写入文件
-     */
-    public static void logAndWrite(Class clazz, String tag, Object msg) {
-        logOnly(clazz, tag, msg);
-        if (IS_WRITE_TO_FILE) writeLogToFile("", clazz.getName(), tag + ":" + msg.toString());
-    }
-
-    /**
-     * 打印
-     */
-    public static void logAndWrite(Object object, String tag, Object msg) {
-        logOnly(object, tag, msg);
-        if (IS_WRITE_TO_FILE) writeLogToFile("", object.toString(), tag + ":" + msg.toString());
+        logOnly(msg);
+        if (IS_WRITE_TO_FILE) writeLogToFile(defaultTag(), msg.toString());
     }
 
     /**
@@ -110,10 +63,10 @@ public class L {
     /**
      * 打开日志文件并写入日志
      **/
-    private static void writeLogToFile(String mLogType, String tag, String text) {
+    private static void writeLogToFile(String tag, String text) {
         Date nowTime = new Date();
         String needWriteFile = mLogFile.format(nowTime);
-        String needWriteMessage = mLogSdf.format(nowTime) + " " + mLogType + " " + tag + " " + text;
+        String needWriteMessage = mLogSdf.format(nowTime) + " " + tag + " " + text;
         File file = new File(LOG_PATH_SDCARD_DIR, needWriteFile + LOGFILEName);
         Utilities.ensurePathExists(file.getParent());
         if (!Utilities.fileExists(file.getAbsolutePath())) {
@@ -153,43 +106,36 @@ public class L {
      * @param log       原log文本
      * @param showCount 规定每段显示的长度（最好不要超过eclipse限制长度）
      */
-    public static void showLogCompletion(String tag, String log, int showCount) {
-        if (log.length() > showCount) return;
-
-        if (log.length() > showCount) {
-            String show = log.substring(0, showCount);
-
-            show(tag, show);
-
-            if ((log.length() - showCount) > showCount) {//剩下的文本还是大于规定长度
-                String partLog = log.substring(showCount, log.length());
-                showLogCompletion(tag, partLog, showCount);
-            } else {
-                String surplusLog = log.substring(showCount, log.length());
-                show(tag, surplusLog);
-            }
-        } else {
-            show(tag, log);
+    public static void showLogCompletion(String log, int showCount) {
+        if(log.length() < showCount){
+            show(log);
+            return;
         }
 
-//        for(int i = 0; i < log.length(); i=+showCount){
-//            int end = i+showCount;
-//            if(end > log.length()) end = log.length();
-//            String part = log.substring(i, end);
-//            show(tag, part);
-//        }
+        String show = log.substring(0, showCount);
+        show(show);
+
+        if ((log.length() - showCount) > showCount) {                   //剩下的文本还是大于规定长度
+            String partLog = log.substring(showCount);
+            showLogCompletion(partLog, showCount);
+        } else {
+            String surplusLog = log.substring(showCount);
+            show(surplusLog);
+        }
     }
 
-    private static void show(String tag, String log) {
-        System.out.println(tag + ":" + log);
+    private static void show(String log) {
+        System.out.println("单Log:" + log);
 //        Log.i(tag, log);
     }
 
     private static String defaultTag() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-//        for (StackTraceElement e : stackTrace) {
-//            System.out.println(e.getClassName() + "\t" + e.getMethodName() + "\t" + e.getLineNumber());
-//        }
+        System.out.println("　Log:");
+        for(int i = stackTrace.length - 1; i >= 4; i--){
+            StackTraceElement e = stackTrace[i];
+            System.out.println("　Log:【" + e.getClassName() + "】 - 【" + e.getMethodName() + "】 - 【" + e.getLineNumber() + "行】");
+        }
         StackTraceElement log = stackTrace[1];
         String tag = null;
         for (int i = 1; i < stackTrace.length; i++) {
@@ -200,9 +146,8 @@ public class L {
             }
         }
         if (tag == null) {
-            tag = log.getClassName() + ".2" + log.getMethodName();
+            tag = log.getClassName() + "." + log.getMethodName();
         }
-        System.out.println(tag);
         return tag;
     }
 }

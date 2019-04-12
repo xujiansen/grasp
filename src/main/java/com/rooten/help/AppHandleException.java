@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 
-import com.rooten.AppParamsMgr;
 import com.rooten.BaApp;
 import com.rooten.util.Util;
 import com.rooten.util.Utilities;
@@ -46,8 +45,6 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
         ex.printStackTrace(print);
         writeError(writer.toString());
 
-        // 置异常标记，在另外的进程中进行重连，本进程已经异常不能进行更多操作
-        AppParamsMgr.setAppError(mApp);
 //        mApp.startAppOnService();
 
         // 销毁本程序
@@ -70,7 +67,7 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
             obj.put("errInfo", error);
             out.write(obj.toJSONString().getBytes("utf-8"));
         } catch (Exception e) {
-            L.logOnly(AppHandleException.class, "writeError::Exception", e.toString());
+            L.logOnly("writeError::Exception" + e.toString());
         } finally {
             Utilities.closeOutputStream(out);
         }

@@ -128,7 +128,7 @@ public class AppPermissionApply {
                     PermissionInfo permissionInfo = context.getPackageManager().getPermissionInfo(str, 0);
                     list.add(permissionInfo.name);
                 } catch (Exception e) {
-                    L.logOnly(AppPermissionApply.class, "getAppPermission::Exception", e.toString());
+                    L.logOnly("getAppPermission::Exception" + e.toString());
                 }
             }
             return list;
@@ -150,7 +150,7 @@ public class AppPermissionApply {
                     if (!permissionInfo.name.equals(permission)) continue;
                     return permissionInfo;
                 } catch (Exception e) {
-                    L.logOnly(AppPermissionApply.class, "getAppPermission::Exception", e.toString());
+                    L.logOnly("getAppPermission::Exception" + e.toString());
                 }
             }
             return null;
@@ -316,7 +316,7 @@ public class AppPermissionApply {
         try {
             activity.startActivity(intent);
         } catch (Exception e) {
-            L.logOnly(AppPermissionApply.class, "startActivityForSpecial::Exception", e.toString());
+            L.logOnly("startActivityForSpecial::Exception" + e.toString());
         }
     }
 

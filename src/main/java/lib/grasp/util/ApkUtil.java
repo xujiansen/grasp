@@ -201,6 +201,7 @@ public class ApkUtil {
         if (!isRunningForeground(context)) {
             /**获取ActivityManager*/
             ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+            if(activityManager == null) return;
 
             /**获得当前运行的task(任务)*/
             List<ActivityManager.RecentTaskInfo> appTask = activityManager.getRecentTasks(Integer.MAX_VALUE, 1);

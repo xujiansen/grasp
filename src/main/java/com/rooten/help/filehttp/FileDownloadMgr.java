@@ -1,5 +1,7 @@
 package com.rooten.help.filehttp;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -9,97 +11,37 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.rooten.util.Utilities;
 import lib.grasp.util.L;
 
 public class FileDownloadMgr {
-    protected Lock mLock = new ReentrantLock();
-    protected boolean mQuit = false;
+    /** 锁 - 实现[添加]与[读取]任务都是同步互斥的 */
+    private Lock mLock = new ReentrantLock();
+    /** 是否准备停止各传输线程 */
+    private boolean mQuit = false;
 
-    private static final int DOWNLOAD_MAX = 5; // 最大下载线程数
+    /** 最大下载线程数(包含各类传输任务) */
+    private int DOWNLOAD_MAX = 2;
 
-    // 下载参数
-    private Map<String, Integer> mDownCategory = new HashMap<>();  // 下载的种类，每个种类占用的线程数
-    private Map<String, String> mDownDescription = new HashMap<>();  // 下载的种类，每个种类的说明
-    private Map<String, Semaphore> mDownSemaphore = new HashMap<>();  // 下载种类的信号量
-    private Map<String, Queue<HttpDownloadRequest>> mDownQueue = new HashMap<>();  // 下载队列
+    /** <传输任务种类ID, 每个任务种类(多个线程)的说明> */
+    private Map<String, String>     mTypeDescription = new HashMap<>();
+    /** <传输任务种类ID, 每个任务种类(多个线程)的线程数> */
+    private Map<String, Integer>    mTypeThreadNum = new HashMap<>();
+    /** <传输任务种类ID, 每个任务种类(多个线程)的信号量> */
+    private Map<String, Semaphore>  mTypeSemaphore = new HashMap<>();
+    /** <传输任务种类ID, 线程队列> */
+    private Map<String, Queue<HttpDownloadRequest>> mTypeThreadQueue = new HashMap<>();
 
     public static final long DownloadStatus_SUCCESS = -1;
     public static final long DownloadStatus_FALIURE = -2;
-    public static final long DownloadStatus_CANCLED = -3;
 
-    // 注册下载类型，返回注册成功的id，否则返回空字符串
-    public String registerCategory(String description, int threadNum) {
-        if (threadNum <= 0 || threadNum > 5) return "";
-
-        int hasRegisterThreadNum = 0;
-        for (Map.Entry<String, Integer> entry : mDownCategory.entrySet()) {
-            hasRegisterThreadNum += entry.getValue();
-        }
-
-        if (hasRegisterThreadNum >= 5) return "";
-
-        int left = DOWNLOAD_MAX - hasRegisterThreadNum;
-        if (threadNum > left) return "";
-
-        String categoryID = UUID.randomUUID().toString();
-        mDownCategory.put(categoryID, threadNum);
-        mDownDescription.put(categoryID, description);
-
-        init();
-
-        return categoryID;
+    /** 下载线程数量 */
+    public FileDownloadMgr(int threadNum) {
+        DOWNLOAD_MAX = threadNum;
     }
 
-    public boolean unRegisterCategory(String categoryID) {
-        if (Utilities.isEmpty(categoryID)) return false;
-        if (!mDownCategory.containsKey(categoryID)) return false;
-
-        mDownCategory.remove(categoryID);
-        mDownDescription.remove(categoryID);
-        mDownSemaphore.remove(categoryID);
-        mDownQueue.remove(categoryID);
-
-        init();
-
-        return true;
-    }
-
-    private HttpDownloadRequest getReq(String categoryID) {
-        Queue<HttpDownloadRequest> queue = mDownQueue.get(categoryID);
-        mLock.lock();
-        HttpDownloadRequest req = queue.poll();
-        mLock.unlock();
-        return req;
-    }
-
-    public void addDownWork(String categoryID, HttpDownloadRequest req) {
-        Semaphore semaphore = getSemaphore(categoryID);
-        if (semaphore == null) return;
-
-        Queue<HttpDownloadRequest> queue = mDownQueue.get(categoryID);
-        mLock.lock();
-        queue.add(req);
-        semaphore.release();
-        mLock.unlock();
-    }
-
-    private void init() {
-        for (Map.Entry<String, Integer> entry : mDownCategory.entrySet()) {
-            String categoryID = entry.getKey();
-            if (mDownSemaphore.containsKey(categoryID)) continue;
-            if (mDownQueue.containsKey(categoryID)) continue;
-
-            Semaphore newSemaphore = new Semaphore(0);
-            mDownSemaphore.put(categoryID, newSemaphore);
-
-            Queue<HttpDownloadRequest> queue = new LinkedList<>();
-            mDownQueue.put(categoryID, queue);
-        }
-    }
-
+    /** 开始运行传输线程(没有传入任务) */
     public void startDownload() {
-        for (Map.Entry<String, Integer> entry : mDownCategory.entrySet()) {
+        for (Map.Entry<String, Integer> entry : mTypeThreadNum.entrySet()) {
             String categoryID = entry.getKey();
             int threadNum = entry.getValue();
             String description = getDescription(categoryID);
@@ -112,46 +54,111 @@ public class FileDownloadMgr {
         }
     }
 
+    /** 停止传输线程 (这里允许各传输线程将当前的任务执行完成, 但不接收新任务) */
     public void stopDownload() {
-        // 置退出标签
-        mQuit = true;
-        for (Map.Entry<String, Integer> entry : mDownCategory.entrySet()) {
+        mQuit = true;   // 置退出标签
+        for (Map.Entry<String, Integer> entry : mTypeThreadNum.entrySet()) {
             String categoryID = entry.getKey();
             int threadNum = entry.getValue();
-
+            // 这里允许各传输线程将当前的任务执行完成, 但不接收新任务
             Semaphore semaphore = getSemaphore(categoryID);
             if (semaphore == null) continue;
             semaphore.release(threadNum);
         }
 
-        mDownCategory.clear();
-        mDownDescription.clear();
-        mDownSemaphore.clear();
-        mDownQueue.clear();
+        mTypeDescription.clear();
+        mTypeThreadNum.clear();
+        mTypeSemaphore.clear();
+        mTypeThreadQueue.clear();
     }
 
-    protected Semaphore getSemaphore(String categoryID) {
-        return mDownSemaphore.get(categoryID);
+    /** 注册下载类型，返回注册成功的id，否则返回空字符串 */
+    public String registerCategory(String description, int threadNum) {
+        if (threadNum <= 0 || threadNum > DOWNLOAD_MAX) return "";
+
+        int hasRegisterThreadNum = 0;
+        for (Map.Entry<String, Integer> entry : mTypeThreadNum.entrySet()) {
+            hasRegisterThreadNum += entry.getValue();
+        }
+
+        if (hasRegisterThreadNum >= DOWNLOAD_MAX) return "";
+
+        int left = DOWNLOAD_MAX - hasRegisterThreadNum;
+        if (threadNum > left) return "";
+
+        String categoryID = UUID.randomUUID().toString();
+        mTypeDescription.put(categoryID, description);
+        mTypeThreadNum.put(categoryID, threadNum);
+
+        init();
+
+        return categoryID;
     }
 
-    protected String getDescription(String categoryID) {
-        return mDownDescription.get(categoryID);
+    /** 解注册下载类型，返回解注册执行结果 */
+    public boolean unRegisterCategory(String categoryID) {
+        if (TextUtils.isEmpty(categoryID)) return false;
+        if (!mTypeThreadNum.containsKey(categoryID)) return false;
+
+        mTypeThreadNum.remove(categoryID);
+        mTypeDescription.remove(categoryID);
+        mTypeSemaphore.remove(categoryID);
+        mTypeThreadQueue.remove(categoryID);
+
+        init();
+
+        return true;
     }
 
+    /** 传入一个[传输任务种类ID] + [传输任务], 开始传输 */
+    public void addDownWork(String categoryID, HttpDownloadRequest req) {
+        Semaphore semaphore = getSemaphore(categoryID);
+        if (semaphore == null) return;
+
+        Queue<HttpDownloadRequest> queue = mTypeThreadQueue.get(categoryID);
+        if(queue == null) return;
+        mLock.lock();
+        queue.add(req);
+        semaphore.release();
+        mLock.unlock();
+    }
+
+
+    /** 初始化新增任务类型的[信号量]与[线程队列] */
+    private void init() {
+        for (Map.Entry<String, Integer> entry : mTypeThreadNum.entrySet()) {
+            String categoryID = entry.getKey();
+            if (mTypeSemaphore.containsKey(categoryID)) continue;
+            if (mTypeThreadQueue.containsKey(categoryID)) continue;
+            Semaphore newSemaphore = new Semaphore(0);
+            mTypeSemaphore.put(categoryID, newSemaphore);
+            Queue<HttpDownloadRequest> queue = new LinkedList<>();
+            mTypeThreadQueue.put(categoryID, queue);
+        }
+    }
+
+    private Semaphore getSemaphore(String categoryID) {
+        return mTypeSemaphore.get(categoryID);
+    }
+
+    private String getDescription(String categoryID) {
+        return mTypeDescription.get(categoryID);
+    }
+
+    /** 单传输线程的run方法 */
     private class DownRun implements Runnable {
-        public String mCategoryID = "";
+        String mCategoryID;
 
-        public DownRun(String categoryID) {
+        DownRun(String categoryID) {
             mCategoryID = categoryID;
         }
 
         @Override
         public void run() {
             String threadName = Thread.currentThread().getName();
-            L.logOnly(FileDownloadMgr.class, "DownRun>>run::start", threadName + "开始运行");
-
+            L.logOnly("下载线程:" + threadName + "开始运行");
             while (!mQuit) {
-                if (Utilities.isEmpty(mCategoryID)) break;
+                if (TextUtils.isEmpty(mCategoryID)) break;
 
                 Semaphore semaphore = getSemaphore(mCategoryID);
                 if (semaphore == null) break;
@@ -163,50 +170,64 @@ public class FileDownloadMgr {
                     HttpDownloadRequest req = getReq(mCategoryID);
                     if (req == null) continue;
 
-                    // 开始下载
-                    doDownload(mCategoryID, req);
+                    doDownload(mCategoryID, req);   // 开始下载
                 } catch (Exception e) {
-                    L.logOnly(FileDownloadMgr.class, "DownRun>>run", e.toString());
+                    L.logOnly("下载线程异常:" + e.toString());
                 }
             }
-
-            L.logOnly(FileDownloadMgr.class, "DownRun>>run::stop", threadName + "停止运行");
+            L.logOnly("下载线程:" + threadName + "停止运行");
         }
     }
 
-    public void doDownload(String categoryID, HttpDownloadRequest req) {
+    /** 按照传入参数获取指定的下载请求对象 */
+    private HttpDownloadRequest getReq(String categoryID) {
+        Queue<HttpDownloadRequest> queue = mTypeThreadQueue.get(categoryID);
+        if(queue == null) return null;
+        mLock.lock();
+        HttpDownloadRequest req = queue.poll();
+        mLock.unlock();
+        return req;
+    }
+
+    /** 开始一个传输任务, 回调传输过程中的各种数据 */
+    private void doDownload(String categoryID, HttpDownloadRequest req) {
         DownloadTask task = new DownloadTask(categoryID, req);
 
-        if (task.onDownload()) {
-            req.progress.onProgress(req.reqId, 0, DownloadStatus_SUCCESS);
+        if (task.doRealDownload()) {
+            req.mProgressListener.onProgress(req.reqId, 0, DownloadStatus_SUCCESS); // 传输成功
         } else {
-            req.progress.onProgress(req.reqId, 0, DownloadStatus_FALIURE);
+            req.mProgressListener.onProgress(req.reqId, 0, DownloadStatus_FALIURE); // 传输异常
         }
     }
 
+    /** 传输任务封装类, 传输过程中会不断回调进度  */
     private class DownloadTask implements HttpUtil.onHttpProgressListener {
-        private String mCategoryID;
+        private String              mCategoryID;
         private HttpDownloadRequest mReq;
 
-        public DownloadTask(String categoryID, HttpDownloadRequest req) {
+        /** 下载任务 */
+        DownloadTask(String categoryID, HttpDownloadRequest req) {
             mCategoryID = categoryID;
             mReq = req;
         }
 
-        private boolean onDownload() {
+        /** 真正开始下载(会阻塞线程, 等到传输结束时返回传输结果) */
+        private boolean doRealDownload() {
             return HttpUtil.downloadFile(mReq, this);
         }
 
+        /** 是否取消 */
         @Override
         public boolean isQuit() {
             return mQuit;
         }
 
+        /** 进度回调 */
         @Override
         public void onProgress(String requestID, long curSize, long allLen) {
-            boolean hasCategory = mDownCategory.containsKey(mCategoryID);
-            if (mReq.progress == null || !hasCategory) return;
-            mReq.progress.onProgress(requestID, curSize, allLen);
+            boolean hasCategory = mTypeThreadNum.containsKey(mCategoryID);
+            if (mReq.mProgressListener == null || !hasCategory) return;
+            mReq.mProgressListener.onProgress(requestID, curSize, allLen);
         }
 
         @Override

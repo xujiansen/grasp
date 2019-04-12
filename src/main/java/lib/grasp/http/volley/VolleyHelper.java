@@ -141,8 +141,8 @@ public class VolleyHelper<T> {
         Response.ErrorListener errorListener = new Response.ErrorListener() {   // 失败回调
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                L.logOnly(this.getClass(), "请求URL", mURL);
-                L.logOnly(this.getClass(), "请求异常", volleyError.toString());
+                 L.logOnly("请求URL" + mURL);
+                 L.logOnly("请求异常" + volleyError.toString());
 
                 dismissView();
                 if (mIsCancel) mIsCancel = false;

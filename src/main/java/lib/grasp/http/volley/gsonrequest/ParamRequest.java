@@ -54,7 +54,7 @@ public class ParamRequest<T> extends Request<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            if (!TextUtils.isEmpty(jsonString)) L.logOnly(ParamRequest.class, "jsonString", jsonString);
+            if (!TextUtils.isEmpty(jsonString)) L.logOnly("jsonString" + jsonString);
             L.logOnly("服务器: --- " + jsonString);
             T result = null;
             if((mType != null) && new TypeToken<byte[]>() {}.getType().equals(mType))   result = (T)response.data;

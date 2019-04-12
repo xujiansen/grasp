@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Message;
 
-import com.rooten.AppParamsMgr;
 import com.rooten.BaApp;
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
@@ -37,9 +36,6 @@ public class SysBroadReceiver extends BroadcastReceiver implements IHandler {
     public boolean handleMessage(Message msg) {
         Context context = (Context) msg.obj;
         if (context == null) return false;
-
-        // 如果当前程序已经退出也直接返回
-        if (AppParamsMgr.isQuit(context)) return false;
 
         BaApp app = (BaApp) context.getApplicationContext();
         if (app == null) return false;

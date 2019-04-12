@@ -14,8 +14,8 @@ import com.rooten.util.StorageInfo;
 public class PathUtil {
 
     // 程序目录结构
-    public static final String PATH_DIR_BASE        = "Gaqu/";
-    public static final String APP_DIR              = "GaquPaopao/";
+    public static final String PATH_DIR_BASE        = "Netoo/";
+    public static final String APP_DIR              = "SunUnbrella/";
 
     // 定义程序中所有实用的路径
     public static String PATH_DB            = "";           // DB目录

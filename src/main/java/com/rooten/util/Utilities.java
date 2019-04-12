@@ -66,7 +66,7 @@ public final class Utilities {
         }
         catch (Exception localException)
         {
-            L.logOnly("toURLEncoded error:" + paramString, localException);
+            L.logOnly("toURLEncoded error:" + paramString + localException);
         }
 
         return "";
@@ -322,7 +322,7 @@ public final class Utilities {
             bmp.recycle();
             bmp = null;
         } catch (Exception e) {
-            L.logOnly(Utilities.class, "recycle", e.toString());
+            L.logOnly("recycle" + e.toString());
         }
     }
 

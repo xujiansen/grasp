@@ -55,7 +55,7 @@ public class JsonObjRequest<T> extends JsonRequest<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            if (!TextUtils.isEmpty(jsonString)) L.logOnly(JsonObjRequest.class, "jsonString", jsonString);
+            if (!TextUtils.isEmpty(jsonString)) L.logOnly("jsonString" + jsonString);
 
             T result = null;
             if((mType != null) && new TypeToken<byte[]>() {}.getType().equals(mType))   result = (T)response.data;

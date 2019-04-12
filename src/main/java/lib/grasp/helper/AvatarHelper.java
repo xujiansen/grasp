@@ -125,7 +125,7 @@ public class AvatarHelper {
 
         CompressImageTask task = new CompressImageTask(mApp, mAct, true, picCropPath);
         task.setListener(listener);
-        task.executeOnExecutor(mApp.AppThreadPool);
+        task.executeOnExecutor(mApp.mAppThreadPool);
     }
 
     /**

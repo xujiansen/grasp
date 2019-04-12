@@ -5,9 +5,9 @@ public class Constant {
     public static boolean APP_DEBUG = false;
 
     // 界面风格设置
-    public static final int COLOR_TOOLBAR = 0xFFCDE7EF;
-    public static final boolean PAGE_USER_BORDER = false;   // 页面使用边框
-    public static final int PAGE_PADDING = 1;               // 页内填充
+    public static final int     COLOR_TOOLBAR = 0xFFCDE7EF;
+    public static final boolean PAGE_USER_BORDER = false;       // 页面使用边框
+    public static final int     PAGE_PADDING = 1;               // 页内填充
 
     // 定期任务的时间和执行任务ID
     public static final int TIME_POLL = 30;             // 轮询，service监听app是否在(秒)

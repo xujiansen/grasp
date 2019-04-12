@@ -16,7 +16,7 @@ public class FileUploadMgr {
     protected Lock mLock = new ReentrantLock();
     protected boolean mQuit = false;
 
-    private static final int UPLOAD_MAX = 5; // 最大上传线程数
+    private static int UPLOAD_MAX = 2; // 最大上传线程数
 
     // 上传参数
     private Map<String, Integer> mUploadCategory = new HashMap<>();  // 上传的种类，每个种类占用的线程数
@@ -27,6 +27,11 @@ public class FileUploadMgr {
     public static final long UploadStatus_SUCCESS = -1;
     public static final long UploadStatus_FALIURE = -2;
     public static final long UploadStatus_CANCLED = -3;
+
+    /** 上传线程数量 */
+    public FileUploadMgr(int threadNum) {
+        UPLOAD_MAX = threadNum;
+    }
 
     /**
      * 注册上传类型，返回注册成功的id，否则返回空字符串
@@ -145,7 +150,7 @@ public class FileUploadMgr {
         @Override
         public void run() {
             String threadName = Thread.currentThread().getName();
-            L.logOnly(FileUploadMgr.class, "UploadRun>>run::start", threadName + "开始运行");
+            L.logOnly("UploadRun>>run::start"+threadName + "开始运行");
 
             while (!mQuit) {
                 if (Utilities.isEmpty(mCategoryID)) break;
@@ -163,11 +168,11 @@ public class FileUploadMgr {
                     // 开始上传
                     doUpload(mCategoryID, req);
                 } catch (Exception e) {
-                    L.logOnly(FileUploadMgr.class, "UploadRun>>run", e.toString());
+                    L.logOnly("UploadRun>>run" + e.toString());
                 }
             }
 
-            L.logOnly(FileUploadMgr.class, "UploadRun>>run::stop", threadName + "停止运行");
+            L.logOnly("UploadRun>>run::stop" + threadName + "停止运行");
         }
     }
 
