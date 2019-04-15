@@ -193,12 +193,12 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
     }
 
     @Override
-    public void onProgress(String requestID, long curSize, long allLen) {
+    public void onProgress(String requestID, String url, long curSize, long allLen) {
         refreshLoadStatus(requestID, curSize, allLen);
     }
 
     @Override
-    public void onResMsg(String requestID, String res) {
+    public void onResMsg(String requestID, String url, String res) {
         HttpUploadRequest targetEntity = null;
         for (HttpUploadRequest entity : mSelected) {
             if (TextUtils.equals(entity.reqId, requestID)) {

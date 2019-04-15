@@ -138,7 +138,7 @@ public class HttpUtil {
                         return false; // 取消
                     }
 
-                    l.onProgress(req.reqId, uploadSize, req.uploadFile.length());
+                    l.onProgress(req.reqId, req.requestUrl, uploadSize, req.uploadFile.length());
                 }
             }
             dos.write(LINE_END.getBytes());
@@ -151,7 +151,7 @@ public class HttpUtil {
             L.logOnly("uploadFile::code" + String.valueOf(code));
             if (code == 200) {
                 String res = readResponseString(conn);
-                if(l != null) l.onResMsg(req.reqId, res);
+                if(l != null) l.onResMsg(req.reqId, req.requestUrl, res);
                 return true;
             } else {
                 String err = readErrStream(conn);
@@ -189,7 +189,7 @@ public class HttpUtil {
         InputStream in = null;
 
         try {
-            L.logOnly("downloadFile::requestUrl" + req.requestUrl);
+            L.logOnly("downloadFile::requestUrl: " + req.requestUrl);
 
             // 因为是urlEncode编码格式并且是GET方法所以，参数必须拼接在url后面
             // 传输请求体参数
@@ -208,7 +208,7 @@ public class HttpUtil {
             conn.setReadTimeout(60 * 1000);
             conn.setConnectTimeout(60 * 1000);
             conn.setDoInput(true);                            // 允许输入流
-            conn.setDoOutput(true);                        // 允许输出流
+//            conn.setDoOutput(true);                        // 允许输出流
             conn.setUseCaches(false);                        // 不允许使用缓存
             conn.setRequestMethod("GET");                    // 请求方式
             conn.setRequestProperty("Charset", CHARSET);    // 设置编码
@@ -217,24 +217,25 @@ public class HttpUtil {
 //            conn.setRequestProperty("Range", "bytes=" + req.offset + "-");
 
             // 传输头里面的参数
-            for (Map.Entry<String, String> entry : req.headParams.entrySet())    //构造文本类型参数的实体数据
-            {
-                String value = urlEncode(entry.getValue());
-                conn.setRequestProperty(entry.getKey(), value);
-            }
+//            for (Map.Entry<String, String> entry : req.headParams.entrySet())    //构造文本类型参数的实体数据
+//            {
+//                String value = urlEncode(entry.getValue());
+//                conn.setRequestProperty(entry.getKey(), value);
+//            }
             conn.connect();
 
             int code = conn.getResponseCode();
             L.logOnly("downloadFile::code" + String.valueOf(code));
             if (code < 200 || code >= 300) {
                 String err = readErrStream(conn);
+                System.out.println("downloadFile::err" + err);
                 L.logOnly("downloadFile::err" + err);
                 return false;
             }
 
             // 读取文件数据
             int contentLength = conn.getContentLength();
-            L.logOnly("downloadFile::contentLength" + String.valueOf(contentLength));
+            L.logOnly("downloadFile::contentLength: " + String.valueOf(contentLength));
             if (contentLength <= 0) return false;
 
             // 设置下载块的大小
@@ -249,7 +250,7 @@ public class HttpUtil {
 
             File saveFile = req.saveFile;
             if (saveFile == null) {
-                L.logOnly("downloadFile::saveFile" + "保存路径为空");
+                L.logOnly("downloadFile::saveFile: 保存路径为空");
                 return false;
             }
 
@@ -278,7 +279,7 @@ public class HttpUtil {
                         return false; // 取消
                     }
 
-                    l.onProgress(req.reqId, size, contentLength);
+                    l.onProgress(req.reqId, req.requestUrl, size, contentLength);
                 }
             }
 
@@ -399,7 +400,7 @@ public class HttpUtil {
                         return false; // 取消
                     }
 
-                    l.onProgress(req.reqId, size, contentLength);
+                    l.onProgress(req.reqId, req.requestUrl, size, contentLength);
                 }
             }
 
@@ -654,8 +655,8 @@ public class HttpUtil {
         /** 是否放弃本次回调 */
         boolean isQuit();
         /** 传输过程回调 */
-        void    onProgress(String requestID, long curSize, long allLen);
+        void    onProgress(String requestID, String url, long curSize, long allLen);
         /** 传输完成返回文字数据 */
-        void    onResMsg(String requestID, String res);
+        void    onResMsg(String requestID, String url, String res);
     }
 }

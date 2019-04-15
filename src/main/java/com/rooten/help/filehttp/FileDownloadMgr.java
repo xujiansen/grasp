@@ -1,6 +1,12 @@
 package com.rooten.help.filehttp;
 
+import android.os.Bundle;
+import android.os.Message;
 import android.text.TextUtils;
+
+import com.rooten.frame.AppHandler;
+import com.rooten.frame.IHandler;
+import com.rooten.util.Util;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import lib.grasp.util.L;
 
-public class FileDownloadMgr {
+public class FileDownloadMgr implements IHandler {
     /** 锁 - 实现[添加]与[读取]任务都是同步互斥的 */
     private Lock mLock = new ReentrantLock();
     /** 是否准备停止各传输线程 */
@@ -33,6 +39,8 @@ public class FileDownloadMgr {
 
     public static final long DownloadStatus_SUCCESS = -1;
     public static final long DownloadStatus_FALIURE = -2;
+
+    public AppHandler mHandler = new AppHandler(this);
 
     /** 下载线程数量 */
     public FileDownloadMgr(int threadNum) {
@@ -194,9 +202,9 @@ public class FileDownloadMgr {
         DownloadTask task = new DownloadTask(categoryID, req);
 
         if (task.doRealDownload()) {
-            req.mProgressListener.onProgress(req.reqId, 0, DownloadStatus_SUCCESS); // 传输成功
+            sendMsg(req, categoryID, req.requestUrl, DownloadStatus_SUCCESS, DownloadStatus_SUCCESS);   // 传输成功
         } else {
-            req.mProgressListener.onProgress(req.reqId, 0, DownloadStatus_FALIURE); // 传输异常
+            sendMsg(req, categoryID, req.requestUrl, DownloadStatus_FALIURE, DownloadStatus_FALIURE);   // 传输成功
         }
     }
 
@@ -224,15 +232,43 @@ public class FileDownloadMgr {
 
         /** 进度回调 */
         @Override
-        public void onProgress(String requestID, long curSize, long allLen) {
+        public void onProgress(String requestID, String url, long curSize, long allLen) {
             boolean hasCategory = mTypeThreadNum.containsKey(mCategoryID);
             if (mReq.mProgressListener == null || !hasCategory) return;
-            mReq.mProgressListener.onProgress(requestID, curSize, allLen);
+            sendMsg(mReq, requestID, url, curSize, allLen);
         }
 
         @Override
-        public void onResMsg(String requestID, String res) {
-
+        public void onResMsg(String requestID, String url, String res) {
+//            boolean hasCategory = mTypeThreadNum.containsKey(mCategoryID);
+//            if (mReq.mProgressListener == null || !hasCategory) return;
+//            sendMsg(mReq, requestID, url, DownloadStatus_SUCCESS, DownloadStatus_SUCCESS);
         }
+    }
+
+    private void sendMsg(HttpDownloadRequest mReq, String requestID, String url, long curSize, long allLen){
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", requestID);
+        bundle.putString("url", url);
+        bundle.putLong("curSize", curSize);
+        bundle.putLong("allLen", allLen);
+        Message msg = new Message();
+        msg.setData(bundle);
+        msg.obj = mReq;
+        mHandler.sendMessage(msg);
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        Object o = msg.obj;
+        if(!(o instanceof HttpDownloadRequest)) return false;
+        HttpDownloadRequest request = (HttpDownloadRequest)o;
+        Bundle bundle 	= msg.getData();
+        String uuid 	= Util.getString(bundle, "uuid");
+        String url 	= Util.getString(bundle, "url");
+        long curSize 	= Util.getLong(bundle, "curSize");
+        long allLen 	= Util.getLong(bundle, "allLen");
+        request.mProgressListener.onProgress(uuid, url, curSize, allLen);
+        return true;
     }
 }

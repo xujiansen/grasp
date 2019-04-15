@@ -3,19 +3,33 @@ package com.rooten.base;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import com.rooten.util.Utilities;
+
+import java.io.File;
+
+import lib.grasp.util.FileUtil;
 
 public class DBBase {
     protected static SQLiteDatabase mDB = null;
 
     /** 初始化库 */
     public static void initDatabase(String dbPath, String dbName) {
-        if (Utilities.isEmpty(dbPath)) return;
-        if (!Utilities.ensurePathExists(dbPath)) return;
+        if (TextUtils.isEmpty(dbPath)) return;
+        if (!FileUtil.ensurePathExists(dbPath)) return;
 
         String strPathName = dbPath + dbName;
         mDB = SQLiteDatabase.openOrCreateDatabase(strPathName, null);
+    }
+
+    /** 初始化库 */
+    public static void dropDatabase(String dbPath, String dbName) {
+        if (TextUtils.isEmpty(dbPath)) return;
+        if (!FileUtil.ensurePathExists(dbPath)) return;
+
+        String strPathName = dbPath + dbName;
+        SQLiteDatabase.deleteDatabase(new File(strPathName));
     }
 
     public boolean tableExists(final String strTableName) {

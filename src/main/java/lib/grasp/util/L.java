@@ -132,7 +132,7 @@ public class L {
     private static String defaultTag() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         System.out.println("　Log:");
-        for(int i = stackTrace.length - 1; i >= 4; i--){
+        for(int i = stackTrace.length - 1; i >= 4; i--){    // log栈
             StackTraceElement e = stackTrace[i];
             System.out.println("　Log:【" + e.getClassName() + "】 - 【" + e.getMethodName() + "】 - 【" + e.getLineNumber() + "行】");
         }

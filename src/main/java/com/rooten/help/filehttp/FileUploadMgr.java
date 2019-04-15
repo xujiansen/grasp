@@ -179,9 +179,9 @@ public class FileUploadMgr {
     private void doUpload(String categoryID, HttpUploadRequest req) {
         UploadTask task = new UploadTask(categoryID, req);
         if (task.onUpload()) {
-            req.progress.onProgress(req.reqId, 0, UploadStatus_SUCCESS);
+            req.progress.onProgress(req.reqId, req.requestUrl, 0, UploadStatus_SUCCESS);
         } else {
-            req.progress.onProgress(req.reqId, 0, UploadStatus_FALIURE);
+            req.progress.onProgress(req.reqId, req.requestUrl, 0, UploadStatus_FALIURE);
         }
     }
 
@@ -204,17 +204,17 @@ public class FileUploadMgr {
         }
 
         @Override
-        public void onProgress(String requestID, long curSize, long allLen) {
+        public void onProgress(String requestID, String url, long curSize, long allLen) {
             boolean hasCategory = mUploadCategory.containsKey(mCategoryID);
             if (mReq.progress == null || !hasCategory) return;
-            mReq.progress.onProgress(mReq.reqId, curSize, allLen);
+            mReq.progress.onProgress(mReq.reqId, mReq.requestUrl, curSize, allLen);
         }
 
         @Override
-        public void onResMsg(String requestID, String res) {
+        public void onResMsg(String requestID, String url, String res) {
             boolean hasCategory = mUploadCategory.containsKey(mCategoryID);
             if (mReq.progress == null || !hasCategory) return;
-            mReq.progress.onResMsg(mReq.reqId, res);
+            mReq.progress.onResMsg(mReq.reqId, mReq.requestUrl, res);
         }
     }
 }
