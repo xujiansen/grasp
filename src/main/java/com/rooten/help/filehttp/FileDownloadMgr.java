@@ -17,7 +17,9 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import lib.grasp.util.FileUtil;
 import lib.grasp.util.L;
+import lib.grasp.util.PathUtil;
 
 public class FileDownloadMgr implements IHandler {
     /** 锁 - 实现[添加]与[读取]任务都是同步互斥的 */
@@ -37,8 +39,10 @@ public class FileDownloadMgr implements IHandler {
     /** <传输任务种类ID, 线程队列> */
     private Map<String, Queue<HttpDownloadRequest>> mTypeThreadQueue = new HashMap<>();
 
-    public static final long DownloadStatus_SUCCESS = -1;
-    public static final long DownloadStatus_FALIURE = -2;
+    /** 下载成功 */
+    public static final long DOWNLOADSTATUS_SUCCESS = Long.MAX_VALUE;
+    /** 下载失败 */
+    public static final long DOWNLOADSTATUS_FALIURE = Long.MIN_VALUE;
 
     public AppHandler mHandler = new AppHandler(this);
 
@@ -202,9 +206,9 @@ public class FileDownloadMgr implements IHandler {
         DownloadTask task = new DownloadTask(categoryID, req);
 
         if (task.doRealDownload()) {
-            sendMsg(req, categoryID, req.requestUrl, DownloadStatus_SUCCESS, DownloadStatus_SUCCESS);   // 传输成功
+            sendMsg(req, categoryID, req.requestUrl, DOWNLOADSTATUS_SUCCESS, 1);   // 传输成功
         } else {
-            sendMsg(req, categoryID, req.requestUrl, DownloadStatus_FALIURE, DownloadStatus_FALIURE);   // 传输成功
+            sendMsg(req, categoryID, req.requestUrl, DOWNLOADSTATUS_FALIURE, 1);   // 传输成功
         }
     }
 
@@ -237,13 +241,6 @@ public class FileDownloadMgr implements IHandler {
             if (mReq.mProgressListener == null || !hasCategory) return;
             sendMsg(mReq, requestID, url, curSize, allLen);
         }
-
-        @Override
-        public void onResMsg(String requestID, String url, String res) {
-//            boolean hasCategory = mTypeThreadNum.containsKey(mCategoryID);
-//            if (mReq.mProgressListener == null || !hasCategory) return;
-//            sendMsg(mReq, requestID, url, DownloadStatus_SUCCESS, DownloadStatus_SUCCESS);
-        }
     }
 
     private void sendMsg(HttpDownloadRequest mReq, String requestID, String url, long curSize, long allLen){
@@ -265,10 +262,16 @@ public class FileDownloadMgr implements IHandler {
         HttpDownloadRequest request = (HttpDownloadRequest)o;
         Bundle bundle 	= msg.getData();
         String uuid 	= Util.getString(bundle, "uuid");
-        String url 	= Util.getString(bundle, "url");
+        String url 	    = Util.getString(bundle, "url");
         long curSize 	= Util.getLong(bundle, "curSize");
         long allLen 	= Util.getLong(bundle, "allLen");
         request.mProgressListener.onProgress(uuid, url, curSize, allLen);
+
+        if(curSize >= allLen){  // 下载成功, 将temp文件转移到OK文件夹
+            String oldFile = request.saveFile.getAbsolutePath();
+            String newFile = PathUtil.PATH_DOWN_OK + request.saveFile.getName();
+            FileUtil.renameFile(oldFile, newFile);
+        }
         return true;
     }
 }

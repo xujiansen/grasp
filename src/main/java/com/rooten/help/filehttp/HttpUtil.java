@@ -151,7 +151,6 @@ public class HttpUtil {
             L.logOnly("uploadFile::code" + String.valueOf(code));
             if (code == 200) {
                 String res = readResponseString(conn);
-                if(l != null) l.onResMsg(req.reqId, req.requestUrl, res);
                 return true;
             } else {
                 String err = readErrStream(conn);
@@ -656,7 +655,7 @@ public class HttpUtil {
         boolean isQuit();
         /** 传输过程回调 */
         void    onProgress(String requestID, String url, long curSize, long allLen);
-        /** 传输完成返回文字数据 */
-        void    onResMsg(String requestID, String url, String res);
+//        /** 传输完成返回文字数据 */
+//        void    onResMsg(String requestID, String url, String res);
     }
 }
