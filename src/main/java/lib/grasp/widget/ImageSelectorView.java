@@ -195,10 +195,9 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
     @Override
     public void onProgress(String requestID, String url, long curSize, long allLen) {
         refreshLoadStatus(requestID, curSize, allLen);
-    }
 
-    @Override
-    public void onResMsg(String requestID, String url, String res) {
+        if(allLen != UploadStatus_SUCCESS && allLen != UploadStatus_FALIURE) return;
+
         HttpUploadRequest targetEntity = null;
         for (HttpUploadRequest entity : mSelected) {
             if (TextUtils.equals(entity.reqId, requestID)) {
@@ -207,7 +206,7 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
             }
         }
         if (targetEntity == null) return;
-        targetEntity.resInfo = res;
+        targetEntity.resInfo = "下载成功";
     }
 
     public void refreshLoadStatus(String requestID, long curSize, long allLen) {

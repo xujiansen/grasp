@@ -209,12 +209,5 @@ public class FileUploadMgr {
             if (mReq.progress == null || !hasCategory) return;
             mReq.progress.onProgress(mReq.reqId, mReq.requestUrl, curSize, allLen);
         }
-
-        @Override
-        public void onResMsg(String requestID, String url, String res) {
-            boolean hasCategory = mUploadCategory.containsKey(mCategoryID);
-            if (mReq.progress == null || !hasCategory) return;
-            mReq.progress.onResMsg(mReq.reqId, mReq.requestUrl, res);
-        }
     }
 }

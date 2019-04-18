@@ -40,9 +40,9 @@ public class FileDownloadMgr implements IHandler {
     private Map<String, Queue<HttpDownloadRequest>> mTypeThreadQueue = new HashMap<>();
 
     /** 下载成功 */
-    public static final long DOWNLOADSTATUS_SUCCESS = Long.MAX_VALUE;
+    public static final long DOWNLOADSTATUS_SUCCESS = -1;
     /** 下载失败 */
-    public static final long DOWNLOADSTATUS_FALIURE = Long.MIN_VALUE;
+    public static final long DOWNLOADSTATUS_FALIURE = -2;
 
     public AppHandler mHandler = new AppHandler(this);
 
@@ -206,8 +206,10 @@ public class FileDownloadMgr implements IHandler {
         DownloadTask task = new DownloadTask(categoryID, req);
 
         if (task.doRealDownload()) {
+            L.logOnly("传输完成");
             sendMsg(req, categoryID, req.requestUrl, DOWNLOADSTATUS_SUCCESS, 1);   // 传输成功
         } else {
+            L.logOnly("传输失败");
             sendMsg(req, categoryID, req.requestUrl, DOWNLOADSTATUS_FALIURE, 1);   // 传输成功
         }
     }
@@ -267,7 +269,7 @@ public class FileDownloadMgr implements IHandler {
         long allLen 	= Util.getLong(bundle, "allLen");
         request.mProgressListener.onProgress(uuid, url, curSize, allLen);
 
-        if(curSize >= allLen){  // 下载成功, 将temp文件转移到OK文件夹
+        if(curSize == DOWNLOADSTATUS_SUCCESS){  // 下载成功, 将temp文件转移到OK文件夹
             String oldFile = request.saveFile.getAbsolutePath();
             String newFile = PathUtil.PATH_DOWN_OK + request.saveFile.getName();
             FileUtil.renameFile(oldFile, newFile);
