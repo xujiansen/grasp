@@ -8,6 +8,7 @@ import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
 import com.rooten.util.Util;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -227,6 +228,9 @@ public class FileDownloadMgr implements IHandler {
 
         /** 真正开始下载(会阻塞线程, 等到传输结束时返回传输结果) */
         private boolean doRealDownload() {
+            String okFilePath = PathUtil.PATH_DOWN_OK + mReq.saveFile.getName();
+            L.logOnly(okFilePath + "文件已经存在, 且传输完成");
+            if(FileUtil.isFileExists(new File(okFilePath))) return true;
             return HttpUtil.downloadFile(mReq, this);
         }
 

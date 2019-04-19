@@ -179,6 +179,26 @@ public class FileUtil {
     }
 
     /**
+     * 列举目录下指定扩展名的文件名（全路径），没有指定扩展名则列举所有文件
+     */
+    public static ArrayList<String> listFile(final String path) {
+        ArrayList<String> arrFiles = new ArrayList<>();
+        if (path == null || !fileExists(path)) {
+            return arrFiles;
+        }
+
+        File filePath = new File(path);
+        if (!filePath.canRead()) return arrFiles;
+
+        String list[] = filePath.list();
+        if (list == null) return arrFiles;
+        for (String str : list) {
+            arrFiles.add(filePath.getPath() + "/" + str);
+        }
+        return arrFiles;
+    }
+
+    /**
      * 列举目录下指定扩展名的文件数
      */
     public static int getFileCount(final String path, final String ext) {

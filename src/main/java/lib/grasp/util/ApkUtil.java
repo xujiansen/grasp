@@ -324,10 +324,19 @@ public class ApkUtil {
         }
     }
 
-    public static String getAppVersion(Context context) {
+    public static String getAppVersionName(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+    }
+
+    public static String getAppVersionCode(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return String.valueOf(info.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
             return "";
         }
