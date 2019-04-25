@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="type_header" type="integer"/>
-    <item name="type_footer" type="integer"/>
-    <item name="type_child" type="integer"/>
-
     <string name="app_name">JS_grasp</string>
+    <string name="dir_name">JS_grasp</string>
     <string name="service_name">守护服务</string>
-    <string name="service_desc">[graspLib]守护服务----------------</string>
+    <string name="service_desc">[graspLib]守护服务</string>
 
     <string name="folder_all">所有照片</string>
     <string name="preview">预览</string>
     <string name="msg_no_camera">没有系统相机</string>
     <string name="msg_amount_limit">已经达到最高选择数量</string>
 
+    <item name="type_header" type="integer"/>
+    <item name="type_footer" type="integer"/>
+    <item name="type_child" type="integer"/>
     <string name="sticky_list">头部吸顶的列表</string>
     <string name="group_list">分组的列表</string>
     <string name="no_header">不带组头的列表</string>

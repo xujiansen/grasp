@@ -8,14 +8,15 @@ import java.util.List;
 import com.rooten.util.ListAvailableStorage;
 import com.rooten.util.StorageInfo;
 
+import lib.grasp.R;
+
 /**
  * 系统路径
  */
 public class PathUtil {
 
     // 程序目录结构
-    public static final String PATH_DIR_BASE        = "Netoo/";
-    public static final String APP_DIR              = "SunUnbrella/";
+    public static String APP_DIR              = "JS_grasp/";
 
     // 定义程序中所有实用的路径
     public static String PATH_DB            = "";           // DB目录
@@ -26,6 +27,8 @@ public class PathUtil {
     public static String PATH_CAMERA_TEMP   = "";           // 拍照临时文件保存目录
 
     public static void initPath(Context context) {
+        APP_DIR         = context.getResources().getString(R.string.dir_name) + "/";
+
         String projectRootPath  = getProjectRootPath(context);    // 项目cache目录
 
         PATH_DB                 = projectRootPath + "db/";
@@ -47,7 +50,7 @@ public class PathUtil {
     /** 获取项目根目录 */
     private static String getProjectRootPath(Context context){
 
-        String bizRootPath = "/" + PathUtil.PATH_DIR_BASE + PathUtil.APP_DIR;
+        String bizRootPath = "/" + PathUtil.APP_DIR;
 
         // 测试是否插入了可卸载的SD卡
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
