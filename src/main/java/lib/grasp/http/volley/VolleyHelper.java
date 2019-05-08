@@ -134,15 +134,13 @@ public class VolleyHelper<T> {
             if (mIsCancel) mIsCancel = false;
             if (orderResponse == null)      return;
             if (!filterCode(orderResponse)) return; // 在网络层通信成功的基础上, 判断业务层是否成功(捕捉业务失败)
-
             if (mSuccessListener != null) mSuccessListener.onResponse(orderResponse);
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {   // 失败回调
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                 L.logOnly("请求URL" + mURL);
-                 L.logOnly("请求异常" + volleyError.toString());
+                 L.logOnly("请求异常::" + volleyError.toString());
 
                 dismissView();
                 if (mIsCancel) mIsCancel = false;
@@ -193,6 +191,7 @@ public class VolleyHelper<T> {
             };
         mRequest.setRetryPolicy(new DefaultRetryPolicy(mTimeout * 1000, 0, 1.0f));
         mApp.getRequestQueue().add(mRequest).setTag(mRequestCode);
+        L.logOnly("请求URL:: " + mURL);
     }
 
     /** 清除所有的加载界面的显示 */

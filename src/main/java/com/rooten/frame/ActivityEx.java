@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,9 +16,11 @@ import com.rooten.BaApp;
 import com.rooten.help.AppHelper;
 import com.rooten.util.Utilities;
 import lib.grasp.R;
+import lib.grasp.mvp.BaseMvpActivity;
+import lib.grasp.mvp.IMvpPresenter;
 import lib.grasp.widget.MessageBoxGrasp;
 
-public class ActivityEx extends AppCompatActivity implements IShowError, IActivityResult, IHandler {
+public class ActivityEx extends BaseMvpActivity implements IShowError, IActivityResult, IHandler {
     protected BaApp mApp;
 
     private int mResultCode = 1;
@@ -64,6 +65,11 @@ public class ActivityEx extends AppCompatActivity implements IShowError, IActivi
         Rect r = new Rect();
         getWindow().getDecorView().getGlobalVisibleRect(r);
         return !r.contains(x, y);
+    }
+
+    @Override
+    public IMvpPresenter onBindPresenter() {
+        return null;
     }
 
     @Override
