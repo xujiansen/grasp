@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.rooten.util.Utilities;
 import lib.grasp.util.L;
+import lib.grasp.util.StreamUtil;
 
 public class HttpUtil {
     /** 上传文件 */
@@ -288,7 +288,7 @@ public class HttpUtil {
             L.logOnly("downloadFile::Exception" + e.toString());
             return false; // 失败
         } finally {
-            Utilities.closeRandomAccessStream(rac);
+            StreamUtil.closeRandomAccessStream(rac);
             closeInputStream(in);
             closeOutputStream(out);
             if (conn != null) conn.disconnect();

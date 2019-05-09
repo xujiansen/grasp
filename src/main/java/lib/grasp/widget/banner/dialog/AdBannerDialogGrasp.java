@@ -9,14 +9,14 @@ import android.widget.LinearLayout;
 
 import com.joanzapata.iconify.widget.IconTextView;
 
-import com.rooten.util.Utilities;
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
 import lib.grasp.widget.banner.viewpager.BannerGrasp;
 
 
 /*
         BannerGrasp mBanner = new BannerGrasp(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Utilities.getValueByDpi(this, 300), Utilities.getValueByDpi(this, 200));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ScreenUtil.getValueByDpi(this, 300), ScreenUtil.getValueByDpi(this, 200));
         mBanner.setLayoutParams(params);
         mBanner.setListener(this);
         mBanner.setDatas(getDatas());
@@ -67,7 +67,7 @@ public class AdBannerDialogGrasp implements View.OnClickListener {
         mItv.setTextSize(30);
         mItv.setTextColor(Color.WHITE);
         LinearLayout.LayoutParams paramsItv = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        paramsItv.setMargins(0,Utilities.getValueByDpi(mCtx, 80),0,0);
+        paramsItv.setMargins(0, ScreenUtil.getValueByDpi(mCtx, 80),0,0);
         paramsItv.gravity = Gravity.CENTER_HORIZONTAL;
         mItv.setLayoutParams(paramsItv);
         mItv.setOnClickListener(this);

@@ -11,7 +11,8 @@ import com.rooten.BaApp;
 import com.rooten.Constant;
 import com.rooten.camera.TakeCamera;
 import com.rooten.help.CompressImage;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 import lib.grasp.widget.ProgressDlgGrasp;
 
 public class CompressImageTask extends AsyncTask<Void, Void, String> {
@@ -57,10 +58,10 @@ public class CompressImageTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        if (!Utilities.isFileExists(mAvatarURL)) return "";
+        if (!FileUtil.isFileExists(mAvatarURL)) return "";
         String mCompressImageURL = CompressImage.compress(TakeCamera.AVATAR_IMAGE_SIZE, 100, mAvatarURL, mApp.getUserData().getCompressAvatarPath(), Constant.SUFFIX_AVATAR_NAME);
         String result = TextUtils.isEmpty(mCompressImageURL) ? mAvatarURL : mCompressImageURL;
-        if (mReturnBase64) mBase64Code = Utilities.fileToBase64(new File(result));
+        if (mReturnBase64) mBase64Code = FileUtil.fileToBase64(new File(result));
         return result;
     }
 

@@ -28,11 +28,12 @@ import android.widget.TextView;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
+
 import com.rooten.ctrl.widget.RoundImageView;
 import com.rooten.ctrl.tab.AppTabTextView;
 import com.rooten.util.IconifyUtil;
 import com.rooten.util.LinearLayoutHelper;
-import com.rooten.util.Utilities;
 
 /**
  * 带间隔的线性布局项
@@ -74,7 +75,7 @@ public class LayoutItemHelper {
 
         Context context = ll.getContext();
         TextView textView = new TextView(context);
-        int height = Utilities.getValueByDpi(context, spaceHeight);
+        int height = ScreenUtil.getValueByDpi(context, spaceHeight);
         textView.setBackgroundColor(context.getResources().getColor(R.color.transparent));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, height);
         ll.addView(textView, params);
@@ -88,7 +89,7 @@ public class LayoutItemHelper {
 
         Context context = ll.getContext();
         TextView textView = new TextView(context);
-        int height = Utilities.getValueByDpi(context, 18);
+        int height = ScreenUtil.getValueByDpi(context, 18);
         textView.setBackgroundColor(context.getResources().getColor(R.color.transparent));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(MATCH_PARENT, height);
         ll.addView(textView, params);
@@ -158,19 +159,19 @@ public class LayoutItemHelper {
         layout.setClickable(true);
 
         // 设置内边距和最小高度
-        int pad = Utilities.getValueByDpi(context, 9);
+        int pad = ScreenUtil.getValueByDpi(context, 9);
         layout.setPadding(pad, 0, pad, 0);
         int height = (int) res.getDimension(R.dimen.linear_item_minheight);
         layout.setMinimumHeight(height);
 
-        pad = Utilities.getValueByDpi(context, 16);
+        pad = ScreenUtil.getValueByDpi(context, 16);
         TextView titleView = new TextView(context);
         titleView.setPadding(0, 0, pad, 0);
         titleView.setTextSize(res.getDimension(R.dimen.text_name));
         titleView.setTextColor(res.getColorStateList(R.color.gray));
         titleView.setText(title);
 
-        pad = Utilities.getValueByDpi(context, 5);
+        pad = ScreenUtil.getValueByDpi(context, 5);
         TextView textView = new TextView(context);
         textView.setTextSize(res.getDimension(R.dimen.text_value));
         textView.setTextColor(res.getColorStateList(R.color.black));
@@ -231,7 +232,7 @@ public class LayoutItemHelper {
         iconView.setTextColor(textColor);
         iconView.setTextSize(24);
 
-        int pad = Utilities.getValueByDpi(context, 6);
+        int pad = ScreenUtil.getValueByDpi(context, 6);
         TextView textView = new TextView(context);
         textView.setText(text);
         textView.setTextSize(16);
@@ -253,7 +254,7 @@ public class LayoutItemHelper {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER);
 
-        int pad = Utilities.getValueByDpi(context, 16);
+        int pad = ScreenUtil.getValueByDpi(context, 16);
         IconTextView iconText = new IconTextView(context);
         iconText.setText("{" + icon + "}");
         iconText.setTextColor(color);
@@ -279,14 +280,14 @@ public class LayoutItemHelper {
         layout.setTag(tag);
         layout.setOnClickListener(l);
 
-        int pad_left = Utilities.getValueByDpi(context, 18);
-        int pad_right = Utilities.getValueByDpi(context, 9);
-        int pad_top = Utilities.getValueByDpi(context, 16);
-        int pad_bottom = Utilities.getValueByDpi(context, 16);
+        int pad_left = ScreenUtil.getValueByDpi(context, 18);
+        int pad_right = ScreenUtil.getValueByDpi(context, 9);
+        int pad_top = ScreenUtil.getValueByDpi(context, 16);
+        int pad_bottom = ScreenUtil.getValueByDpi(context, 16);
         layout.setPadding(pad_left, pad_top, pad_right, pad_bottom);
 
         IconTextView iconText = new IconTextView(context);
-        iconText.setMinWidth(Utilities.getValueByDpi(context, 36));
+        iconText.setMinWidth(ScreenUtil.getValueByDpi(context, 36));
         iconText.setGravity(Gravity.CENTER);
         iconText.setText("{" + icon + "}");
         iconText.setTextColor(iconColor);
@@ -296,7 +297,7 @@ public class LayoutItemHelper {
         textView.setText(text);
         textView.setTextSize(res.getDimension(R.dimen.home_app_sliding_menu_text));
         textView.setTextColor(Color.DKGRAY);
-        int padLeft = Utilities.getValueByDpi(context, 6);
+        int padLeft = ScreenUtil.getValueByDpi(context, 6);
         textView.setPadding(padLeft, 0, 0, 0);
 
         layout.addView(iconText);
@@ -317,8 +318,8 @@ public class LayoutItemHelper {
         Resources res = context.getResources();
         int itemMinHeight = (int) res.getDimension(R.dimen.listItem_minHeight);
 
-        int pad1 = Utilities.getValueByDpi(context, 12);
-        int pad2 = Utilities.getValueByDpi(context, 6);
+        int pad1 = ScreenUtil.getValueByDpi(context, 12);
+        int pad2 = ScreenUtil.getValueByDpi(context, 6);
         LinearLayout layout = createLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER_VERTICAL);
@@ -327,12 +328,12 @@ public class LayoutItemHelper {
         layout.setClickable(true);
         layout.setTag(tag);
 
-        int iconLen = Utilities.getValueByDpi(context, 22);
+        int iconLen = ScreenUtil.getValueByDpi(context, 22);
         ImageView icon = new ImageView(context);
         icon.setImageResource(iconRes);
         icon.setTag(tag + "_" + TAG_FUNCTION_ICON);
 
-        int pad = Utilities.getValueByDpi(context, 5);
+        int pad = ScreenUtil.getValueByDpi(context, 5);
         TextView viewText = new TextView(context);
         viewText.setTextSize(res.getDimension(R.dimen.home_app_fragment_title));
         viewText.setTextColor(Color.BLACK);
@@ -359,7 +360,7 @@ public class LayoutItemHelper {
         LinearLayoutHelper.addView(layout, num, WRAP_CONTENT, WRAP_CONTENT);
         LinearLayoutHelper.addView(layout, space, 0, WRAP_CONTENT, 1);
 
-        int len = Utilities.getValueByDpi(context, 52);
+        int len = ScreenUtil.getValueByDpi(context, 52);
         addPointImageItem(layout, tag, len);
 
         LinearLayoutHelper.addView(layout, bz, WRAP_CONTENT, WRAP_CONTENT);
@@ -374,12 +375,12 @@ public class LayoutItemHelper {
         FrameLayout layout = new FrameLayout(context);
         layout.setTag(tag + "_" + TAG_HEAD_FRAME);
 
-        int pad = Utilities.getValueByDpi(context, 5);
+        int pad = ScreenUtil.getValueByDpi(context, 5);
         LinearLayout imgLayout = new LinearLayout(context);
         imgLayout.setOrientation(LinearLayout.VERTICAL);
         imgLayout.setPadding(pad, pad, pad, pad);
 
-        int headLen = Utilities.getValueByDpi(context, 36);
+        int headLen = ScreenUtil.getValueByDpi(context, 36);
         RoundImageView imageView = new RoundImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(R.drawable.ic_user_head_default);
@@ -406,7 +407,7 @@ public class LayoutItemHelper {
         if (ll == null) return null;
         Context context = ll.getContext();
 
-        int pad = Utilities.getValueByDpi(context, 3);
+        int pad = ScreenUtil.getValueByDpi(context, 3);
         FrameLayout layout = new FrameLayout(context);
         layout.setPadding(pad, pad, pad, pad);
         layout.setTag(tag);
@@ -472,9 +473,9 @@ public class LayoutItemHelper {
         Context context = ll.getContext();
         Resources res = context.getResources();
 
-        int pad = Utilities.getValueByDpi(context, 9);
+        int pad = ScreenUtil.getValueByDpi(context, 9);
         LinearLayout layout = createLayout(context);
-        layout.setMinimumHeight(Utilities.getValueByDpi(context, 60));
+        layout.setMinimumHeight(ScreenUtil.getValueByDpi(context, 60));
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER_VERTICAL);
         layout.setPadding(pad, 0, pad, 0);
@@ -517,8 +518,8 @@ public class LayoutItemHelper {
         Context context = ll.getContext();
         Resources res = context.getResources();
 
-        int padTopAndBottom = Utilities.getValueByDpi(context, 8);
-        int padLeft = Utilities.getValueByDpi(context, 5);
+        int padTopAndBottom = ScreenUtil.getValueByDpi(context, 8);
+        int padLeft = ScreenUtil.getValueByDpi(context, 5);
         TextView textView = new TextView(context);
         textView.setPadding(padLeft, padTopAndBottom, 0, padTopAndBottom);
         textView.setBackgroundColor(res.getColor(R.color.window_color));
@@ -585,7 +586,7 @@ public class LayoutItemHelper {
         linearLayout.setBackgroundResource(R.drawable.dotted_line);
         linearLayout.setTag(tag);
 
-        int pad = Utilities.getValueByDpi(context, 16);
+        int pad = ScreenUtil.getValueByDpi(context, 16);
         ImageView imageView = new ImageView(context);
         imageView.setPadding(pad, pad, pad, pad);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -608,7 +609,7 @@ public class LayoutItemHelper {
         if (ll == null) return null;
         Context context = ll.getContext();
 
-        int pad = Utilities.getValueByDpi(context, 1);
+        int pad = ScreenUtil.getValueByDpi(context, 1);
         LinearLayout linearLayout = createRipperLayout(context);
         linearLayout.setBackgroundColor(Color.parseColor("#c9c9c9"));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -643,7 +644,7 @@ public class LayoutItemHelper {
         line.setImageResource(R.drawable.ic_divider_horizontal_bright_opaque);
 
         LinearLayout layout = LinearLayoutHelper.createHorizontal(context);
-        int pad = Utilities.getValueByDpi(context, 6);
+        int pad = ScreenUtil.getValueByDpi(context, 6);
         layout.setPadding(pad, 0, pad, 0);
         layout.setMinimumHeight((int) res.getDimension(R.dimen.page_bottom_tab_height));
         layout.setGravity(Gravity.CENTER_VERTICAL);
@@ -699,8 +700,8 @@ public class LayoutItemHelper {
     public static LinearLayout createEditLine(Context context) {
         final EditText editText = new EditText(context);
         Resources res = context.getResources();
-        int height = Utilities.getValueByDpi(context, 30);
-        int margin = Utilities.getValueByDpi(context, 8);
+        int height = ScreenUtil.getValueByDpi(context, 30);
+        int margin = ScreenUtil.getValueByDpi(context, 8);
 
         LinearLayout ll = LinearLayoutHelper.createVertical(context);
         ll.setBackgroundColor(res.getColor(R.color.window_color));

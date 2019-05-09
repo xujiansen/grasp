@@ -10,9 +10,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
+
 import com.rooten.util.LinearLayoutHelper;
 import com.rooten.util.TableLayoutHelper;
-import com.rooten.util.Utilities;
 
 public class TablePage extends ScrollPage {
     protected TableLayout mTableLayout = null;
@@ -21,13 +22,13 @@ public class TablePage extends ScrollPage {
         super(context);
         mTableLayout = TableLayoutHelper.createLayout(getContext());
 
-        int padd = Utilities.getValueByDpi(getContext(), 9);
+        int padd = ScreenUtil.getValueByDpi(getContext(), 9);
         mTableLayout.setPadding(padd / 3, 0, padd, padd);
 
         LayoutParams lp = new LayoutParams(LinearLayoutHelper.MATCH_PARENT, LinearLayoutHelper.WRAP_CONTENT);
-        lp.leftMargin = Utilities.getValueByDpi(getContext(), 3);
-        lp.rightMargin = Utilities.getValueByDpi(getContext(), 2);
-        lp.topMargin = lp.bottomMargin = Utilities.getValueByDpi(getContext(), 1);
+        lp.leftMargin = ScreenUtil.getValueByDpi(getContext(), 3);
+        lp.rightMargin = ScreenUtil.getValueByDpi(getContext(), 2);
+        lp.topMargin = lp.bottomMargin = ScreenUtil.getValueByDpi(getContext(), 1);
         addView(mTableLayout, lp);
     }
 
@@ -84,9 +85,9 @@ public class TablePage extends ScrollPage {
         line.setScaleType(ScaleType.FIT_XY);
 
         int m = LinearLayoutHelper.MATCH_PARENT;
-        LayoutParams param = new LayoutParams(m, Utilities.getValueByDpi(mContext, 1));
-        param.topMargin = Utilities.getValueByDpi(mContext, 9);
-        param.bottomMargin = Utilities.getValueByDpi(mContext, 12);
+        LayoutParams param = new LayoutParams(m, ScreenUtil.getValueByDpi(mContext, 1));
+        param.topMargin = ScreenUtil.getValueByDpi(mContext, 9);
+        param.bottomMargin = ScreenUtil.getValueByDpi(mContext, 12);
         layout.addView(line, param);
 
         return layout;

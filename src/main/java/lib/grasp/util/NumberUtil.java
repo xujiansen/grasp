@@ -6,6 +6,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -115,7 +116,6 @@ public class NumberUtil {
 
 
     /* -------------------------------------------------private-------------------------------------------------------------- */
-
 
     private static char getBankCardCheckCode(String nonCheckCodeCardId) {
         if (nonCheckCodeCardId == null
@@ -296,6 +296,21 @@ public class NumberUtil {
             bytes[i] = (byte) Integer.parseInt(a[i], 16);
         }
         return bytes;
+    }
+
+
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+
+    public static int generateViewId() {
+        for (; ; ) {
+            final int result = sNextGeneratedId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                return result;
+            }
+        }
     }
 
 }

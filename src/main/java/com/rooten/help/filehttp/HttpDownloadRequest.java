@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.rooten.util.Utilities;
-
 /** 网络请求封装类(包含监听者) */
 public class HttpDownloadRequest {
     /** 下载请求id */
@@ -79,7 +77,7 @@ public class HttpDownloadRequest {
     }
 
     public void addHeadParams(String name, String value) {
-        if (Utilities.isEmpty(name)) return;
+        if (TextUtils.isEmpty(name)) return;
 
         if (headParams == null) {
             headParams = new HashMap<>();

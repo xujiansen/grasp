@@ -29,10 +29,11 @@ import com.rooten.frame.IHandler;
 import com.rooten.help.filehttp.FileUploadMgr;
 import com.rooten.help.filehttp.HttpUploadRequest;
 import com.rooten.help.filehttp.HttpUtil;
-import com.rooten.util.Utilities;
+
 import lib.grasp.R;
 import lib.grasp.entity.UploadPicRes;
 import lib.grasp.helper.AvatarHelper;
+import lib.grasp.util.FileUtil;
 import lib.grasp.util.GlideUtils;
 import lib.grasp.util.NumberUtil;
 
@@ -300,7 +301,7 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
 
         sonView.setVisibility(VISIBLE);
 
-        if (!Utilities.isFileExists(entity.uploadFile.getAbsolutePath())) { // 未选择图片
+        if (!FileUtil.isFileExists(entity.uploadFile.getAbsolutePath())) { // 未选择图片
             iv.setAlpha(1f);
             iv.setImageDrawable(null);
             itv.setVisibility(GONE);

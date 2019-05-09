@@ -24,4 +24,11 @@ public class ViewUtil {
         view.setMinimumHeight(Math.max(w, h));
         view.setMinimumWidth(Math.max(w, h));
     }
+
+    public static boolean setFocusView(final View view) {
+        if (view != null) {
+            return view.requestFocus();
+        }
+        return false;
+    }
 }

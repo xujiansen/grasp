@@ -26,8 +26,9 @@ import com.rooten.frame.AppActivity;
 import com.rooten.frame.LinearPage;
 import com.rooten.frame.SinglePageMgr;
 import com.rooten.util.IconifyUtil;
-import com.rooten.util.Utilities;
+
 import lib.grasp.util.GlideUtils;
+import lib.grasp.util.ScreenUtil;
 import uk.co.senab.photoview.PhotoView;
 
 public class ImagePreviewActivity extends AppActivity {
@@ -194,7 +195,7 @@ public class ImagePreviewActivity extends AppActivity {
                 setItemIcon(selected ? SELECTED_ICON : UNSELECTED_ICON);
             }
 
-            int padTopAndBottom = Utilities.getValueByDpi(getBaseContext(), 5);
+            int padTopAndBottom = ScreenUtil.getValueByDpi(getBaseContext(), 5);
             PhotoView view = new PhotoView(ImagePreviewActivity.this);
             view.setPadding(0, padTopAndBottom, 0, padTopAndBottom);
             container.addView(view);

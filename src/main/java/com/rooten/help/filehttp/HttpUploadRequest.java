@@ -1,11 +1,11 @@
 package com.rooten.help.filehttp;
 
+import android.text.TextUtils;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import com.rooten.util.Utilities;
 
 public class HttpUploadRequest {
     public String reqId = "";       // 请求id
@@ -88,7 +88,7 @@ public class HttpUploadRequest {
     }
 
     public void addHeadParams(String name, String value) {
-        if (Utilities.isEmpty(name)) return;
+        if (TextUtils.isEmpty(name)) return;
 
         if (headParams == null) {
             headParams = new HashMap<>();
@@ -98,7 +98,7 @@ public class HttpUploadRequest {
     }
 
     public void addBodyParams(String name, Object value) {
-        if (Utilities.isEmpty(name)) return;
+        if (TextUtils.isEmpty(name)) return;
 
         if (bodyParams == null) {
             bodyParams = new HashMap<>();
@@ -108,12 +108,12 @@ public class HttpUploadRequest {
     }
 
     public void addExtraParams(String name, Object value) {
-        if (extraParams == null || Utilities.isEmpty(name)) return;
+        if (extraParams == null || TextUtils.isEmpty(name)) return;
         extraParams.put(name, value);
     }
 
     public Object getExtraParamValue(String name) {
-        if (Utilities.isEmpty(name)) return "";
+        if (TextUtils.isEmpty(name)) return "";
         return extraParams.get(name);
     }
 }

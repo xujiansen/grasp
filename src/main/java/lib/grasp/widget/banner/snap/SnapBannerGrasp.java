@@ -21,9 +21,10 @@ import java.util.TimerTask;
 import com.rooten.BaApp;
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
-import com.rooten.util.Utilities;
+
 import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
+import lib.grasp.util.ScreenUtil;
 
 /*
         BannerGrasp mBanner = mView.findViewById(R.id.name);
@@ -176,7 +177,7 @@ public class SnapBannerGrasp extends FrameLayout implements IHandler {
 
         FrameLayout.LayoutParams paramsLL = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         paramsLL.gravity = Gravity.CENTER_HORIZONTAL| Gravity.BOTTOM;
-        paramsLL.bottomMargin = Utilities.getValueByDpi(getContext(), 10);
+        paramsLL.bottomMargin = ScreenUtil.getValueByDpi(getContext(), 10);
         mLL.setLayoutParams(paramsLL);
     }
 
@@ -259,7 +260,7 @@ public class SnapBannerGrasp extends FrameLayout implements IHandler {
         if(mDatas == null || mDatas.size() == 0) return;
         mLL.removeAllViews();
         for(SnapBannerEntity entity : mDatas){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Utilities.getValueByDpi(getContext(), 20), LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ScreenUtil.getValueByDpi(getContext(), 20), LinearLayout.LayoutParams.WRAP_CONTENT);
             params.gravity = Gravity.CENTER;
             mLL.addView(entity.itv, params);
         }

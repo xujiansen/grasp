@@ -50,15 +50,15 @@ public class AppLoopImpl {
 //     * 保证APP存在并且在前台
 //     */
 //    private static void checkAppExist(BaApp app) {
-//        L.logAndWrite(AppLoopImpl.class.getSimpleName(), "checkAppExist--校验app是否在线------------:" + ApkUtil.isAppRun(app, "com.gaqu.adplayer65"));
+//        L.logAndWrite(AppLoopImpl.class.getSimpleName(), "checkAppExist--校验app是否在线------------:" + AppUtil.isAppRun(app, "com.gaqu.adplayer65"));
 //
-//        if (!ApkUtil.isAppRun(app, "com.gaqu.adplayer65")) {
+//        if (!AppUtil.isAppRun(app, "com.gaqu.adplayer65")) {
 //            Intent intent = new Intent("android.intent.action.gaqu_adplayer");
 //            app.sendBroadcast(intent);
 //            return;
 //        }
 //
-//        ApkUtil.setTopApp(app);
+//        AppUtil.setTopApp(app);
 //    }
 
 

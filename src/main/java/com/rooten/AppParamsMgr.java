@@ -2,6 +2,7 @@ package com.rooten;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
@@ -9,8 +10,8 @@ import net.minidev.json.JSONValue;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import com.rooten.util.Utilities;
 import lib.grasp.util.L;
+import lib.grasp.util.StreamUtil;
 
 /**
  * App参数管理
@@ -55,7 +56,7 @@ public class AppParamsMgr {
         } catch (Exception e) {
             L.logOnly("saveUserInfo::Exception" + e.toString());
         } finally {
-            Utilities.closeOutputStream(out);
+            StreamUtil.closeOutputStream(out);
         }
     }
 
@@ -74,13 +75,13 @@ public class AppParamsMgr {
         } catch (Exception e) {
             L.logOnly("getUserInfo::Exception" + e.toString());
         } finally {
-            Utilities.closeInputStream(in);
+            StreamUtil.closeInputStream(in);
         }
         return null;
     }
 
     public static void saveBooleanValue(Context context, String name, boolean value) {
-        if (Utilities.isEmpty(name)) return;
+        if (TextUtils.isEmpty(name)) return;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(BOOLEAN_LOG, Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -89,14 +90,14 @@ public class AppParamsMgr {
     }
 
     public static boolean getBooleanValue(Context context, String name) {
-        if (Utilities.isEmpty(name)) return false;
+        if (TextUtils.isEmpty(name)) return false;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(BOOLEAN_LOG, Context.MODE_MULTI_PROCESS);
         return sharedPreferences.getBoolean(name, false);
     }
 
     public static void saveStringValue(Context context, String name, String value) {
-        if (Utilities.isEmpty(name)) return;
+        if (TextUtils.isEmpty(name)) return;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(STRING_LOG, Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -105,7 +106,7 @@ public class AppParamsMgr {
     }
 
     public static String getStringValue(Context context, String name) {
-        if (Utilities.isEmpty(name)) return "";
+        if (TextUtils.isEmpty(name)) return "";
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(STRING_LOG, Context.MODE_MULTI_PROCESS);
         return sharedPreferences.getString(name, "");

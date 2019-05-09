@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import com.rooten.util.Utilities;
 import okhttp3.Response;
 
 /**
@@ -497,7 +496,7 @@ public class FileUtil {
     }
 
     public static String getExtName(String filename) {
-        if (Utilities.isEmpty(filename)) {
+        if (TextUtils.isEmpty(filename)) {
             return "";
         }
 
@@ -757,4 +756,5 @@ public class FileUtil {
             }
         }
     }
+
 }

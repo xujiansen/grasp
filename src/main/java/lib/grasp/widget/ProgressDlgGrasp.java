@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
 import lib.grasp.R;
+import lib.grasp.util.L;
 
 public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnClickListener {
     private final int MSG_UPDATE_TIME = 1;
@@ -115,7 +116,11 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
             mTimer.cancel();
             mTimer = null;
         }
-        super.dismiss();
+        try {
+            super.dismiss();
+        }catch (Exception e){
+            L.logOnly(e);
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.rooten.Constant;
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
 
-import static lib.grasp.util.ApkUtil.getExplicitIntent;
+import static lib.grasp.util.AppUtil.getExplicitIntent;
 
 @SuppressWarnings("NewApi")
 public class AppLoopJob extends JobService implements IHandler {

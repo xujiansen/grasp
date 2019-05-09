@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,7 +18,6 @@ import android.widget.RelativeLayout;
 
 import lib.grasp.R;
 import com.rooten.util.LinearLayoutHelper;
-import com.rooten.util.Utilities;
 
 public class AppActivity extends ActivityEx implements OnSubmitCompletedListener, IHandler {
     protected View mRoot;
@@ -180,7 +180,7 @@ public class AppActivity extends ActivityEx implements OnSubmitCompletedListener
     }
 
     public void setTitle(String title) {
-        if (!Utilities.isEmpty(title)) {
+        if (!TextUtils.isEmpty(title)) {
             if (getSupportActionBar() == null) return;
             getSupportActionBar().setTitle(title);
         }

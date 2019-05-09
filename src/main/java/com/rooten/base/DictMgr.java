@@ -13,7 +13,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.rooten.Constant;
 import com.rooten.ctrl.IDict;
-import com.rooten.util.Utilities;
+import lib.grasp.util.StringUtil;
+
+import lib.grasp.util.FileUtil;
 
 final public class DictMgr {
     private static final String DB_NAME = "dict.db";
@@ -31,11 +33,11 @@ final public class DictMgr {
 
     public boolean initDatabase(final String strDictPath) {
         String strDictName = strDictPath + DB_NAME;
-        if (!Utilities.ensurePathExists(strDictPath)) return false;
+        if (!FileUtil.ensurePathExists(strDictPath)) return false;
 
         try {
             mDb = SQLiteDatabase.openOrCreateDatabase(strDictName, null);
-            if (!Utilities.fileExists(strDictName)) return false;
+            if (!FileUtil.fileExists(strDictName)) return false;
 
             dropTable(TB_TEMP);
             return createDictMgr();
@@ -162,7 +164,7 @@ final public class DictMgr {
                 result.moveToNext();
             }
         }
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return hash;
     }
 
@@ -172,7 +174,7 @@ final public class DictMgr {
         String strFmt = "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'";
         Cursor result = mDb.rawQuery(String.format(strFmt, strTableName), null);
         boolean bRet = (result.getCount() > 0);
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return bRet;
     }
 
@@ -267,7 +269,7 @@ final public class DictMgr {
         } catch (SQLException e) {
             if (Constant.APP_DEBUG) System.out.println(e);
         } finally {
-            Utilities.closeCursor(result);
+            DBBase.closeCursor(result);
         }
         return false;
     }
@@ -279,7 +281,7 @@ final public class DictMgr {
         String strSql = String.format(strFmt, dictName);
         Cursor result = mDb.rawQuery(strSql, null);
         int nCols = result.getColumnCount();
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return nCols;
     }
 
@@ -295,7 +297,7 @@ final public class DictMgr {
         for (int i = 0; i < nCols; i++) {
             arrCols.add(result.getColumnName(i));
         }
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return arrCols;
     }
 
@@ -303,7 +305,7 @@ final public class DictMgr {
         if (!tableExists(dictName)) return null;
 
         ArrayList<String> arrCols = getColumn(dictName);
-        return Utilities.getStringAt(arrCols, nColumn);
+        return StringUtil.getStringAt(arrCols, nColumn);
     }
 
     private int getRowCount(final String dictName) {
@@ -313,13 +315,13 @@ final public class DictMgr {
         String strSql = String.format(strFmt, dictName);
         Cursor result = mDb.rawQuery(strSql, null);
         if (result.getCount() == 0) {
-            Utilities.closeCursor(result);
+            DBBase.closeCursor(result);
             return 0;
         }
 
         result.moveToFirst();
         final int nRows = result.getInt(0);
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return nRows;
     }
 
@@ -333,13 +335,13 @@ final public class DictMgr {
         String strSql = String.format(strFmt, dictName, filter);
         Cursor result = mDb.rawQuery(strSql, null);
         if (result.getCount() == 0) {
-            Utilities.closeCursor(result);
+            DBBase.closeCursor(result);
             return 0;
         }
 
         result.moveToFirst();
         final int nRows = result.getInt(0);
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return nRows;
     }
 
@@ -354,7 +356,7 @@ final public class DictMgr {
         Cursor result = mDb.rawQuery(strSql, null);
         final int nRows = result.getCount();
         if (nRows == 0) {
-            Utilities.closeCursor(result);
+            DBBase.closeCursor(result);
             return null;
         }
 
@@ -363,7 +365,7 @@ final public class DictMgr {
         for (int i = 0; i < arrCol.size(); i++) {
             arrVal.add(result.getString(i));
         }
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return arrVal;
     }
 
@@ -394,13 +396,13 @@ final public class DictMgr {
         Cursor result = mDb.rawQuery(strSql, null);
         final int nRows = result.getCount();
         if (nRows == 0) {
-            Utilities.closeCursor(result);
+            DBBase.closeCursor(result);
             return 0;
         }
 
         result.moveToFirst();
         int count = result.getInt(result.getColumnIndex("dicts"));
-        Utilities.closeCursor(result);
+        DBBase.closeCursor(result);
         return count;
     }
 

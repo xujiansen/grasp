@@ -1,5 +1,7 @@
 package com.rooten.base;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.rooten.util.Utilities;
+import lib.grasp.util.FileUtil;
 
 public class UserData{
 
@@ -31,24 +33,24 @@ public class UserData{
     /** 头像临时目录(压缩) */
     public String getCompressAvatarPath() {
         String path = mStrUserPath + "avatar/compress/";
-        Utilities.ensurePathExists(path);
+        FileUtil.ensurePathExists(path);
         return path;
     }
 
     /** 头像临时目录(裁切) */
     public String getCropAvatarPath() {
         String path = mStrUserPath + "avatar/crop/";
-        Utilities.ensurePathExists(path);
+        FileUtil.ensurePathExists(path);
         return path;
     }
 
     public void setPrivatePath(final String strPath) {
         mStrUserPath = strPath;
-        Utilities.ensurePathExists(strPath);
+        FileUtil.ensurePathExists(strPath);
     }
 
     public boolean isError() {
-        return Utilities.isEmpty(mStrUserPath);
+        return TextUtils.isEmpty(mStrUserPath);
     }
 
     /** post/get 放在头里面-----系统里面的通用业务模块使用（没办法） */

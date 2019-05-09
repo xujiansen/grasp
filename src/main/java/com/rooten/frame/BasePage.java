@@ -1,11 +1,13 @@
 package com.rooten.frame;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import com.rooten.BaApp;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.ViewUtil;
 
 public class BasePage implements IShowError {
     protected final Context mContext;
@@ -74,12 +76,12 @@ public class BasePage implements IShowError {
     public void showError(final View view, final String errMsg) {
         errorVerifyOrSubmit();
         if (view != null) {
-            Utilities.setFocusView(view);
+            ViewUtil.setFocusView(view);
         }
 
-        Utilities.shakeView(getContext(), view);
+        ViewUtil.shakeView(getContext(), view);
 
-        if (!Utilities.isEmpty(errMsg)) {
+        if (!TextUtils.isEmpty(errMsg)) {
 //			MessageBoxGrasp.infoMsg(getContext(), errMsg);
             Toast.makeText(getContext(), errMsg, Toast.LENGTH_LONG).show();
         }

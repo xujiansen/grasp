@@ -14,6 +14,12 @@ import java.io.FileOutputStream;
 
 public class ScreenUtil {
 
+    /** 固定值适配各种屏幕密度 */
+    public static int getValueByDpi(Context ctx, int value) {
+        float density = ctx.getResources().getDisplayMetrics().density;
+        return (int) (value * density + 0.5f);
+    }
+
     /** 获取屏幕密度 */
     public static float getScreenDensity(Context context) {
         return getDisplayMetrics(context).density;

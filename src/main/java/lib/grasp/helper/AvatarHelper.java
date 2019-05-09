@@ -21,8 +21,9 @@ import com.rooten.BaApp;
 import com.rooten.Constant;
 import com.rooten.frame.ActivityEx;
 import com.rooten.frame.IResultListener;
-import com.rooten.util.Utilities;
+
 import lib.grasp.util.FileUtil;
+import lib.grasp.util.ScreenUtil;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -83,8 +84,8 @@ public class AvatarHelper {
         intent.putExtra("aspectY", 1);
 
         // outputX , outputY : 裁剪图片宽高
-        intent.putExtra("outputX", Utilities.getValueByDpi(mAct, 160));
-        intent.putExtra("outputY", Utilities.getValueByDpi(mAct, 160));
+        intent.putExtra("outputX", ScreenUtil.getValueByDpi(mAct, 160));
+        intent.putExtra("outputY", ScreenUtil.getValueByDpi(mAct, 160));
 //        intent.putExtra("return-data", true);      //原本的裁剪方式
 
         //uritempFile为Uri类变量，实例化uritempFile，转化为uri方式解决问题

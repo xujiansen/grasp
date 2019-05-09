@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +25,8 @@ import lib.grasp.R;
 import com.rooten.frame.AppActivity;
 import com.rooten.frame.IResultListener;
 import com.rooten.frame.RecycleViewPage;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 import lib.grasp.util.GlideUtils;
 
 public class ImageManagerActivity extends AppActivity {
@@ -152,7 +154,7 @@ public class ImageManagerActivity extends AppActivity {
 
                 // 图片路径校验
                 if (parent.equals("/storage")) continue;
-                if (!Utilities.fileExists(uri)) continue;
+                if (!FileUtil.fileExists(uri)) continue;
                 if (!file.isFile()) continue;
 
                 // 图片长度校验
@@ -165,7 +167,7 @@ public class ImageManagerActivity extends AppActivity {
                     item.arrImg.add(uri);
                 } else {
                     String folderName = getFolderName(parent);
-                    if (Utilities.isEmpty(folderName)) continue;
+                    if (TextUtils.isEmpty(folderName)) continue;
 
                     ImagePathItem item = new ImagePathItem();
                     item.cover = uri;

@@ -19,7 +19,8 @@ import java.util.TimerTask;
 
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.ScreenUtil;
 
 /*
         BannerGrasp mBanner = mView.findViewById(R.id.name);
@@ -139,7 +140,7 @@ public class BannerGrasp extends FrameLayout implements IHandler, ViewPager.OnPa
 
         FrameLayout.LayoutParams paramsLL = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         paramsLL.gravity = Gravity.CENTER_HORIZONTAL| Gravity.BOTTOM;
-        paramsLL.bottomMargin = Utilities.getValueByDpi(getContext(), 10);
+        paramsLL.bottomMargin = ScreenUtil.getValueByDpi(getContext(), 10);
         mLL.setLayoutParams(paramsLL);
     }
 
@@ -231,7 +232,7 @@ public class BannerGrasp extends FrameLayout implements IHandler, ViewPager.OnPa
         mLL.removeAllViews();
         for(int i = 0; i < mDatas.size(); i++){
             BannerEntity entity = mDatas.get(i);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Utilities.getValueByDpi(getContext(), 20), LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ScreenUtil.getValueByDpi(getContext(), 20), LinearLayout.LayoutParams.WRAP_CONTENT);
             params.gravity = Gravity.CENTER;
             mLL.addView(entity.itv, params);
         }

@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rooten.util.Utilities;
 import lib.grasp.R;
+import lib.grasp.util.FileUtil;
 
 public class PressSpeakButton extends AppCompatButton {
     public interface RecordListener {
@@ -216,7 +216,7 @@ public class PressSpeakButton extends AppCompatButton {
 
 
         recorder.stopRecording();
-        if (mIsCanceled || mRecodeTime < MIN_RECORD_TIME) Utilities.delFile(recorder.getFilePath());
+        if (mIsCanceled || mRecodeTime < MIN_RECORD_TIME) FileUtil.delFile(recorder.getFilePath());
         else if(mRecordListener != null) mRecordListener.onNewAudioMsgInput(mRecodeTime, recorder.getFilePath());
     }
 

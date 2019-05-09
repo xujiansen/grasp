@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.rooten.ctrl.widget.SegmentedGroup;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.NumberUtil;
+import lib.grasp.util.ScreenUtil;
 
 public class MultiRadioTab extends SegmentedGroup implements MultiPageMgr.onRealizeMultiTab {
     private ArrayList<RadioButton> mBtnList = new ArrayList<>();
@@ -33,10 +35,10 @@ public class MultiRadioTab extends SegmentedGroup implements MultiPageMgr.onReal
         setBackgroundColor(Color.WHITE);
         setOrientation(HORIZONTAL);
 
-        int t = Utilities.getValueByDpi(getContext(), 9);
-        int b = Utilities.getValueByDpi(getContext(), 9);
-        int l = Utilities.getValueByDpi(getContext(), 12);
-        int r = Utilities.getValueByDpi(getContext(), 12);
+        int t = ScreenUtil.getValueByDpi(getContext(), 9);
+        int b = ScreenUtil.getValueByDpi(getContext(), 9);
+        int l = ScreenUtil.getValueByDpi(getContext(), 12);
+        int r = ScreenUtil.getValueByDpi(getContext(), 12);
         setPadding(l, t, r, b);
     }
 
@@ -44,12 +46,12 @@ public class MultiRadioTab extends SegmentedGroup implements MultiPageMgr.onReal
         int index = mBtnList.size() + 1;
 
         RadioButton btn = new RadioButton(getContext());
-        btn.setId(Utilities.generateViewId());
-        btn.setMinWidth(Utilities.getValueByDpi(getContext(), 60));
+        btn.setId(NumberUtil.generateViewId());
+        btn.setMinWidth(ScreenUtil.getValueByDpi(getContext(), 60));
         btn.setGravity(Gravity.CENTER);
         btn.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        int padd = Utilities.getValueByDpi(getContext(), 5);
+        int padd = ScreenUtil.getValueByDpi(getContext(), 5);
         btn.setPadding(padd, 0, padd, 0);
         btn.setTextSize(16);
         if (title != null) btn.setText(title);
@@ -58,7 +60,7 @@ public class MultiRadioTab extends SegmentedGroup implements MultiPageMgr.onReal
         int w = LayoutParams.WRAP_CONTENT;
         LayoutParams params = new LayoutParams(0, w);
         params.weight = 1;
-        params.height = Utilities.getValueByDpi(getContext(), 45);
+        params.height = ScreenUtil.getValueByDpi(getContext(), 45);
         addView(btn, params);
 
         mBtnList.add(btn);

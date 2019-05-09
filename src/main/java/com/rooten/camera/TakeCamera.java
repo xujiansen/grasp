@@ -10,7 +10,8 @@ import com.rooten.Constant;
 import lib.grasp.R;
 import com.rooten.frame.IActivityResult;
 import com.rooten.frame.IResultListener;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 import lib.grasp.util.PathUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 
@@ -64,7 +65,7 @@ public class TakeCamera {
     }
 
     public void onCapture(final onCameraReturnListener l) {
-        if (!Utilities.ensurePathExists(mPicPath)) {
+        if (!FileUtil.ensurePathExists(mPicPath)) {
             MessageBoxGrasp.infoMsg(mContext, "图片保存目录不存在！");
             return;
         }

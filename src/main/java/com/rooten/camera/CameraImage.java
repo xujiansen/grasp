@@ -24,7 +24,8 @@ import java.util.ArrayList;
 
 import lib.grasp.R;
 import com.rooten.util.IconifyUtil;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 import uk.co.senab.photoview.PhotoView;
 
@@ -200,7 +201,7 @@ public class CameraImage extends AppCompatActivity implements View.OnClickListen
 
         View.OnClickListener listenerOk = v -> {
             for (String img : mArrImgs) {
-                Utilities.delFile(img);
+                FileUtil.delFile(img);
             }
             mArrImgs.clear();
             mAdapter.notifyDataSetChanged();

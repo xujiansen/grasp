@@ -56,7 +56,9 @@ import java.util.List;
 import lib.grasp.R;
 import com.rooten.frame.ActivityEx;
 import com.rooten.util.IconifyUtil;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.BitmapUtil;
+import lib.grasp.util.FileUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 
 @SuppressLint("NewApi")
@@ -175,7 +177,7 @@ public class CameraActivity extends ActivityEx implements Callback, View.OnClick
             return;
         }
 
-        Utilities.ensurePathExists(mImagePath);
+        FileUtil.ensurePathExists(mImagePath);
 
         mSurfaceView = (SurfaceView) findViewById(R.id.camera_preview);
         mFocusRect = (FocusRectangle) findViewById(R.id.camera_focus_rectangle);
@@ -426,7 +428,7 @@ public class CameraActivity extends ActivityEx implements Callback, View.OnClick
             mSelfShot = false;
         }
 
-        if (mImagePath == null || !Utilities.fileExists(mImagePath)) {
+        if (mImagePath == null || !FileUtil.fileExists(mImagePath)) {
             return false;
         }
         return true;
@@ -462,7 +464,7 @@ public class CameraActivity extends ActivityEx implements Callback, View.OnClick
 
         View.OnClickListener listenerOk = v -> {
             for (String img : mImages) {
-                Utilities.delFile(img);
+                FileUtil.delFile(img);
             }
             mImages.clear();
             finish();
@@ -986,7 +988,7 @@ public class CameraActivity extends ActivityEx implements Callback, View.OnClick
             if (scale == 1.0f) return src;
 
             if (scale > 1.0f) scale = 1.0f;
-            Bitmap newBmp = Utilities.scaleBitmap(src, scale);
+            Bitmap newBmp = BitmapUtil.scaleBitmap(src, scale);
             return newBmp;
         }
 
@@ -1090,7 +1092,7 @@ public class CameraActivity extends ActivityEx implements Callback, View.OnClick
             }
 
             if (scale > 1.0f) scale = 1.0f;
-            Bitmap newBmp = Utilities.scaleBitmap(tempBmp, scale);
+            Bitmap newBmp = BitmapUtil.scaleBitmap(tempBmp, scale);
             tempBmp.recycle();
             return newBmp;
         }

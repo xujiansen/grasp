@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
+
 import com.rooten.frame.BasePage.onVerifyAndSubmitListener;
 import com.rooten.util.LinearLayoutHelper;
-import com.rooten.util.Utilities;
 
 public class MultiPageMgr extends LinearLayout implements onVerifyAndSubmitListener {
     private class Page {
@@ -83,7 +84,7 @@ public class MultiPageMgr extends LinearLayout implements onVerifyAndSubmitListe
         setBackgroundColor(getResources().getColor(R.color.window_color));
 
         mViewPager = new ViewPager(getContext());
-        mViewPager.setPageMargin(Utilities.getValueByDpi(getContext(), 1));
+        mViewPager.setPageMargin(ScreenUtil.getValueByDpi(getContext(), 1));
         mViewPager.setPageMarginDrawable(new ColorDrawable(getResources().getColor(R.color.shape_line)));
 
         ViewPager.LayoutParams lp = new ViewPager.LayoutParams();
@@ -138,11 +139,11 @@ public class MultiPageMgr extends LinearLayout implements onVerifyAndSubmitListe
             LinearLayoutHelper.addView(this, tabView, width, height);
         }
 
-        LinearLayoutHelper.addView(this, lineTop, width, Utilities.getValueByDpi(getContext(), 1));
+        LinearLayoutHelper.addView(this, lineTop, width, ScreenUtil.getValueByDpi(getContext(), 1));
         LinearLayoutHelper.addView(this, mViewPager, width, height, 1);
 
         if (mHasIndicator) {
-            LinearLayoutHelper.addView(this, lineBottom, width, Utilities.getValueByDpi(getContext(), 1));
+            LinearLayoutHelper.addView(this, lineBottom, width, ScreenUtil.getValueByDpi(getContext(), 1));
             LinearLayoutHelper.addView(this, mIndicator, width, height);
         }
     }

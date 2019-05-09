@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -18,8 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
+
 import com.rooten.util.LinearLayoutHelper;
-import com.rooten.util.Utilities;
 
 public class EditDialog {
     private static AlertDialog mAlertDlg;
@@ -261,12 +263,12 @@ public class EditDialog {
         textView.setText(String.valueOf(defaultValue));
         textView.setTextSize(16);
         textView.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
-        LinearLayoutHelper.addView(layout, textView, Utilities.getValueByDpi(context, 50), Utilities.getValueByDpi(context, 50));
+        LinearLayoutHelper.addView(layout, textView, ScreenUtil.getValueByDpi(context, 50), ScreenUtil.getValueByDpi(context, 50));
 
         SeekBar seekBar = new SeekBar(context);
         seekBar.setMax(max - min);
         seekBar.setProgress(Math.max(defaultValue - min, 0));
-        LinearLayoutHelper.addView(layout, seekBar, ViewGroup.LayoutParams.MATCH_PARENT, Utilities.getValueByDpi(context, 50));
+        LinearLayoutHelper.addView(layout, seekBar, ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtil.getValueByDpi(context, 50));
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -338,9 +340,9 @@ public class EditDialog {
     }
 
     private static AppCompatEditText createEditWithTitle(final Context context, LinearLayout layout, String title, String defaultText, String hint) {
-        if (Utilities.isEmpty(defaultText)) defaultText = "";
-        if (Utilities.isEmpty(title))       title = "";
-        if (Utilities.isEmpty(hint))        hint = "";
+        if (TextUtils.isEmpty(defaultText)) defaultText = "";
+        if (TextUtils.isEmpty(title))       title = "";
+        if (TextUtils.isEmpty(hint))        hint = "";
 
         final AppCompatTextView textView = new AppCompatTextView(context);
         textView.setText(title);
@@ -354,7 +356,7 @@ public class EditDialog {
         edtText.setSelection(defaultText.length());
 
         int pad = context.getResources().getDimensionPixelSize(R.dimen.abc_dialog_padding_material);
-        layout.setPadding(pad, Utilities.getValueByDpi(context, 8), pad, 0);
+        layout.setPadding(pad, ScreenUtil.getValueByDpi(context, 8), pad, 0);
         int width = 0;
         int height = LinearLayoutHelper.WRAP_CONTENT;
         LinearLayoutHelper.addView(layout, textView, width, height, 1);
@@ -363,8 +365,8 @@ public class EditDialog {
     }
 
     private static AppCompatEditText createEditWithHint(final Context context, LinearLayout layout, String hint, String value) {
-        if (Utilities.isEmpty(hint)) hint = "";
-        if (Utilities.isEmpty(value)) value = "";
+        if (TextUtils.isEmpty(hint)) hint = "";
+        if (TextUtils.isEmpty(value)) value = "";
 
         final AppCompatEditText edtText = new AppCompatEditText(context);
         edtText.setHint(hint);
@@ -372,7 +374,7 @@ public class EditDialog {
         edtText.setSelection(value.length());
 
         int pad = context.getResources().getDimensionPixelSize(R.dimen.abc_dialog_padding_material);
-        layout.setPadding(pad, Utilities.getValueByDpi(context, 8), pad, 0);
+        layout.setPadding(pad, ScreenUtil.getValueByDpi(context, 8), pad, 0);
         int width = LinearLayoutHelper.MATCH_PARENT;
         int height = LinearLayoutHelper.WRAP_CONTENT;
         LinearLayoutHelper.addView(layout, edtText, width, height);

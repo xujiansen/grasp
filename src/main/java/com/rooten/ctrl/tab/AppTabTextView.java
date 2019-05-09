@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.rooten.util.Utilities;
+import lib.grasp.util.ScreenUtil;
 
 public class AppTabTextView extends AppCompatTextView {
     private int mMode = MODE_NUM_POP;
@@ -67,7 +67,7 @@ public class AppTabTextView extends AppCompatTextView {
     private void showRedPop() {
         setText("");
 
-        int size = Utilities.getValueByDpi(getContext(), 14);
+        int size = ScreenUtil.getValueByDpi(getContext(), 14);
         ViewGroup.LayoutParams params = getLayoutParams();
         params.width = size;
         params.height = size;

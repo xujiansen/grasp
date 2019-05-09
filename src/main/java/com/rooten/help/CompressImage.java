@@ -10,7 +10,10 @@ import java.io.FileOutputStream;
 import java.util.UUID;
 
 //import com.rooten.frame.CameraPage;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.BitmapUtil;
+import lib.grasp.util.FileUtil;
+import lib.grasp.util.StreamUtil;
 
 public class CompressImage {
     // 常用图片大小
@@ -53,30 +56,30 @@ public class CompressImage {
                 int max = Math.max(temp.getWidth(), temp.getHeight());
                 if (max > picWidth) {
                     float ratio = ((float) picWidth / (float) max);
-                    Bitmap newBitmap = Utilities.scaleBitmap(temp, ratio);
-                    Utilities.recycle(temp);
+                    Bitmap newBitmap = BitmapUtil.scaleBitmap(temp, ratio);
+                    BitmapUtil.recycle(temp);
 
                     // png转jpg,输出到输出流中
                     newBitmap.compress(Bitmap.CompressFormat.JPEG, fileQuality, out);
-                    Utilities.recycle(newBitmap);
+                    BitmapUtil.recycle(newBitmap);
                 } else {
                     // png转jpg,输出到输出流中
                     temp.compress(Bitmap.CompressFormat.JPEG, fileQuality, out);
-                    Utilities.recycle(temp);
+                    BitmapUtil.recycle(temp);
                 }
 
                 out.flush(); // 刷新缓冲到文件
             } else {
                 // 直接复制
-                if (!Utilities.copyFile(srcFile.toString(), desFile.toString())) {
+                if (!FileUtil.copyFile(srcFile.toString(), desFile.toString())) {
                     return "";
                 }
             }
             return desFile.toString();
         } catch (Exception e) {
         } finally {
-            Utilities.closeInputStream(in);
-            Utilities.closeOutputStream(out);
+            StreamUtil.closeInputStream(in);
+            StreamUtil.closeOutputStream(out);
         }
         return "";
     }

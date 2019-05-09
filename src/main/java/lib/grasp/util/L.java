@@ -1,21 +1,15 @@
 package lib.grasp.util;
 
 import android.os.Environment;
-import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import com.rooten.util.Utilities;
 
 /**
  * 带日志文件输入的，又可控开关的日志调试
@@ -68,8 +62,8 @@ public class L {
         String needWriteFile = mLogFile.format(nowTime);
         String needWriteMessage = mLogSdf.format(nowTime) + " " + tag + " " + text;
         File file = new File(LOG_PATH_SDCARD_DIR, needWriteFile + LOGFILEName);
-        Utilities.ensurePathExists(file.getParent());
-        if (!Utilities.fileExists(file.getAbsolutePath())) {
+        FileUtil.ensurePathExists(file.getParent());
+        if (!FileUtil.fileExists(file.getAbsolutePath())) {
             try {
                 file.createNewFile();
             } catch (IOException e) {

@@ -1,5 +1,7 @@
 package com.rooten.help.filehttp;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -9,7 +11,6 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.rooten.util.Utilities;
 import lib.grasp.util.L;
 
 public class FileUploadMgr {
@@ -153,7 +154,7 @@ public class FileUploadMgr {
             L.logOnly("UploadRun>>run::start"+threadName + "开始运行");
 
             while (!mQuit) {
-                if (Utilities.isEmpty(mCategoryID)) break;
+                if (TextUtils.isEmpty(mCategoryID)) break;
 
                 Semaphore semaphore = getSemaphore(mCategoryID);
                 if (semaphore == null) break;

@@ -19,8 +19,9 @@ import com.rooten.ctrl.widget.HackyViewPager;
 import com.rooten.frame.AppActivity;
 import com.rooten.frame.LinearPage;
 import com.rooten.util.IconifyUtil;
-import com.rooten.util.Utilities;
+
 import lib.grasp.util.GlideUtils;
+import lib.grasp.util.ScreenUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 import uk.co.senab.photoview.PhotoView;
 
@@ -171,7 +172,7 @@ public class ImagePreviewAndEditActivity extends AppActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            int padTopAndBottom = Utilities.getValueByDpi(getBaseContext(), 5);
+            int padTopAndBottom = ScreenUtil.getValueByDpi(getBaseContext(), 5);
             PhotoView view = new PhotoView(ImagePreviewAndEditActivity.this);
             view.setPadding(0, padTopAndBottom, 0, padTopAndBottom);
             container.addView(view);

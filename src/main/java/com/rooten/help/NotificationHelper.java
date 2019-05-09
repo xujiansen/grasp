@@ -40,7 +40,7 @@ public class NotificationHelper {
 
     public void addAppNotification() {
         String title = "您还没有登录";
-//        if (!Utilities.isEmpty(mApp.getUserData().name)) {
+//        if (!StringUtil.isEmpty(mApp.getUserData().name)) {
 //            title = mApp.getUserData().name + " 你好";
 //        }
 

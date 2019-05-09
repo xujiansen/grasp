@@ -27,8 +27,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import com.rooten.BaApp;
-import com.rooten.util.Utilities;
+
 import lib.grasp.R;
+import lib.grasp.util.StreamUtil;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -211,7 +212,7 @@ public class AppHelper {
         } catch (IOException ex) {
             return "";
         } finally {
-            Utilities.closeBufferReader(input);
+            StreamUtil.closeBufferReader(input);
         }
         return line;
     }

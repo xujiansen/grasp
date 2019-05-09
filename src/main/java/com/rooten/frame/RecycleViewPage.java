@@ -14,9 +14,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
+
 import com.rooten.ctrl.widget.SimpleItemDecoration;
 import com.rooten.ctrl.widget.SwipeRefreshLayout;
-import com.rooten.util.Utilities;
 
 public class RecycleViewPage extends BasePage implements SwipeRefreshLayout.OnLoadListener, SwipeRefreshLayout.OnRefreshListener {
     protected View mRootView;
@@ -148,8 +149,8 @@ public class RecycleViewPage extends BasePage implements SwipeRefreshLayout.OnLo
             int padLeftAndRight = isLowLollipop ? 9 : 9;
 
             Context context = holder.itemView.getContext();
-            padTopAndBottom = Utilities.getValueByDpi(context, padTopAndBottom);
-            padLeftAndRight = Utilities.getValueByDpi(context, padLeftAndRight);
+            padTopAndBottom = ScreenUtil.getValueByDpi(context, padTopAndBottom);
+            padLeftAndRight = ScreenUtil.getValueByDpi(context, padLeftAndRight);
 
             int dataSize = getItemCount();
             boolean isLast = position == dataSize - 1;

@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.rooten.util.Utilities;
-
 /**
  * 时间格式化
  */
@@ -53,8 +51,8 @@ public class TimeDateUtil {
     /** 获取两个时间的距离 */
     public static long getTimeDistance(String time1, String time2){
         if(TextUtils.isEmpty(time1) || TextUtils.isEmpty(time2)) return -1;
-        Date date1 = Utilities.parseTimeEs(time1);
-        Date date2 = Utilities.parseTimeEs(time2);
+        Date date1 = parseTimeEs(time1);
+        Date date2 = parseTimeEs(time2);
         long long1 = date1.getTime();
         long long2 = date2.getTime();
         if(long2 < long1) return -1;

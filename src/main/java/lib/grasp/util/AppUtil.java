@@ -23,15 +23,28 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.List;
 
-import com.rooten.util.Utilities;
-
 import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
  * Created by GaQu_Dev on 2018/10/31.
  */
-public class ApkUtil {
+public class AppUtil {
 
+    /** 获取apk文件的ICON */
+    public static Drawable getApkIcon(Context context, String apkPath) {
+        if (!FileUtil.fileExists(apkPath)) return null;
+
+        PackageManager pckManager = context.getPackageManager();
+        PackageInfo info = pckManager.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES);
+        if (info == null) return null;
+
+        ApplicationInfo appInfo = info.applicationInfo;
+        appInfo.sourceDir = apkPath;
+        appInfo.publicSourceDir = apkPath;
+        return appInfo.loadIcon(pckManager);
+    }
+
+    /** 安装APK */
     public static void installAPK(Context context, File file) {
         if(!FileUtil.isFileExists(file)) return;
         Uri apk = getImageContentUri(context, file);
@@ -71,7 +84,7 @@ public class ApkUtil {
         }
     }
 
-    public static String getMIMEType(File var0) {
+    private static String getMIMEType(File var0) {
         String var1 = "";
         String var2 = var0.getName();
         String var3 = var2.substring(var2.lastIndexOf(".") + 1, var2.length()).toLowerCase();
@@ -86,7 +99,7 @@ public class ApkUtil {
      */
     public static String getIMEI(Context context) {
         if(!PermissionUtil.checkDangerousPermission(context, Manifest.permission.READ_PHONE_STATE)) return "";
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
     }
 
@@ -102,7 +115,6 @@ public class ApkUtil {
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
-
 
     /** 启动远程服务 */
     public static Intent getExplicitIntent(Context context, Intent implicitIntent) {
@@ -150,6 +162,7 @@ public class ApkUtil {
             return false;
         }
     }
+
     /**
      * 方法描述：判断某一Service是否正在运行
      *
@@ -247,8 +260,7 @@ public class ApkUtil {
         return false;
     }
 
-
-    //获取已安装应用的 uid，-1 表示未安装此应用或程序异常
+    /** 获取已安装应用的 uid，-1 表示未安装此应用或程序异常 */
     private static int getPackageUid(Context context, String packageName) {
         try {
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
@@ -282,33 +294,12 @@ public class ApkUtil {
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-    public static Drawable getApkIcon(Context context, String apkPath) {
-        if (!Utilities.fileExists(apkPath)) return null;
-
-        PackageManager pckManager = context.getPackageManager();
-        PackageInfo info = pckManager.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES);
-        if (info == null) return null;
-
-        ApplicationInfo appInfo = info.applicationInfo;
-        appInfo.sourceDir = apkPath;
-        appInfo.publicSourceDir = apkPath;
-        return appInfo.loadIcon(pckManager);
-    }
-
+    /** String的文件地址转Uri */
     public static Uri getImageContentUri(Context context, File imageFile) {
         String filePath = imageFile.getAbsolutePath();
-        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
-                new String[] { filePath }, null);
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID },
+                MediaStore.Images.Media.DATA + "=? ", new String[] { filePath }, null);
         if (cursor != null && cursor.moveToFirst()) {
             int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
             Uri baseUri = Uri.parse("content://media/external/images/media");
@@ -324,6 +315,7 @@ public class ApkUtil {
         }
     }
 
+    /** 获取App的VersionName */
     public static String getAppVersionName(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -333,6 +325,7 @@ public class ApkUtil {
         }
     }
 
+    /** 获取App的VersionCode */
     public static String getAppVersionCode(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);

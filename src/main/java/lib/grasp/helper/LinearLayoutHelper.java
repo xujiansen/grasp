@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import com.rooten.util.Utilities;
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
 import lib.grasp.widget.LastInputEditText;
 
 public final class LinearLayoutHelper {
@@ -77,7 +77,7 @@ public final class LinearLayoutHelper {
     public static void addTransportSpace(Context ctx, LinearLayout ll, int height) {
         if(ll == null) return;
         View view = new View(ctx);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, height));
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
     }
 
     /** 添加文字透明行 */
@@ -86,8 +86,8 @@ public final class LinearLayoutHelper {
         TextView view = new TextView(ctx);
         view.setText(text);
         view.setGravity(Gravity.CENTER_VERTICAL| Gravity.LEFT);
-        view.setPadding(Utilities.getValueByDpi(ctx, 8), 0, Utilities.getValueByDpi(ctx, 8), 0);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, height));
+        view.setPadding(ScreenUtil.getValueByDpi(ctx, 8), 0, ScreenUtil.getValueByDpi(ctx, 8), 0);
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
     }
 
     /** 添加分割线 */
@@ -103,9 +103,9 @@ public final class LinearLayoutHelper {
         if(ll == null) return;
         View view = new View(ctx);
         view.setBackgroundColor(Color.LTGRAY);
-//        view.setPadding(Utilities.getValueByDpi(ctx, 5), 0, Utilities.getValueByDpi(ctx, 5), 0);
+//        view.setPadding(ScreenUtil.getValueByDpi(ctx, 5), 0, ScreenUtil.getValueByDpi(ctx, 5), 0);
         LayoutParams lp = new LayoutParams(MATCH_PARENT, 1);
-        lp.setMargins(Utilities.getValueByDpi(ctx, 5), 0, Utilities.getValueByDpi(ctx, 5), 0);
+        lp.setMargins(ScreenUtil.getValueByDpi(ctx, 5), 0, ScreenUtil.getValueByDpi(ctx, 5), 0);
         ll.addView(view, lp);
     }
 
@@ -129,7 +129,7 @@ public final class LinearLayoutHelper {
         }
         view.setTag(tag);
         view.setOnClickListener(listener);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, 50));
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, 50));
         return tvValue;
     }
 
@@ -143,13 +143,13 @@ public final class LinearLayoutHelper {
         switcher.setChecked(value);
         switcher.setTag(tag);
         if(listener != null)switcher.setOnCheckedChangeListener(listener);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, 50));
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, 50));
         return switcher;
     }
 
     /** 添加左键右图片行(不显示箭头) */
     public static View addKeyImgLine(Context ctx, View.OnClickListener listener, LinearLayout ll, String title, int value, String tag) {
-        return addKeyImgArrowLine(ctx, listener, ll, title, value, tag, Utilities.getValueByDpi(ctx, 40), false);
+        return addKeyImgArrowLine(ctx, listener, ll, title, value, tag, ScreenUtil.getValueByDpi(ctx, 40), false);
     }
 
     /** 添加左键右图片+箭头行 */
@@ -169,7 +169,7 @@ public final class LinearLayoutHelper {
         container.setOnClickListener(listener);
         view.setTag(tag);
         view.setOnClickListener(isShowArrow ? listener : null);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, height));
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
         return ivValue;
     }
 
@@ -184,7 +184,7 @@ public final class LinearLayoutHelper {
         tvValue.setEnabled(editable);
         if(!editable) tvValue.setTextColor(Color.GRAY);
         if(!TextUtils.isEmpty(value)) tvValue.setText(value);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, 50));
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, 50));
         return tvValue;
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,7 +22,8 @@ import com.rooten.util.Util;
 import lib.grasp.R;
 import com.rooten.ctrl.widget.RoundProgressBar;
 import com.rooten.frame.ActivityEx;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 import lib.grasp.util.GlideUtils;
 import uk.co.senab.photoview.PhotoView;
 
@@ -113,7 +115,7 @@ public class ImageProgressActivity extends ActivityEx implements
 
             HashMap obj = (HashMap) itemObj;
             String savePath = Util.getString(obj, "savePath");
-            if (!Utilities.fileExists(savePath)) continue;
+            if (!FileUtil.fileExists(savePath)) continue;
 
             obj.put("progress", 100);
             obj.put("state", STATE_SUCCESS);
@@ -151,7 +153,7 @@ public class ImageProgressActivity extends ActivityEx implements
         String msgId = data.getString("msgId", "");
 
         // 校验数据的正确性
-        if (Utilities.isEmpty(saveFile) || Utilities.isEmpty(msgId) || progress == DEFAULT_PROGRESS)
+        if (TextUtils.isEmpty(saveFile) || TextUtils.isEmpty(msgId) || progress == DEFAULT_PROGRESS)
             return;
 
         // 刷新页面
@@ -183,7 +185,7 @@ public class ImageProgressActivity extends ActivityEx implements
     }
 
     private HashMap<String, Object> findItemDataByMsgId(String msgId) {
-        if (Utilities.isEmpty(msgId)) return null;
+        if (TextUtils.isEmpty(msgId)) return null;
 
         for (Object itemObj : mDownFileArr) {
             if (!(itemObj instanceof HashMap)) continue;
@@ -235,7 +237,7 @@ public class ImageProgressActivity extends ActivityEx implements
 
             String savePath = Util.getString(itemData, "savePath");
             int state = Util.getInt(itemData, "state", -1);
-            if (Utilities.isEmpty(savePath) || state == -1) return;
+            if (TextUtils.isEmpty(savePath) || state == -1) return;
 
             if (state == STATE_SUCCESS) {
                 progressBar.setVisibility(View.GONE);

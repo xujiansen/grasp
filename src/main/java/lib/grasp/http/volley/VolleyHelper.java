@@ -23,7 +23,8 @@ import com.rooten.BaApp;
 import com.rooten.Constant;
 import com.rooten.ctrl.widget.SwipeRefreshLayout;
 import com.rooten.help.LocalBroadMgr;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.StringUtil;
 import lib.grasp.http.BaseResponse;
 import lib.grasp.http.volley.gsonrequest.JsonObjRequest;
 import lib.grasp.http.volley.gsonrequest.ParamRequest;
@@ -298,7 +299,7 @@ public class VolleyHelper<T> {
                 Map.Entry<String, String> entry = (Map.Entry) o;
                 encodedParams.append(entry.getKey());
                 encodedParams.append('=');
-                encodedParams.append(Utilities.toURLEncoded(entry.getValue()));
+                encodedParams.append(StringUtil.toURLEncoded(entry.getValue()));
                 encodedParams.append('&');
             }
             String newUrl = url + encodedParams.toString();
@@ -360,6 +361,12 @@ public class VolleyHelper<T> {
                     return false;
                 }
                 MessageBoxGrasp.infoMsg(mContext, "当前应用版本已过期, 请联系管理员");
+                return false;
+            }
+
+            if (res.code == 500) {
+                String verStr = res.msg;
+                TOAST.showShort(mContext, verStr);
                 return false;
             }
         }

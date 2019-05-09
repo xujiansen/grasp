@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,10 +15,11 @@ import java.util.Hashtable;
 
 import com.rooten.BaApp;
 import com.rooten.help.AppHelper;
-import com.rooten.util.Utilities;
+
 import lib.grasp.R;
 import lib.grasp.mvp.BaseMvpActivity;
 import lib.grasp.mvp.IMvpPresenter;
+import lib.grasp.util.ViewUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 
 public class ActivityEx extends BaseMvpActivity implements IShowError, IActivityResult, IHandler {
@@ -118,10 +120,10 @@ public class ActivityEx extends BaseMvpActivity implements IShowError, IActivity
     @Override
     public void showError(final View view, final String errMsg) {
         if (view != null) {
-            Utilities.setFocusView(view);
+            ViewUtil.setFocusView(view);
         }
 
-        if (!Utilities.isEmpty(errMsg)) {
+        if (!TextUtils.isEmpty(errMsg)) {
             MessageBoxGrasp.infoMsg(this, errMsg);
         }
     }

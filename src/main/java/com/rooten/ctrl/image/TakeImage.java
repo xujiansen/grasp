@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 import com.rooten.frame.IActivityResult;
 import com.rooten.frame.IResultListener;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 
 public class TakeImage {
     private static final String RETURN_KEY = "data";
@@ -71,7 +72,7 @@ public class TakeImage {
 
         for (String str : tempData) {
             // 遍历已选择的图片列表，删除该项
-            if (!Utilities.fileExists(str)) {
+            if (!FileUtil.fileExists(str)) {
                 selectedData.remove(str);
             }
         }

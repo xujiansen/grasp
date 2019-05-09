@@ -11,7 +11,8 @@ import com.rooten.BaApp;
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
 import com.rooten.util.Util;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.NetUtil;
 
 /**
  * 系统广播
@@ -44,7 +45,7 @@ public class SysBroadReceiver extends BroadcastReceiver implements IHandler {
         switch (Util.getString(data, "action")) {
             case ConnectivityManager.CONNECTIVITY_ACTION: {
                 // 如果当前网络状态是未连接的直接返回
-                if (!Utilities.isNetConnected(context)) break;
+                if (!NetUtil.isNetConnected(context)) break;
 
                 // 在程序启动时候会收到该广播，但是程序是在正常启动的所以要判断
                 break;

@@ -176,3 +176,9 @@
 -keep class com.multi.image.** { *; }
 -keep class com.zxing.** { *; }
 -keep class lib.grasp.** { *; }
+
+# 第三方picker(gzu-liyujiang/AndroidPicker)
+-keepattributes InnerClasses,Signature
+-keepattributes *Annotation*
+
+-keep class cn.qqtheme.framework.entity.** { *;}

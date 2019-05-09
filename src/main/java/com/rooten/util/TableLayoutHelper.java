@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.rooten.BaApp;
 import com.rooten.Constant;
 
+import lib.grasp.util.ScreenUtil;
+
 public final class TableLayoutHelper {
     private static final int MATCH_PARENT = LinearLayout.LayoutParams.FILL_PARENT;
     private static final int WRAP_CONTENT = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -31,10 +33,10 @@ public final class TableLayoutHelper {
             if (Constant.PAGE_USER_BORDER) {
                 BaApp app = (BaApp) tl.getContext().getApplicationContext();
                 int padding = Constant.PAGE_PADDING;
-                lp.leftMargin = Utilities.getValueByDpi(tl.getContext(), padding);
-                lp.rightMargin = Utilities.getValueByDpi(tl.getContext(), padding);
+                lp.leftMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
+                lp.rightMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
             }
-            lp.rightMargin = Utilities.getValueByDpi(tl.getContext(), 5);
+            lp.rightMargin = ScreenUtil.getValueByDpi(tl.getContext(), 5);
             tl.addView(view, lp);
         }
         return view;
@@ -43,8 +45,8 @@ public final class TableLayoutHelper {
     public static View addTableRow(final TableLayout tl, final View view, int padding) {
         if (tl != null || view != null) {
             LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            lp.leftMargin = Utilities.getValueByDpi(tl.getContext(), padding);
-            lp.rightMargin = Utilities.getValueByDpi(tl.getContext(), padding);
+            lp.leftMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
+            lp.rightMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
             tl.addView(view, lp);
         }
         return view;
@@ -58,10 +60,10 @@ public final class TableLayoutHelper {
                 if (Constant.PAGE_USER_BORDER) {
                     BaApp app = (BaApp) tl.getContext().getApplicationContext();
                     int padding = Constant.PAGE_PADDING;
-                    lp.leftMargin = Utilities.getValueByDpi(tl.getContext(), padding);
-                    lp.rightMargin = Utilities.getValueByDpi(tl.getContext(), padding);
+                    lp.leftMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
+                    lp.rightMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
                 }
-                lp.rightMargin = Utilities.getValueByDpi(tr.getContext(), 5);
+                lp.rightMargin = ScreenUtil.getValueByDpi(tr.getContext(), 5);
                 tr.addView(arrView[n], lp);
             }
             tl.addView(tr, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
@@ -78,10 +80,10 @@ public final class TableLayoutHelper {
             if (Constant.PAGE_USER_BORDER) {
                 BaApp app = (BaApp) tl.getContext().getApplicationContext();
                 int padding = Constant.PAGE_PADDING;
-                lp.leftMargin = Utilities.getValueByDpi(tl.getContext(), padding);
-                lp.rightMargin = Utilities.getValueByDpi(tl.getContext(), padding);
+                lp.leftMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
+                lp.rightMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
             }
-            lp.rightMargin = Utilities.getValueByDpi(tr.getContext(), 5);
+            lp.rightMargin = ScreenUtil.getValueByDpi(tr.getContext(), 5);
             lp.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
             tr.addView(leftView, lp);
 
@@ -89,7 +91,7 @@ public final class TableLayoutHelper {
             if (Constant.PAGE_USER_BORDER) {
                 BaApp app = (BaApp) tl.getContext().getApplicationContext();
                 int padding = Constant.PAGE_PADDING;
-                lp.rightMargin = Utilities.getValueByDpi(tl.getContext(), padding);
+                lp.rightMargin = ScreenUtil.getValueByDpi(tl.getContext(), padding);
             }
             tr.addView(rightView, lp);
             tl.addView(tr, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));

@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import com.rooten.util.Utilities;
-
 import java.io.File;
 
 import lib.grasp.util.FileUtil;
@@ -92,7 +90,7 @@ public class DBBase {
     }
 
     public void closeAll(Cursor result) {
-        Utilities.closeCursor(result);
+        closeCursor(result);
     }
 
     public static void beginTransaction() {
@@ -104,5 +102,14 @@ public class DBBase {
         if (mDB == null) return;
         mDB.setTransactionSuccessful();
         mDB.endTransaction();
+    }
+
+
+    public static void closeCursor(Cursor cursor) {
+        try {
+            if (cursor == null) return;
+            cursor.close();
+        } catch (Exception e) {
+        }
     }
 }

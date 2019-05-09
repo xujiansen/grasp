@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ import lib.grasp.R;
 import com.rooten.ctrl.widget.SwipeRefreshLayout;
 import com.rooten.frame.AppActivity;
 import com.rooten.frame.IResultListener;
-import com.rooten.util.Utilities;
+
+import lib.grasp.util.FileUtil;
 import lib.grasp.util.GlideUtils;
+import lib.grasp.util.TimeDateUtil;
 
 public class ImageGridActivity extends AppActivity implements SwipeRefreshLayout.OnLoadListener, View.OnClickListener {
     private int MAX_NUM = 20;
@@ -160,8 +163,8 @@ public class ImageGridActivity extends AppActivity implements SwipeRefreshLayout
 
         for (int i = start; i < start + PAGE_SIZE; i++) {
             String filepath = Util.getString(data, i);
-            if (Utilities.isEmpty(filepath)) continue;
-            if (!Utilities.fileExists(filepath)) continue;
+            if (TextUtils.isEmpty(filepath)) continue;
+            if (!FileUtil.fileExists(filepath)) continue;
 
             File f = new File(filepath);
             if (!f.isFile()) continue;
@@ -200,12 +203,12 @@ public class ImageGridActivity extends AppActivity implements SwipeRefreshLayout
             else tag.setVisibility(View.GONE);
 
             TextView sizeView = (TextView) view.findViewById(R.id.image_grid_item_size);
-            sizeView.setText(Utilities.getFileSize(itemView.getContext(), path));
+            sizeView.setText(FileUtil.getFileSize(itemView.getContext(), path));
 
             File f = new File(path);
             long lastTime = f.lastModified();
             TextView timeView = (TextView) view.findViewById(R.id.image_grid_item_time);
-            timeView.setText(Utilities.getDateTime(new Date(lastTime)));
+            timeView.setText(TimeDateUtil.getDateTime(new Date(lastTime)));
 
             FrameLayout all = (FrameLayout) view.findViewById(R.id.image_grid_item_all);
             all.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +220,7 @@ public class ImageGridActivity extends AppActivity implements SwipeRefreshLayout
         }
 
         void onItemClick(String path, View view) {
-            if (!Utilities.fileExists(path)) {
+            if (!FileUtil.fileExists(path)) {
                 Toast.makeText(ImageGridActivity.this, "该文件不存在请重新选择！", Toast.LENGTH_SHORT).show();
                 return;
             }

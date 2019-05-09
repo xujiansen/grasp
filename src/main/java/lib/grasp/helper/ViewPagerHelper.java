@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rooten.Constant;
-import com.rooten.util.Utilities;
+
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
 
 /**
  * 1. 默认显示最后一页
@@ -39,7 +40,7 @@ public class ViewPagerHelper {
             mViewPager = new ViewPager(mContext);
         }
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setPageMargin(Utilities.getValueByDpi(mContext, 1));
+        mViewPager.setPageMargin(ScreenUtil.getValueByDpi(mContext, 1));
         mViewPager.setPageMarginDrawable(new ColorDrawable(mContext.getResources().getColor(R.color.shape_line)));
 
 //        AppBarLayout.LayoutParams lp = new AppBarLayout.LayoutParams(AppBarLayout.LayoutParams.MATCH_PARENT, AppBarLayout.LayoutParams.MATCH_PARENT);

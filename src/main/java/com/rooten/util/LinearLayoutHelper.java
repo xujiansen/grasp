@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import lib.grasp.util.ScreenUtil;
+
 public final class LinearLayoutHelper {
     public static final int MATCH_PARENT = LayoutParams.MATCH_PARENT;
     public static final int WRAP_CONTENT = LayoutParams.WRAP_CONTENT;
@@ -65,7 +67,7 @@ public final class LinearLayoutHelper {
     public static void addTransportSpace(Context ctx, LinearLayout ll, int height) {
         if(ll == null) return;
         View view = new View(ctx);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, height));
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
     }
 
     /** 添加文字透明行 */
@@ -74,8 +76,8 @@ public final class LinearLayoutHelper {
         TextView view = new TextView(ctx);
         view.setText(text);
         view.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
-        view.setPadding(Utilities.getValueByDpi(ctx, 8), 0, Utilities.getValueByDpi(ctx, 8), 0);
-        ll.addView(view, MATCH_PARENT, Utilities.getValueByDpi(ctx, height));
+        view.setPadding(ScreenUtil.getValueByDpi(ctx, 8), 0, ScreenUtil.getValueByDpi(ctx, 8), 0);
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
     }
 
     /** 添加分割线 */
@@ -91,9 +93,9 @@ public final class LinearLayoutHelper {
         if(ll == null) return;
         View view = new View(ctx);
         view.setBackgroundColor(Color.LTGRAY);
-//        view.setPadding(Utilities.getValueByDpi(ctx, 5), 0, Utilities.getValueByDpi(ctx, 5), 0);
+//        view.setPadding(ScreenUtil.getValueByDpi(ctx, 5), 0, ScreenUtil.getValueByDpi(ctx, 5), 0);
         LayoutParams lp = new LayoutParams(MATCH_PARENT, 1);
-        lp.setMargins(Utilities.getValueByDpi(ctx, 5), 0, Utilities.getValueByDpi(ctx, 5), 0);
+        lp.setMargins(ScreenUtil.getValueByDpi(ctx, 5), 0, ScreenUtil.getValueByDpi(ctx, 5), 0);
         ll.addView(view, lp);
     }
 

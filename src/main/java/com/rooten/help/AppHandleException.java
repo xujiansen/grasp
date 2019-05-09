@@ -10,9 +10,11 @@ import java.util.Date;
 
 import com.rooten.BaApp;
 import com.rooten.util.Util;
-import com.rooten.util.Utilities;
+
 import lib.grasp.util.L;
 import lib.grasp.util.PathUtil;
+import lib.grasp.util.StreamUtil;
+import lib.grasp.util.TimeDateUtil;
 
 /**
  * 全局异常捕获
@@ -55,7 +57,7 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
 //        if (!Constant.APP_DEBUG) return;
 
         String errorParent = PathUtil.PATH_LOG_ERROR;
-        String filename = Utilities.getDateTimeEx(new Date()) + ".txt";
+        String filename = TimeDateUtil.getDateTimeEx(new Date()) + ".txt";
 
         FileOutputStream out = null;
         try {
@@ -63,13 +65,13 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
             out = new FileOutputStream(file, true);
 
             JSONObject obj = new JSONObject();
-            obj.put("time", Utilities.getDateTimeMillisEs(new Date()));
+            obj.put("time", TimeDateUtil.getDateTimeMillisEs(new Date()));
             obj.put("errInfo", error);
             out.write(obj.toJSONString().getBytes("utf-8"));
         } catch (Exception e) {
             L.logOnly("writeError::Exception" + e.toString());
         } finally {
-            Utilities.closeOutputStream(out);
+            StreamUtil.closeOutputStream(out);
         }
     }
 }
