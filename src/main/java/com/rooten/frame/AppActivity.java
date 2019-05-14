@@ -17,9 +17,11 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 
 import lib.grasp.R;
+import lib.grasp.mvp.IMvpPresenter;
+
 import com.rooten.util.LinearLayoutHelper;
 
-public class AppActivity extends ActivityEx implements OnSubmitCompletedListener, IHandler {
+public class AppActivity<P extends IMvpPresenter> extends ActivityEx<P> implements OnSubmitCompletedListener, IHandler {
     protected View mRoot;
     protected MenuItem mItem;
     public Toolbar mToolbar;

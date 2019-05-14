@@ -1,7 +1,14 @@
 package lib.grasp.mvp;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import lib.grasp.util.L;
 
@@ -39,12 +46,25 @@ public abstract class BaseMvpFragment<P extends IMvpPresenter> extends Fragment 
         return getActivity();
     }
 
+
     /**
      * 在生命周期结束时，将 presenter 与 view 之间的联系断开，防止出现内存泄露
      */
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        if (mPresenter != null) mPresenter.detachView();
+//    }
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) mPresenter.detachView();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mPresenter != null) mPresenter.attachView(this);    // 绑定宿主view与presenter
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mPresenter != null) mPresenter.detachView();        // 解绑宿主view与presenter
     }
 }

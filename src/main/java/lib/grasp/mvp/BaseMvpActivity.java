@@ -2,15 +2,19 @@ package lib.grasp.mvp;
 
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * View基类(MVP)
  */
-public abstract class BaseMvpActivity<P extends IMvpPresenter> extends AppCompatActivity implements IMvpView {
+public abstract class  BaseMvpActivity <P extends IMvpPresenter> extends AppCompatActivity implements IMvpView {
 
     /**
      * 持有的Presenter的引用
      */
     private P mPresenter;
+
 
     /**
      * 创建/bind Presenter<br/>

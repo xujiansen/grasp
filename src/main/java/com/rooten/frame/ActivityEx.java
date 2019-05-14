@@ -22,7 +22,7 @@ import lib.grasp.mvp.IMvpPresenter;
 import lib.grasp.util.ViewUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 
-public class ActivityEx extends BaseMvpActivity implements IShowError, IActivityResult, IHandler {
+public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> implements IShowError, IActivityResult, IHandler {
     protected BaApp mApp;
 
     private int mResultCode = 1;
@@ -70,7 +70,7 @@ public class ActivityEx extends BaseMvpActivity implements IShowError, IActivity
     }
 
     @Override
-    public IMvpPresenter onBindPresenter() {
+    public P onBindPresenter() {
         return null;
     }
 

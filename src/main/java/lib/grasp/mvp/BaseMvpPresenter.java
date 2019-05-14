@@ -13,16 +13,16 @@ public abstract class BaseMvpPresenter<V extends IMvpView> implements IMvpPresen
      * 宿主View(一般是Activity/Fragment)<br/>
      * 防止 Activity/Fragment 不走 onDestory() 方法，所以采用弱引用来防止内存泄漏
      */
-    protected WeakReference<V> mViewRef;
+    protected V mViewRef;
 
     /** 初始化Presenter(同时需要传入宿主View) */
     public BaseMvpPresenter(@NonNull V view) {
-        attachView(view);
+        addView(view);
     }
 
     /** 初始化Presenter(同时注册View) */
-    private void attachView(V view) {
-        mViewRef = new WeakReference<>(view);
+    public void addView(V view) {
+        mViewRef = view;
     }
 
     /** 获取在本Presenter注册的View */
@@ -31,14 +31,22 @@ public abstract class BaseMvpPresenter<V extends IMvpView> implements IMvpPresen
     /** 本Presenter是否已经注册了View */
     @Override
     public boolean isViewAttach() {
-        return mViewRef != null && mViewRef.get() != null;
+        return mViewRef != null;
+    }
+
+    /** 获取在本Presenter对宿主View的引用 */
+    @Override
+    public void attachView(IMvpView iMvpView) {
+        if (mViewRef == null) {
+            mViewRef = (V) iMvpView;
+        }
     }
 
     /** 获取在本Presenter对宿主View的引用 */
     @Override
     public void detachView() {
         if (mViewRef != null) {
-            mViewRef.clear();
+//            mViewRef.clear();
             mViewRef = null;
         }
     }
