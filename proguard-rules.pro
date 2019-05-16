@@ -180,5 +180,27 @@
 # 第三方picker(gzu-liyujiang/AndroidPicker)
 -keepattributes InnerClasses,Signature
 -keepattributes *Annotation*
-
 -keep class cn.qqtheme.framework.entity.** { *;}
+
+# bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+# tinker混淆规则
+-dontwarn com.tencent.tinker.**
+-keep class com.tencent.tinker.** { *; }
+
+#mqtt
+-keep class org.eclipse.paho.** { *; }                              # mqtt
+-keep class com.amap.api.location.**{*;}
+-keep class com.amap.api.fence.**{*;}
+-keep class com.autonavi.aps.amapapi.model.**{*;}
+
+#ijkplayer
+-keep class tv.danmaku.ijk.media.player.** {*;}
+-keep class tv.danmaku.ijk.media.player.IjkMediaPlayer{*;}
+-keep class tv.danmaku.ijk.media.player.ffmpeg.FFmpegApi{*;}
+
+#ijkplayer
+-keep class com.dueeeke.** { *; }                                   # ijkplayer
+-keep class com.dueeeke.videoplayer.** { *; }                       # ijkplayer
+-keep class com.github.dueeeke.dkplayer.** { *; }                   # dkplayer
