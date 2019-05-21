@@ -204,3 +204,6 @@
 -keep class com.dueeeke.** { *; }                                   # ijkplayer
 -keep class com.dueeeke.videoplayer.** { *; }                       # ijkplayer
 -keep class com.github.dueeeke.dkplayer.** { *; }                   # dkplayer
+
+#flexbox
+-keepnames public class com.google.android.flexbox.FlexboxLayoutManager

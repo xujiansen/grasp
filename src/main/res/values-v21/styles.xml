@@ -31,8 +31,8 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:colorAccent">@color/colorAccent</item>
-        <item name="android:colorControlNormal">@color/colorAccent</item>
-        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:colorControlNormal">@color/colorControlNormal</item>
+        <item name="android:colorControlActivated">@color/colorControlActivated</item>
     </style>
 
 </resources>

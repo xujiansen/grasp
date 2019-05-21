@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimaryDark">#61aeed</color>
     <color name="colorPrimary">#6fb6f0</color>
-    <color name="colorAccent">#f2f2f2</color>
-    <color name="colorControlNormal">#c7c7c7</color>
+    <color name="colorAccent">#888888</color>
+    <color name="colorControlNormal">#888888</color>
+    <color name="colorControlActivated">#595656</color>
 
     <color name="black">#ff000000</color>
     <color name="red">#FE0113</color>
