@@ -59,7 +59,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2' //这里gradle版本改成你自己的版本
+        classpath 'com.android.tools.build:gradle:3.4.1' //这里gradle版本改成你自己的版本
     }
 }
 

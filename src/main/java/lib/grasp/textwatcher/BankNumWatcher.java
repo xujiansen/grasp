@@ -1,18 +1,13 @@
 package lib.grasp.textwatcher;
 
-import android.support.annotation.NonNull;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.Selection;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
-import android.util.Log;
 import android.widget.EditText;
 
 public class BankNumWatcher implements TextWatcher {
 
-    //default max length = 21 + 5 space
+    //default_video max length = 21 + 5 space
     public static final int DEFAULT_MAX_LENGTH = 19 + 4;
     //max input length
     private int maxLength = DEFAULT_MAX_LENGTH;

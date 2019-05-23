@@ -39,7 +39,7 @@ public class MagnificentChart extends View {
 
 // #MARK - Constants
 
-    // default initialization params
+    // default_video initialization params
     public static final float ANIMATION_SPEED_DEFAULT = 6.5f;
     public static final float ANIMATION_SPEED_SLOW = 1.0f;
     public static final float ANIMATION_SPEED_FAST = 10.0f;

@@ -41,7 +41,7 @@ public class SegmentedGroup extends RadioGroup {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        //Use holo light for default
+        //Use holo light for default_video
         updateBackground();
     }
 

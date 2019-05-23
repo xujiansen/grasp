@@ -44,7 +44,7 @@
 				depending on the value of this flag. In the horizontal case, a columnCount
 				property may be additionally supplied to force new rows to be created when a
 				row is full. The rowCount attribute may be used similarly in the vertical case.
-				The default is horizontal.
+				The default_video is horizontal.
         -->
         <attr name="android:orientation" />
         <!-- The maxmimum number of rows to create when automatically positioning children. -->
@@ -52,9 +52,9 @@
         <!-- The maxmimum number of columns to create when automatically positioning children. -->
         <attr name="columnCount" format="integer" />
         <!--
-                When set to true, tells GridLayout to use default margins when none are specified
+                When set to true, tells GridLayout to use default_video margins when none are specified
 				in a view's layout parameters.
-				The default value is false.
+				The default_video value is false.
 				See {@link android.widget.GridLayout#setUseDefaultMargins(boolean)}.
         -->
         <attr name="useDefaultMargins" format="boolean" />
@@ -62,21 +62,21 @@
                 When set to alignMargins, causes alignment to take place between the outer
 				boundary of a view, as defined by its margins. When set to alignBounds,
 				causes alignment to take place between the edges of the view.
-				The default is alignMargins.
+				The default_video is alignMargins.
 				See {@link android.widget.GridLayout#setAlignmentMode(int)}.
         -->
         <attr name="alignmentMode" />
         <!--
                 When set to true, forces row boundaries to appear in the same order
 				as row indices.
-				The default is true.
+				The default_video is true.
 				See {@link android.widget.GridLayout#setRowOrderPreserved(boolean)}.
         -->
         <attr name="rowOrderPreserved" format="boolean" />
         <!--
                 When set to true, forces column boundaries to appear in the same order
 				as column indices.
-				The default is true.
+				The default_video is true.
 				See {@link android.widget.GridLayout#setColumnOrderPreserved(boolean)}.
         -->
         <attr name="columnOrderPreserved" format="boolean" />
@@ -92,7 +92,7 @@
         <!--
                 The row span: the difference between the bottom and top
 				boundaries delimiting the group of cells occupied by this view.
-				The default is one.
+				The default_video is one.
 				See {@link android.widget.GridLayout.Spec}.
         -->
         <attr name="layout_rowSpan" format="integer" min="1" />
@@ -104,13 +104,13 @@
         <!--
                 The column span: the difference between the right and left
 				boundaries delimiting the group of cells occupied by this view.
-				The default is one.
+				The default_video is one.
 				See {@link android.widget.GridLayout.Spec}.
         -->
         <attr name="layout_columnSpan" format="integer" min="1" />
         <!--
                 Gravity specifies how a component should be placed in its group of cells.
-				The default is LEFT | BASELINE.
+				The default_video is LEFT | BASELINE.
 				See {@link android.widget.GridLayout.LayoutParams#setGravity(int)}.
         -->
         <attr name="android:layout_gravity" />

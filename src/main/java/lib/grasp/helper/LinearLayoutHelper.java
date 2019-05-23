@@ -140,9 +140,10 @@ public final class LinearLayoutHelper {
         TextView tvTitle = (TextView)view.findViewById(R.id.title);
         Switch switcher = (Switch)view.findViewById(R.id.switcher);
         tvTitle.setText(title);
+        switcher.setOnCheckedChangeListener(null);
         switcher.setChecked(value);
         switcher.setTag(tag);
-        if(listener != null)switcher.setOnCheckedChangeListener(listener);
+        if(listener != null) switcher.setOnCheckedChangeListener(listener);
         ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, 50));
         return switcher;
     }

@@ -41,7 +41,7 @@ public class AppLoopImpl {
 //            case Constant.ID_APPUPGRADE: {
 //                break;
 //            }
-//            default:
+//            default_video:
 //                break;
 //        }
     }
