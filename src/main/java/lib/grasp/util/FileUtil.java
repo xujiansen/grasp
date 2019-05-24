@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 
 import okhttp3.Response;
@@ -755,6 +756,50 @@ public class FileUtil {
                 throw new EOFException("读完关闭失败拉");
             }
         }
+    }
+
+    public static String getFileMD5(File file)
+    {
+        if (!file.exists() || !file.isFile())
+        {
+            return "";
+        }
+        MessageDigest digest = null;
+        FileInputStream in = null;
+        byte buffer[] = new byte[1024];
+        int len;
+        try
+        {
+            digest = MessageDigest.getInstance("MD5");
+            in = new FileInputStream(file);
+            while ((len = in.read(buffer, 0, 1024)) != -1)
+            {
+                digest.update(buffer, 0, len);
+            }
+            in.close();
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
+        return bytes2Hex(digest.digest());
+    }
+
+    public static String bytes2Hex(byte[] bts)
+    {
+        String des = "";
+        String tmp = null;
+
+        for (int i = 0; i < bts.length; i++)
+        {
+            tmp = (Integer.toHexString(bts[i] & 0xFF));
+            if (tmp.length() == 1)
+            {
+                des += "0";
+            }
+            des += tmp;
+        }
+        return des;
     }
 
 }

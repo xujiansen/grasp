@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 public class BankNumWatcher implements TextWatcher {
 
-    //default_video max length = 21 + 5 space
+    //a max length = 21 + 5 space
     public static final int DEFAULT_MAX_LENGTH = 19 + 4;
     //max input length
     private int maxLength = DEFAULT_MAX_LENGTH;

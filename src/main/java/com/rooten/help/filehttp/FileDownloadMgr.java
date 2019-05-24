@@ -54,6 +54,7 @@ public class FileDownloadMgr implements IHandler {
 
     /** 开始运行传输线程(没有传入任务) */
     public void startDownload() {
+        mQuit = false;
         for (Map.Entry<String, Integer> entry : mTypeThreadNum.entrySet()) {
             String categoryID = entry.getKey();
             int threadNum = entry.getValue();
