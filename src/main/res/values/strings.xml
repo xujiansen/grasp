@@ -23,6 +23,4 @@
     <string name="various">头、尾和子项都支持多种类型的列表</string>
     <string name="various_child">多种子项类型的列表</string>
 
-    <string name="accessibility_service_description">智能安装服务，无需用户的任何操作就可以自动安装程序。</string>
-
 </resources>
