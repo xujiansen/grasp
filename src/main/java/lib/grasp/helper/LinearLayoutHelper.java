@@ -84,6 +84,7 @@ public final class LinearLayoutHelper {
     public static void addTitleSpace(Context ctx, LinearLayout ll, String text, int height) {
         if(ll == null) return;
         TextView view = new TextView(ctx);
+        view.setTextColor(Color.GRAY);
         view.setText(text);
         view.setGravity(Gravity.CENTER_VERTICAL| Gravity.LEFT);
         view.setPadding(ScreenUtil.getValueByDpi(ctx, 8), 0, ScreenUtil.getValueByDpi(ctx, 8), 0);
@@ -129,7 +130,7 @@ public final class LinearLayoutHelper {
         }
         view.setTag(tag);
         view.setOnClickListener(listener);
-        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, 50));
+        ll.addView(view, MATCH_PARENT, WRAP_CONTENT);
         return tvValue;
     }
 

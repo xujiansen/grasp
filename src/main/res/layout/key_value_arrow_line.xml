@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector_background_white"
     android:paddingVertical="5dp"
+    android:minHeight="50dp"
     android:paddingLeft="12dp"
     android:paddingRight="12dp" >
 
@@ -13,14 +14,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:text="title"/>
+        android:text="title"
+        android:textColor="@color/gray"/>
 
     <TextView
         android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/title"
         android:textColor="@color/black"
         android:drawableRight="@drawable/ic_list_bz_normal"
         android:drawablePadding="2dp"

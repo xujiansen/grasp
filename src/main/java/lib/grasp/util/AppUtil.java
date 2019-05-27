@@ -20,7 +20,12 @@ import android.telephony.TelephonyManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -30,7 +35,9 @@ import static android.content.Context.ACTIVITY_SERVICE;
  */
 public class AppUtil {
 
-    /** 获取apk文件的ICON */
+    /**
+     * 获取apk文件的ICON
+     */
     public static Drawable getApkIcon(Context context, String apkPath) {
         if (!FileUtil.fileExists(apkPath)) return null;
 
@@ -44,16 +51,16 @@ public class AppUtil {
         return appInfo.loadIcon(pckManager);
     }
 
-    /** 安装APK */
+    /**
+     * 安装APK
+     */
     public static void installAPK(Context context, File file) {
-        if(!FileUtil.isFileExists(file)) return;
+        if (!FileUtil.isFileExists(file)) return;
         Uri apk = getImageContentUri(context, file);
 
         if (Build.VERSION.SDK_INT >= 24) {
             install(context, file);
-        }
-
-        else {
+        } else {
             openFile(context, file);
         }
 
@@ -94,11 +101,12 @@ public class AppUtil {
 
     /**
      * 获取手机IMEI号
-     *
+     * <p>
      * 需要动态权限: android.permission.READ_PHONE_STATE
      */
     public static String getIMEI(Context context) {
-        if(!PermissionUtil.checkDangerousPermission(context, Manifest.permission.READ_PHONE_STATE)) return "";
+        if (!PermissionUtil.checkDangerousPermission(context, Manifest.permission.READ_PHONE_STATE))
+            return "";
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
     }
@@ -116,7 +124,9 @@ public class AppUtil {
         context.startActivity(intent);
     }
 
-    /** 启动远程服务 */
+    /**
+     * 启动远程服务
+     */
     public static Intent getExplicitIntent(Context context, Intent implicitIntent) {
         // Retrieve all services that can match the given intent
         PackageManager pm = context.getPackageManager();
@@ -146,18 +156,18 @@ public class AppUtil {
      */
     public static boolean isAppAlive(Context context, String packageName) {
         int uid = getPackageUid(context, packageName);
-        if(uid > 0){
+        if (uid > 0) {
             boolean rstA = isAppRunning(context, packageName);  //   目标APP是否崩了(不包括远程APP,例如:remote)
             boolean rstB = isProcessRunning(context, uid);      //   进程是否(全)崩了(包含主进程与远程进程),, 一个应用只有一个uid，但是可以有多个pid（通过process属性来指定进程）
-            if(rstA||rstB){
+            if (rstA || rstB) {
                 //指定包名的程序正在运行中
                 System.out.println("--isAppRunning:" + rstA + ", --isProcessRunning:" + rstB);
                 return true;
-            }else{
+            } else {
                 //指定包名的程序未在运行中
                 return false;
             }
-        }else{
+        } else {
             //应用未安装
             return false;
         }
@@ -214,7 +224,7 @@ public class AppUtil {
         if (!isRunningForeground(context)) {
             /**获取ActivityManager*/
             ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-            if(activityManager == null) return;
+            if (activityManager == null) return;
 
             /**获得当前运行的task(任务)*/
             List<ActivityManager.RecentTaskInfo> appTask = activityManager.getRecentTasks(Integer.MAX_VALUE, 1);
@@ -242,6 +252,7 @@ public class AppUtil {
     /**
      * 方法描述：判断某一应用是否正在运行
      * Created by cafeting on 2017/2/4.
+     *
      * @param context     上下文
      * @param packageName 应用的包名
      * @return true 表示正在运行，false 表示没有运行
@@ -260,7 +271,9 @@ public class AppUtil {
         return false;
     }
 
-    /** 获取已安装应用的 uid，-1 表示未安装此应用或程序异常 */
+    /**
+     * 获取已安装应用的 uid，-1 表示未安装此应用或程序异常
+     */
     private static int getPackageUid(Context context, String packageName) {
         try {
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
@@ -277,15 +290,15 @@ public class AppUtil {
      * 判断某一 uid 的程序是否有正在运行的进程，即是否存活
      * Created by cafeting on 2017/2/4.
      *
-     * @param context     上下文
-     * @param uid 已安装应用的 uid
+     * @param context 上下文
+     * @param uid     已安装应用的 uid
      * @return true 表示正在运行，false 表示没有运行
      */
     public static boolean isProcessRunning(Context context, int uid) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> runningServiceInfos = am.getRunningServices(200);
         if (runningServiceInfos.size() > 0) {
-            for (ActivityManager.RunningServiceInfo appProcess : runningServiceInfos){
+            for (ActivityManager.RunningServiceInfo appProcess : runningServiceInfos) {
                 if (uid == appProcess.uid) {
                     return true;
                 }
@@ -294,12 +307,14 @@ public class AppUtil {
         return false;
     }
 
-    /** String的文件地址转Uri */
+    /**
+     * String的文件地址转Uri
+     */
     public static Uri getImageContentUri(Context context, File imageFile) {
         String filePath = imageFile.getAbsolutePath();
         Cursor cursor = context.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID },
-                MediaStore.Images.Media.DATA + "=? ", new String[] { filePath }, null);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[]{MediaStore.Images.Media._ID},
+                MediaStore.Images.Media.DATA + "=? ", new String[]{filePath}, null);
         if (cursor != null && cursor.moveToFirst()) {
             int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
             Uri baseUri = Uri.parse("content://media/external/images/media");
@@ -315,7 +330,9 @@ public class AppUtil {
         }
     }
 
-    /** 获取App的VersionName */
+    /**
+     * 获取App的VersionName
+     */
     public static String getAppVersionName(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -325,7 +342,9 @@ public class AppUtil {
         }
     }
 
-    /** 获取App的VersionCode */
+    /**
+     * 获取App的VersionCode
+     */
     public static String getAppVersionCode(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -333,5 +352,71 @@ public class AppUtil {
         } catch (PackageManager.NameNotFoundException e) {
             return "";
         }
+    }
+
+    /**
+     * 判断手机是否拥有Root权限。
+     *
+     * @return 有root权限返回true，否则返回false。
+     */
+    public static boolean isRoot() {
+        boolean bool = false;
+        try {
+            bool = new File("/system/bin/su").exists() || new File("/system/xbin/su").exists();
+        } catch (Exception e) {
+            L.logOnly(e.getMessage());
+        }
+        return bool;
+    }
+
+    /**
+     * 执行具体的静默安装逻辑，需要手机ROOT。
+     *
+     * @param apkPath 要安装的apk文件的路径
+     * @return 安装成功返回true，安装失败返回false。
+     */
+    public static void installSilence(String apkPath) {
+        new Thread(() -> {
+            boolean result = false;
+            DataOutputStream dataOutputStream = null;
+            BufferedReader errorStream = null;
+            try {
+                // 申请su权限
+                Process process = Runtime.getRuntime().exec("su");
+                dataOutputStream = new DataOutputStream(process.getOutputStream());
+                // 执行pm install命令
+                String command = "pm install -r " + apkPath + "\n";
+                dataOutputStream.write(command.getBytes(Charset.forName("utf-8")));
+                dataOutputStream.flush();
+                dataOutputStream.writeBytes("exit\n");
+                dataOutputStream.flush();
+                process.waitFor();
+                errorStream = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                String msg = "";
+                String line;
+                // 读取命令的执行结果
+                while ((line = errorStream.readLine()) != null) {
+                    msg += line;
+                }
+                L.logOnly("install msg is " + msg);
+                // 如果执行结果中包含Failure字样就认为是安装失败，否则就认为安装成功
+                if (!msg.contains("Failure")) {
+                    result = true;
+                }
+            } catch (Exception e) {
+                L.logOnly(e.getMessage());
+            } finally {
+                try {
+                    if (dataOutputStream != null) {
+                        dataOutputStream.close();
+                    }
+                    if (errorStream != null) {
+                        errorStream.close();
+                    }
+                } catch (IOException e) {
+                    L.logOnly(e.getMessage());
+                }
+            }
+        }).start();
     }
 }
