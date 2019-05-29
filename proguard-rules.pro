@@ -219,3 +219,10 @@ public static java.lang.String TABLENAME;
 -keep public interface net.sqlcipher.database.**
 -dontwarn net.sqlcipher.database.**
 -dontwarn org.greenrobot.greendao.**
+
+# bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+# tinker混淆规则
+-dontwarn com.tencent.tinker.**
+-keep class com.tencent.tinker.** { *; }
