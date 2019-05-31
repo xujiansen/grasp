@@ -3,45 +3,17 @@ package lib.grasp.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.io.FileOutputStream;
 
-import lib.grasp.widget.ProhibitViewGroup;
-
 
 public class ScreenUtil {
 
-    /** 禁用下拉菜单 */
-    public static ProhibitViewGroup prohibitDropDown(Context context, WindowManager manager) {
-//        manager = ((WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE));
-        WindowManager.LayoutParams localLayoutParams = new WindowManager.LayoutParams();
-        localLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
-        localLayoutParams.gravity = Gravity.TOP;
-        localLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|
-                // this is to enable the notification to recieve touch events
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
-                // Draws over status bar
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-        localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        localLayoutParams.height = (int) (50 * context.getResources()
-                .getDisplayMetrics().scaledDensity);
-        localLayoutParams.format = PixelFormat.TRANSPARENT;
-        ProhibitViewGroup view = new ProhibitViewGroup(context);
-        manager.addView(view, localLayoutParams);
-        return view;
-    }
-
-    /** 启用下拉菜单 */
-    public static void allowDropDown(WindowManager manager, View view){
-        manager.removeView(view);
-    }
 
 
     /** 固定值适配各种屏幕密度 */

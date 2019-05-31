@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -17,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,6 +31,8 @@ import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
 
+import lib.grasp.widget.ProhibitViewGroup;
+
 import static android.Manifest.permission.EXPAND_STATUS_BAR;
 
 /**
@@ -40,6 +44,69 @@ import static android.Manifest.permission.EXPAND_STATUS_BAR;
  * </pre>
  */
 public final class BarUtils {
+
+
+    public static final int DISABLE_EXPAND = 0x00010000;//4.2以上的整形标识
+    public static final int DISABLE_EXPAND_LOW = 0x00000001;//4.2以下的整形标识
+    public static final int DISABLE_NONE = 0x00000000;//取消StatusBar所有disable属性，即还原到最最原始状态
+
+    public static void unBanStatusBar(Context context) {//利用反射解除状态栏禁止下拉
+        Object service = context.getSystemService("statusbar");
+        try {
+            Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+            Method expand = statusBarManager.getMethod("disable", int.class);
+            expand.invoke(service, DISABLE_NONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void setStatusBarDisable(Context context, int disable_status) {//调用statusBar的disable方法
+        Object service = context.getSystemService("statusbar");
+        try {
+            Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+            Method expand = statusBarManager.getMethod("disable", int.class);
+            expand.invoke(service, disable_status);
+        } catch (Exception e) {
+            unBanStatusBar(context);
+            e.printStackTrace();
+        }
+    }
+
+    public static void banStatusBar(Context context) {//禁止statusbar下拉，适配了高低版本
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentApiVersion <= 16) {
+            setStatusBarDisable(context, DISABLE_EXPAND_LOW);
+        } else {
+            setStatusBarDisable(context, DISABLE_EXPAND);
+        }
+    }
+
+
+    /** 禁用下拉菜单 */
+    public static ProhibitViewGroup prohibitStatusPanelDropDown(Context context, WindowManager manager) {
+//        manager = ((WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE));
+        WindowManager.LayoutParams localLayoutParams = new WindowManager.LayoutParams();
+        localLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        localLayoutParams.gravity = Gravity.TOP;
+        localLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|
+                // this is to enable the notification to recieve touch events
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                // Draws over status bar
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        localLayoutParams.height = (int) (50 * context.getResources()
+                .getDisplayMetrics().scaledDensity);
+        localLayoutParams.format = PixelFormat.TRANSPARENT;
+        ProhibitViewGroup view = new ProhibitViewGroup(context);
+        manager.addView(view, localLayoutParams);
+        return view;
+    }
+
+    /** 启用下拉菜单 */
+    public static void allowStatusPanelDropDown(WindowManager manager, View view){
+        manager.removeView(view);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // status bar
