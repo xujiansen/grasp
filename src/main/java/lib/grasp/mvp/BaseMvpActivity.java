@@ -1,5 +1,8 @@
 package lib.grasp.mvp;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public abstract class  BaseMvpActivity <P extends IMvpPresenter> extends AppComp
     /**
      * 获取 Presenter 对象，在需要获取时才创建Presenter，起到懒加载作用
      * <br/>一般给自己(View)调用
+     * @return Presenter对象
      */
     protected P getPresenter() {
         if (mPresenter == null) mPresenter = onBindPresenter();
@@ -38,6 +42,12 @@ public abstract class  BaseMvpActivity <P extends IMvpPresenter> extends AppComp
     @Override
     public AppCompatActivity getSelfActivity() {
         return this;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (mPresenter != null) mPresenter.attachView(this);    // 绑定宿主view与presenter
     }
 
     /**

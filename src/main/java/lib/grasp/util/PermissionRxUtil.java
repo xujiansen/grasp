@@ -1,6 +1,7 @@
 package lib.grasp.util;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -86,6 +87,16 @@ public class PermissionRxUtil {
     }
 
     /**
+     * 测试是否可以再次申请
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    public static boolean checkShouldShow(FragmentActivity activity, String permissionStr) {
+        RxPermissions permissions = new RxPermissions(activity);
+        permissions.setLogging(true);
+        return !permissions.isGranted(permissionStr) && !activity.shouldShowRequestPermissionRationale(permissionStr);
+    }
+
+    /**
      * 申请权限(单个)
      * <br/>1、返回true：申请成功 ；返回false：申请失败
      * <br/>2、同意后，之后再申请此权限则不再弹出提示框
@@ -134,8 +145,6 @@ public class PermissionRxUtil {
                     }
                 });
     }
-
-
 
     /**
      * 申请权限(单个)
@@ -209,11 +218,31 @@ public class PermissionRxUtil {
     }
 
     /**
+     * 申请权限(多个)
+     * <br/>1、只要有一个禁止，则返回false；全部同意，则返回true。
+     * <br/>2、某个权限同意后，之后再申请此权限则不再弹出提示框，其他的会继续弹出
+     * <br/>3、申请多个权限，会有多个弹窗
+     */
+    @SuppressWarnings("all")
+    public static void requireMultiDangerousPermissionForListener(FragmentActivity activity, String[] permissionArray, Consumer<Permission> consumer) {
+        RxPermissions permissions = new RxPermissions(activity);
+        permissions.setLogging(true);
+        permissions.requestEach(permissionArray)            // requestEach
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if(consumer == null) return;
+                        consumer.accept(permission);
+                    }
+                });
+    }
+
+    /**
      * 申请多个权限，获取合并后的详细信息
      * @param activity
      */
     @SuppressWarnings("all")
-    public void checkPermissionRequestEachCombined(FragmentActivity activity, String[] permissionArray) {
+    public static void checkPermissionRequestEachCombined(FragmentActivity activity, String[] permissionArray) {
         RxPermissions permissions = new RxPermissions(activity);
         permissions.setLogging(true);
         permissions.requestEachCombined(permissionArray)    // requestEachCombined
