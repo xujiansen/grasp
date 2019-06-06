@@ -381,6 +381,34 @@ public class AppUtil {
     }
 
     /**
+     * 授权root用户权限
+     * @param command
+     */
+    public static boolean rootCommand(String command) {
+        Process process = null;
+        DataOutputStream dos = null;
+        try {
+            process = Runtime.getRuntime().exec("su");
+            dos = new DataOutputStream(process.getOutputStream());
+            dos.writeBytes(command+"\n");
+            dos.writeBytes("exit\n");
+            dos.flush();
+            process.waitFor();
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (dos != null) {
+                    dos.close();
+                }
+                process.destroy();
+            } catch (Exception e) {
+            }
+        }
+        return true;
+    }
+
+    /**
      * 执行具体的静默安装逻辑，需要手机ROOT。
      *
      * @param apkPath 要安装的apk文件的路径

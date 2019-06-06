@@ -93,7 +93,7 @@ public class PermissionRxUtil {
     public static boolean checkShouldShow(FragmentActivity activity, String permissionStr) {
         RxPermissions permissions = new RxPermissions(activity);
         permissions.setLogging(true);
-        return !permissions.isGranted(permissionStr) && !activity.shouldShowRequestPermissionRationale(permissionStr);
+        return !(!permissions.isGranted(permissionStr) && !activity.shouldShowRequestPermissionRationale(permissionStr));
     }
 
     /**
