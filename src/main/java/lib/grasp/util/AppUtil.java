@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
@@ -41,10 +42,10 @@ public class AppUtil {
      * <p>
      * 需要动态权限: android.permission.READ_PHONE_STATE
      */
-    public static String getIMEI(Context context) {
-        if (!PermissionUtil.checkDangerousPermission(context, Manifest.permission.READ_PHONE_STATE))
+    public static String getIMEI(AppCompatActivity activity) {
+        if (!PermissionRxUtil.checkDangerousPermission(activity, android.Manifest.permission.READ_PHONE_STATE))
             return "";
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
     }
 

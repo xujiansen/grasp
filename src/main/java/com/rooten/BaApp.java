@@ -1,14 +1,11 @@
 package com.rooten;
 
-import android.Manifest;
 import android.app.Application;
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Process;
-import android.telephony.TelephonyManager;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -16,20 +13,17 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.MaterialCommunityModule;
 import com.joanzapata.iconify.fonts.MaterialModule;
+import com.rooten.base.UserData;
+import com.rooten.help.ActivityMgr;
+import com.rooten.help.LocalBroadMgr;
+import com.rooten.help.NotificationHelper;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.rooten.base.UserData;
-import com.rooten.help.ActivityMgr;
-import com.rooten.help.LocalBroadMgr;
-import com.rooten.help.NotificationHelper;
-import com.rooten.help.filehttp.FileDownloadMgr;
-import com.rooten.help.filehttp.FileUploadMgr;
 import lib.grasp.util.PathUtil;
-import lib.grasp.util.PermissionUtil;
 
 public class BaApp extends Application {
     private Handler             mHandler        = new Handler();                // 主线程执行  　
@@ -91,13 +85,6 @@ public class BaApp extends Application {
     /** 获取操作系统 */
     static public String getOSName() {
         return "Android";
-    }
-
-    /** 获取设备IMEI */
-    synchronized public String getIMEI() {
-        if(!PermissionUtil.checkDangerousPermission(this, Manifest.permission.READ_PHONE_STATE)) return "";
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
     }
 
     /** 获取APP版本名称 */

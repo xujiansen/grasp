@@ -66,6 +66,11 @@ import android.text.TextUtils;
  * 表格中每个危险权限都属于一个权限组，我们在进行运行时权限处理时使用的是权限名，
  * 但是用户一旦同意授权了，那么该权限所对应的权限组中所有其他的权限也会同时被授权。
  */
+
+/**
+ * 请使用{@link PermissionRxUtil}
+ */
+@Deprecated
 public class PermissionUtil {
     /*
      *  1. 摄像头

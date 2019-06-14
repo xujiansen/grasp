@@ -2,6 +2,7 @@ package lib.grasp.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,16 +17,16 @@ public class SimCardUtil {
     static String SIMCARD_1;
     static String SIMCARD_2;
 
-    private void getNumber(Context ctx) {
-        if (!PermissionUtil.checkDangerousPermission((Activity) ctx, android.Manifest.permission.READ_PHONE_STATE))
+    private void getNumber(AppCompatActivity activity) {
+        if (!PermissionRxUtil.checkDangerousPermission(activity, android.Manifest.permission.READ_PHONE_STATE))
             return;
-        TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
         if (tm == null) return;
         String phoneNumber1 = tm.getLine1Number();  //手机号码
 
 //        String phoneNumber2 = tm.getGroupIdLevel1();
 
-        boolean isDouble = isDoubleSim(ctx);
+        boolean isDouble = isDoubleSim(activity);
         if (isDouble) {
             // tv.setText("这是双卡手机！");
         } else {
