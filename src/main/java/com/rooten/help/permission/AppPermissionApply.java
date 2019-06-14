@@ -323,7 +323,7 @@ public class AppPermissionApply {
     /**
      * 经过测试需要跳转到设置界面上用户手动设置的权限用此方面进行判断
      */
-    private static boolean hasSpecialPermission(Context context, String op) {
+    public static boolean hasSpecialPermission(Context context, String op) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return true;
 
         try {
