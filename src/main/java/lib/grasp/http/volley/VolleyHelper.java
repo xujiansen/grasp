@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 
 import net.minidev.json.JSONObject;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,11 +20,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.google.gson.internal.$Gson$Types;
 import com.rooten.BaApp;
 import com.rooten.Constant;
 import com.rooten.ctrl.widget.SwipeRefreshLayout;
 import com.rooten.help.LocalBroadMgr;
 
+import lib.grasp.http.okhttp.OkHttpHelper;
+import lib.grasp.http.okhttp.ResponseCallback;
 import lib.grasp.util.StringUtil;
 import lib.grasp.http.BaseResponse;
 import lib.grasp.http.volley.gsonrequest.JsonObjRequest;
@@ -129,6 +133,10 @@ public class VolleyHelper<T> {
         if (mMethod == Request.Method.GET) {
             mURL = encodeParameters(mURL, mParam);
         }
+
+        Type superclass = getClass().getGenericSuperclass();
+        //ParameterizedType参数化类型，即泛型
+        ParameterizedType parameterized = (ParameterizedType) superclass;
 
         Response.Listener<T> listener = orderResponse -> {  // 成功回调
             dismissView();
@@ -373,4 +381,27 @@ public class VolleyHelper<T> {
         return true;
     }
 
+
+    private void dos(){
+        OkHttpHelper.with(mContext)
+                .setURL("")
+                .setMethod(OkHttpHelper.POST_FORM)
+                .setHeadParam(null)
+                .setParam(null)
+                .setIsShowProg(true, "测试")
+                .setRequestCode("123")
+                .setSwip(null)
+                .setTimeout(30)
+                .execute(new ResponseCallback<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+
+                    }
+                });
+    }
 }
