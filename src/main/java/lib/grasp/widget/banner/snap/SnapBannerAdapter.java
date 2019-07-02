@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.rooten.BaApp;
 import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 
 /**
  * Created by JS_grasp on 2019/1/29.

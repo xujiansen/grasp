@@ -27,7 +27,7 @@ import com.rooten.frame.LinearPage;
 import com.rooten.frame.SinglePageMgr;
 import com.rooten.util.IconifyUtil;
 
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 import lib.grasp.util.ScreenUtil;
 import uk.co.senab.photoview.PhotoView;
 

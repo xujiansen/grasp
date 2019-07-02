@@ -27,7 +27,7 @@ import com.rooten.frame.IResultListener;
 import com.rooten.frame.RecycleViewPage;
 
 import lib.grasp.util.FileUtil;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 
 public class ImageManagerActivity extends AppActivity {
     private ImagePathAdapter mAdapter;

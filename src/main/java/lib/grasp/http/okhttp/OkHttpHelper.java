@@ -27,11 +27,12 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Volley网络访问请求
  */
-public class OkHttpHelper<T> {
+public class OkHttpHelper {
     protected BaApp mApp;
     protected Context mContext;
 
@@ -89,7 +90,7 @@ public class OkHttpHelper<T> {
     /**
      * 监听器
      */
-    private OkHttpCallback<T> mCallbackInner;
+    private OkHttpCallback mCallbackInner;
 
     private static OkHttpClient mOkHttpClient;
 
@@ -110,11 +111,15 @@ public class OkHttpHelper<T> {
     }
 
     private static void initOkHttpClient(int mTimeout) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new OkHttpInterceptor()).setLevel(HttpLoggingInterceptor.Level.BODY);
+
         synchronized (OkHttpHelper.class){
             mOkHttpClient = new okhttp3.OkHttpClient.Builder()
                     .connectTimeout(mTimeout,   TimeUnit.SECONDS)
                     .writeTimeout(  mTimeout,   TimeUnit.SECONDS)
                     .readTimeout(   mTimeout,   TimeUnit.SECONDS)
+                    .addInterceptor(interceptor)
+//                    .addNetworkInterceptor(new HttpLoggingInterceptor(new OkHttpInterceptor()))
                     .retryOnConnectionFailure(false)
                     .build();
         }
@@ -129,9 +134,9 @@ public class OkHttpHelper<T> {
         });
     }
 
-    public void execute(ResponseCallback<T> callback) {
+    public void execute(ResponseCallback callback) {
         this.mCallbackInner.setListener(callback);
-        if (mIsShowProg && mProgressDlg != null) {
+        if (mIsShowProg) {
             initProgressDlg();
             mProgressDlg.show();
             mProgressDlg.setMessage(TextUtils.isEmpty(mInfoStr) ? "正在操作" : mInfoStr);

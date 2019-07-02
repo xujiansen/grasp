@@ -34,7 +34,7 @@ import lib.grasp.R;
 import lib.grasp.entity.UploadPicRes;
 import lib.grasp.helper.AvatarHelper;
 import lib.grasp.util.FileUtil;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 import lib.grasp.util.NumberUtil;
 
 import static com.rooten.help.filehttp.FileUploadMgr.UploadStatus_FALIURE;

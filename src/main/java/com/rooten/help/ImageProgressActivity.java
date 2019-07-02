@@ -24,7 +24,7 @@ import com.rooten.ctrl.widget.RoundProgressBar;
 import com.rooten.frame.ActivityEx;
 
 import lib.grasp.util.FileUtil;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 import uk.co.senab.photoview.PhotoView;
 
 

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -632,6 +633,16 @@ public final class BarUtils {
         View decorView = window.getDecorView();
         int visibility = decorView.getSystemUiVisibility();
         return (visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+    }
+
+    /** 小米全面屏是否显示了NaviBar(结合isNavBarVisible()使用) */
+    public static boolean isNavBarVisibleMi(Context context) {
+        return Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0;
+    }
+
+    /** vivo全面屏是否显示了NaviBar(结合isNavBarVisible()使用) */
+    public static boolean isNavBarVisibleVivo(Context context) {
+        return Settings.Secure.getInt(context.getContentResolver(), "navigation_gesture_on", 0) != 0;
     }
 
     /**

@@ -171,7 +171,6 @@ public class OkHttpCallback<T> implements Callback {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             mListener.onFailure(new OkHttpException(OTHER_ERROR, e.getMessage()));
             L.logOnly("onResponse处理失败" + e.getMessage());
         }

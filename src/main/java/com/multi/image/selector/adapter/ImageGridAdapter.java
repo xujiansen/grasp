@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lib.grasp.R;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 
 
 /**

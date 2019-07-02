@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.rooten.ctrl.widget.RoundImageView;
 import lib.grasp.R;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 
 /**
  * Created by GaQu_Dev on 2018/9/26.

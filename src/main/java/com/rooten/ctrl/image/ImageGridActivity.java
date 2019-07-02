@@ -26,7 +26,7 @@ import com.rooten.frame.AppActivity;
 import com.rooten.frame.IResultListener;
 
 import lib.grasp.util.FileUtil;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 import lib.grasp.util.TimeDateUtil;
 
 public class ImageGridActivity extends AppActivity implements SwipeRefreshLayout.OnLoadListener, View.OnClickListener {

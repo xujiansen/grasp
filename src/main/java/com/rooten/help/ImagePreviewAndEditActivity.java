@@ -20,7 +20,7 @@ import com.rooten.frame.AppActivity;
 import com.rooten.frame.LinearPage;
 import com.rooten.util.IconifyUtil;
 
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 import lib.grasp.util.ScreenUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 import uk.co.senab.photoview.PhotoView;

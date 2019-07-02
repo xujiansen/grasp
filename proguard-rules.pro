@@ -226,3 +226,17 @@ public static java.lang.String TABLENAME;
 # tinker混淆规则
 -dontwarn com.tencent.tinker.**
 -keep class com.tencent.tinker.** { *; }
+
+# glide 4.x
+
+# glide
+-dontwarn com.bumptech.glide.**
+-keep class com.bumptech.glide.**{*;}
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl { *; }
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder

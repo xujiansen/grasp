@@ -8,15 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.multi.image.selector.bean.Folder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import lib.grasp.R;
-import lib.grasp.util.GlideUtils;
+import lib.grasp.util.glide.GlideUtils;
 
 
 /**
