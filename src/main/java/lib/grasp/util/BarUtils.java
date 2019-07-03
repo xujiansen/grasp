@@ -1,7 +1,6 @@
 package lib.grasp.util;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,13 +9,13 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.annotation.RequiresPermission;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -490,7 +489,7 @@ public final class BarUtils {
     /** 设置标题栏左边箭头是否可见 */
     public static void setTitleBarNaviArrowVisibility(@NonNull final AppCompatActivity activity, boolean visiable) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        android.support.v7.app.ActionBar bar = activity.getSupportActionBar();
+        androidx.appcompat.app.ActionBar bar = activity.getSupportActionBar();
         if(bar == null) return;
         bar.setDisplayHomeAsUpEnabled(visiable);
     }

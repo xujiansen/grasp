@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.PermissionChecker;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
 import android.text.TextUtils;
 
 /**

@@ -1,18 +1,8 @@
 package lib.grasp.util;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.view.View;
-
-import net.minidev.json.JSONAware;
-
-import org.json.JSONArray;
+import androidx.appcompat.app.AppCompatActivity;
 
 import lib.grasp.widget.MessageBoxGrasp;
 

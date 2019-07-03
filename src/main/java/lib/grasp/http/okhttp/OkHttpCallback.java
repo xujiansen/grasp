@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -19,9 +19,7 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
-import lib.grasp.http.BaseResponse;
 import lib.grasp.util.L;
-import lib.grasp.util.TOAST;
 import lib.grasp.widget.MessageBoxGrasp;
 import okhttp3.Call;
 import okhttp3.Callback;

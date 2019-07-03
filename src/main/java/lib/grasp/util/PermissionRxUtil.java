@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.tbruyelle.rxpermissions2.Permission;
@@ -15,9 +15,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.plugins.RxJavaPlugins;
 
 /**
  * 权限工具类

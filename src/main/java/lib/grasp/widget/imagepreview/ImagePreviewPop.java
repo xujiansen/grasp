@@ -3,7 +3,7 @@ package lib.grasp.widget.imagepreview;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import lib.grasp.R;
 import lib.grasp.util.BarUtils;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by JS_grasp on 2019/1/23.

@@ -12,8 +12,10 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
@@ -153,7 +155,7 @@ public class GlideUtils {
      * @param errorid
      * @param bitmapOrgif 加载普通图片 或者GIF图片 ，GIF图片设置bitmap显示第一帧
      */
-    public void LoadSupportv4FragmentBitmap(android.support.v4.app.Fragment fragment, String path, ImageView imageView, int placeid, int errorid, String bitmapOrgif) {
+    public void LoadSupportv4FragmentBitmap(Fragment fragment, String path, ImageView imageView, int placeid, int errorid, String bitmapOrgif) {
         if (bitmapOrgif == null || bitmapOrgif.equals(LOAD_BITMAP)) {
             Glide.with(fragment)
                     .asBitmap()
@@ -209,7 +211,7 @@ public class GlideUtils {
      * @param imageView
      */
     @SuppressWarnings("unchecked")
-    public void LoadSupportv4FragmentCircleBitmap(android.support.v4.app.Fragment fragment, String path, ImageView imageView) {
+    public void LoadSupportv4FragmentCircleBitmap(Fragment fragment, String path, ImageView imageView) {
         Glide.with(fragment).load(path).transform(new GlideCircleTransform()).into(imageView);
     }
 
@@ -269,7 +271,7 @@ public class GlideUtils {
      * @param roundradius
      */
     @SuppressWarnings("unchecked")
-    public void LoadSupportv4FragmentRoundBitmap(android.support.v4.app.Fragment fragment, String path, ImageView imageView, int roundradius) {
+    public void LoadSupportv4FragmentRoundBitmap(Fragment fragment, String path, ImageView imageView, int roundradius) {
         if (roundradius < 0) {
             Glide.with(fragment).load(path).transform(new GlideRoundTransform(fragment.getActivity())).into(imageView);
         } else {
@@ -314,7 +316,7 @@ public class GlideUtils {
      * @param imageView
      */
     @SuppressWarnings("unchecked")
-    public void LoadSupportv4FragmentBlurBitmap(android.support.v4.app.Fragment fragment, String path, ImageView imageView) {
+    public void LoadSupportv4FragmentBlurBitmap(Fragment fragment, String path, ImageView imageView) {
         Glide.with(fragment).load(path).transform(new BlurTransformation(fragment.getActivity())).into(imageView);
     }
 
@@ -358,7 +360,7 @@ public class GlideUtils {
      * @param rotateRotationAngle
      */
     @SuppressWarnings("unchecked")
-    public void LoadSupportv4FragmentRotateBitmap(android.support.v4.app.Fragment fragment, String path, ImageView imageView, Float rotateRotationAngle) {
+    public void LoadSupportv4FragmentRotateBitmap(Fragment fragment, String path, ImageView imageView, Float rotateRotationAngle) {
         Glide.with(fragment).load(path).transform(new RotateTransformation(fragment.getActivity(), rotateRotationAngle)).into(imageView);
     }
 

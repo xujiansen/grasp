@@ -1,7 +1,7 @@
 package lib.grasp.widget.recyclerview.group.layoutmanger;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import android.util.AttributeSet;
 
 import lib.grasp.widget.recyclerview.group.adapter.base.GroupedRecyclerViewAdapter;

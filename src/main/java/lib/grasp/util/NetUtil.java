@@ -4,14 +4,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 
 import java.io.DataOutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**

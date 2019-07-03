@@ -1,8 +1,6 @@
 package lib.grasp.mvp;
 
-import android.support.annotation.NonNull;
-
-import java.lang.ref.WeakReference;
+import androidx.annotation.NonNull;
 
 
 /**

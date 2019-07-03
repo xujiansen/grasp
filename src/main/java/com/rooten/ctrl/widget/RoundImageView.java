@@ -20,7 +20,7 @@ import android.util.TypedValue;
 
 import lib.grasp.R;
 
-public class RoundImageView extends android.support.v7.widget.AppCompatImageView {
+public class RoundImageView extends androidx.appcompat.widget.AppCompatImageView {
     /**
      * 图片的类型，圆形or圆角
      */

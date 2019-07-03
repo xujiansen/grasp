@@ -1,6 +1,5 @@
 package lib.grasp.util;
 
-import android.Manifest;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -15,10 +14,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.appcompat.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
