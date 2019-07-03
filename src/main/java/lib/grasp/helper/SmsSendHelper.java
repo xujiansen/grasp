@@ -3,17 +3,16 @@ package lib.grasp.helper;
 import android.app.Activity;
 import android.text.TextUtils;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.google.gson.reflect.TypeToken;
+import com.rooten.BaApp;
 
 import java.util.HashMap;
 
-import com.rooten.BaApp;
-
-import lib.grasp.http.volley.VolleyHelper;
 import lib.grasp.http.ObjResponse;
+import lib.grasp.http.okhttp.OkHttpHelper;
+import lib.grasp.http.okhttp.ResponseCallback;
 import lib.grasp.util.TOAST;
+
+import static lib.grasp.http.okhttp.OkHttpHelper.GET;
 
 /** 验证码 */
 public class SmsSendHelper {
@@ -55,29 +54,32 @@ public class SmsSendHelper {
 
     /** 具体上传 */
     private void doGetSms(HashMap<String, String> map, HashMap<String, String> headMap){
-        VolleyHelper.with(mAct)
+        OkHttpHelper.with(mAct)
                 .setURL(mUrl)
-//                .setURL(Constant.POST_CONFIRM_CODE)
-                .setMethod(Request.Method.GET)
+                .setMethod(GET)
                 .setHeadParam(headMap)
                 .setParam(map)
                 .setIsShowProg(false, "正在加载")
                 .setSwip(null)
-                .onSuccess((Response.Listener<ObjResponse<String>>) response -> {
-                    if (response == null || response.code != 0) {
-                        TOAST.showShort(mAct, "获取失败" + ((response != null && !TextUtils.isEmpty(response.msg)) ? "," + response.msg : ""));
-                        mCodeHelper.doSendResult(false);
-                        return;
+                .execute(new ResponseCallback<ObjResponse<String>>() {
+                    @Override
+                    public void onSuccess(ObjResponse<String> response) {
+                        if (response == null || response.code != 0) {
+                            TOAST.showShort(mAct, "获取失败" + ((response != null && !TextUtils.isEmpty(response.msg)) ? "," + response.msg : ""));
+                            mCodeHelper.doSendResult(false);
+                            return;
+                        }
+                        TOAST.showShort(mAct, "获取成功" + ((!TextUtils.isEmpty(response.msg)) ? ("," + response.msg) : ""));
+                        mCodeHelper.doSendResult(true);
+                        mCode = response.data;
                     }
-                    TOAST.showShort(mAct, "获取成功" + ((!TextUtils.isEmpty(response.msg)) ? ("," + response.msg) : ""));
-                    mCodeHelper.doSendResult(true);
-                    mCode = response.data;
-                })
-                .onError(volleyError -> {
-                    TOAST.showShort(mAct, "获取失败");
-                    mCodeHelper.doSendResult(false);
-                })
-                .execute(new TypeToken<ObjResponse<String>>() {}.getType());
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        TOAST.showShort(mAct, "获取失败");
+                        mCodeHelper.doSendResult(false);
+                    }
+                });
     }
 
     /** 发起验证(异步) */

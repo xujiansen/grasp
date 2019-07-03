@@ -107,5 +107,4 @@ dependencies {
     implementation files('libs/core.jar')
     implementation files('libs/gson-2.7.jar')
     implementation files('libs/json-smart-1.2.jar')
-//    implementation files('libs/volley.jar')
 }

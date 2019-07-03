@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Process;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.MaterialCommunityModule;
@@ -34,8 +32,6 @@ public class BaApp extends Application {
 
     private LocalBroadMgr       mLocalBroadMgr = null; // 本地广播管理
 
-    private RequestQueue        mRequestQueue;
-
     public  ExecutorService     mAppThreadPool = Executors.newFixedThreadPool(3);
 
 
@@ -56,13 +52,6 @@ public class BaApp extends Application {
 
     private void initAppPath() {
         PathUtil.initPath(this);
-    }
-
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(this);
-        }
-        return mRequestQueue;
     }
 
     private void initIconify() {
