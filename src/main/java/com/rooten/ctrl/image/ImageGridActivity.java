@@ -97,7 +97,7 @@ public class ImageGridActivity extends AppActivity implements SwipeRefreshLayout
     private void initRecyclerView(View v) {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.image_grid_recycle);
         GridLayoutManager gridManager = new GridLayoutManager(this, SPAN_COUNT);
-        gridManager.setOrientation(LinearLayoutManager.VERTICAL);
+        gridManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(gridManager);
     }
 

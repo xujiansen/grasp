@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 
 // 0. 删掉包名
 // 1. application改为library
-// 2. application注明flatdir(aar路径)
+// 2. application注明flatDir(aar路径)
 // 3. 没办法的话可将lib/libs里面的所有aar包复制到app/libs里面
 // 4. 注意lib与app的版本compact的远程依赖兼容
-// 5. application的manifest里面的applicaation标签添加replace属性
+// 5. AndroidManifest里面的application标签添加replace属性
 // 6. application的依赖地址
 
 android {
@@ -68,7 +68,6 @@ allprojects {
 
         flatDir {
             dirs 'libs'
-//            dirs '../app/libs'
         }
         google()
     }
@@ -76,33 +75,29 @@ allprojects {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.palette:palette:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'                                  // 这里如果用jar包的话,RN项目就依赖冲突
     implementation 'com.squareup.okio:okio:1.15.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
     implementation 'com.github.bumptech.glide:glide:4.9.0'                              // glide
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'net.minidev:json-smart:2.3'
+
     implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     implementation 'com.joanzapata.iconify:android-iconify-material:2.1.0'
     implementation 'com.joanzapata.iconify:android-iconify-material-community:2.1.0'
 
-
-    implementation 'androidx.multidex:multidex:2.0.1'                 // 多dex配置
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.3.8'        // bugly异常框架
-    implementation 'com.tencent.tinker:tinker-android-lib:1.9.11'       // tinker框架
-    implementation 'com.tencent.bugly:nativecrashreport:3.6.0.1'        // bugly热更新框架
-
-
     implementation 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
-
-    implementation files('libs/core.jar')
-    implementation files('libs/gson-2.7.jar')
-    implementation files('libs/json-smart-1.2.jar')
 }
