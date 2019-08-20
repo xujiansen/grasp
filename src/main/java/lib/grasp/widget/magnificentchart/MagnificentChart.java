@@ -18,22 +18,18 @@ import java.util.List;
 
 import lib.grasp.R;
 
+/*
+ * 使用方法:
+ * MagnificentChart magnificentChart = (MagnificentChart) mView.findViewById(R.id.magnificentChart);
+ * MagnificentChartItem firstItem1 = new MagnificentChartItem("first1", 10, Color.parseColor("#FF4081"));
+ * List<MagnificentChartItem> chartItemsList = new ArrayList<>();
+ * chartItemsList.add(firstItem1);
+ * magnificentChart.setChartItemsList(chartItemsList);
+ * magnificentChart.setMaxValue(100);
+ */
+
 /**
  * 饼状比例图
- * <p>
- * 使用方法:
- * <br/>
- * MagnificentChart magnificentChart = (MagnificentChart) mView.findViewById(R.id.magnificentChart);
- * <br/>
- * MagnificentChartItem firstItem1 = new MagnificentChartItem("first1", 10, Color.parseColor("#FF4081"));
- * <br/>
- * List<MagnificentChartItem> chartItemsList = new ArrayList<>();
- * <br/>
- * chartItemsList.add(firstItem1);
- * <br/>
- * magnificentChart.setChartItemsList(chartItemsList);
- * <br/>
- * magnificentChart.setMaxValue(100);
  */
 public class MagnificentChart extends View {
 

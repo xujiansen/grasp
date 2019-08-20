@@ -148,7 +148,7 @@ public class OkHttpCallback<T> implements Callback {
                 else if(result.getInt(RESULT_CODE) == SESSION_INVALIDATE){
                     MessageBoxGrasp.infoMsg(mContext, "提示", "会话已过期,请重新登录!", false, v -> {
                         BaApp app = (BaApp) mContext.getApplicationContext();
-                        LocalBroadMgr localBroadMgr = new LocalBroadMgr(app);
+                        LocalBroadMgr localBroadMgr = app.getLocalBroadMgr();
                         localBroadMgr.broadAction(Constant.ARG_TOKEN_EXPIRE);
                     });
                 }

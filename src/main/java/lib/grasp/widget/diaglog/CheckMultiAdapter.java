@@ -14,7 +14,7 @@ import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
 
 /**
- * 运动记录列表项
+ * 多选不消失
  */
 public class CheckMultiAdapter extends BaseAdapter<CheckMultiAdapter.Holder, CheckMultiEntity> {
 

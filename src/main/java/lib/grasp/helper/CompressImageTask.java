@@ -26,7 +26,7 @@ public class CompressImageTask extends AsyncTask<Void, Void, String> {
     private String      mBase64Code = "";           // 图片Base64编码
 
     /** 加载结果监听 */
-    private onCompressListener mListener;
+    private ImageSingleSelectListener mListener;
 
     public CompressImageTask(BaApp app, Context context, boolean isShowProg, String src) {
         this.mApp           = app;
@@ -79,7 +79,7 @@ public class CompressImageTask extends AsyncTask<Void, Void, String> {
         }
 
         if (mListener != null) {
-            mListener.onCompressFinished(result1, mBase64Code);
+            mListener.onSelected(result1, mBase64Code);
         }
     }
 
@@ -88,7 +88,7 @@ public class CompressImageTask extends AsyncTask<Void, Void, String> {
         Toast.makeText(mContext, strMsg, Toast.LENGTH_SHORT).show();
     }
 
-    public void setListener(onCompressListener mListener) {
+    public void setListener(ImageSingleSelectListener mListener) {
         this.mListener = mListener;
     }
 
@@ -97,7 +97,4 @@ public class CompressImageTask extends AsyncTask<Void, Void, String> {
         this.mReturnBase64 = mReturnBase64;
     }
 
-    public interface onCompressListener{
-        void onCompressFinished(String picCompressPath, String base64Coder);
-    }
 }

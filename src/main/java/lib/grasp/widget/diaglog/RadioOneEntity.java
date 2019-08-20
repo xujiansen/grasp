@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 选择
+ * 单选一个消失
  */
 public class RadioOneEntity {
     public String id;

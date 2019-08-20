@@ -12,7 +12,7 @@ import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
 
 /**
- * 运动记录列表项
+ * 单选一个消失
  */
 public class RadioOneAdapter extends BaseAdapter<RadioOneAdapter.Holder, RadioOneEntity> {
 
@@ -43,6 +43,9 @@ public class RadioOneAdapter extends BaseAdapter<RadioOneAdapter.Holder, RadioOn
     public int getItemCount() {
         super.getItemCount();
         return getDatas().size();
+    }
+
+    public void setWidth() {
     }
 
     class Holder extends RecyclerView.ViewHolder{

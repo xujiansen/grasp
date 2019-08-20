@@ -18,7 +18,7 @@ import lib.grasp.R;
 import lib.grasp.util.BarUtils;
 
 /**
- * Created by JS_grasp on 2019/1/23.
+ * 查看图片弹窗
  */
 public class ImagePreviewPop extends PopupWindow
 //        implements PhotoViewAttacher.OnPhotoTapListener

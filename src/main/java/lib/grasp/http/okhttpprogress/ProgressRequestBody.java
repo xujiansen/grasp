@@ -12,9 +12,6 @@ import okio.Sink;
 
 /**
  * 包装的请求体，处理进度
- * User:lizhangqu(513163535@qq.com)
- * Date:2015-09-02
- * Time: 17:15
  */
 public  class ProgressRequestBody extends RequestBody {
     //实际的待包装请求体

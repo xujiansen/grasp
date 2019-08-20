@@ -22,7 +22,7 @@ import lib.grasp.R;
 import lib.grasp.util.L;
 import lib.grasp.util.NumberUtil;
 
-/** 带进度回调的弹窗 */
+/** 带进度回调的Dialog */
 public class LoadingDlgGrasp extends AlertDialog implements IHandler, View.OnClickListener {
     private final int MSG_UPDATE_TIME   = 1;
     public static final int MSG_UPDATE_STATUS = 2;

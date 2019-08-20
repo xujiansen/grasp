@@ -27,7 +27,7 @@ import lib.grasp.widget.banner.viewpager.BannerGrasp;
  */
 
 /**
- * 弹窗式广告banner
+ * 弹窗式广告banner(基于ViewPager)
  */
 public class AdBannerDialogGrasp implements View.OnClickListener {
     private final int MATCH_PARENT  = LinearLayout.LayoutParams.MATCH_PARENT;

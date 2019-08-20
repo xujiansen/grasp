@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**  */
+/** 仿微信带进度条的webview */
 public class ProgressView extends View {
     private Paint mPaint;
     private int mWidth, mHeight;

@@ -12,7 +12,7 @@ import java.util.List;
 import lib.grasp.R;
 
 /**
- * Created by GaQu_Dev on 2018/9/26.
+ * 轮播适配器
  */
 public class VpAdapter extends PagerAdapter implements View.OnClickListener {
 

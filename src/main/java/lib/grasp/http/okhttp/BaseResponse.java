@@ -1,4 +1,4 @@
-package lib.grasp.http;
+package lib.grasp.http.okhttp;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -8,11 +8,12 @@ import android.telephony.SmsMessage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/** 监听手机短信回调 */
 public class SmsBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = "SmsBroadcastReceiver";
 
-    private static MessageListener mMessageListener;
+    private MessageListener mMessageListener;
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -15,10 +15,8 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 /**
- * recyclerview单项侧滑
- *
+ * RecyclerView列表单项侧滑
  */
-//SwipeItemLayout1与SwipeItemLayout2供参考，SwipeItemLayout为正式版本
 public class SwipeItemLayout extends ViewGroup {
     enum Mode{
         RESET,DRAG,FLING,TAP

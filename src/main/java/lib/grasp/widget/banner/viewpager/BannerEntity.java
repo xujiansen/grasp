@@ -17,7 +17,7 @@ import lib.grasp.R;
 import lib.grasp.util.glide.GlideUtils;
 
 /**
- * Created by GaQu_Dev on 2018/9/26.
+ * 轮播单项实体
  */
 public class BannerEntity {
     /** 展示画面 */

@@ -40,7 +40,6 @@ public class FolderAdapter extends BaseAdapter {
 
     /**
      * 设置数据集
-     * @param folders
      */
     public void setData(List<Folder> folders) {
         if(folders != null && folders.size()>0){
@@ -82,12 +81,6 @@ public class FolderAdapter extends BaseAdapter {
                 holder.size.setText(getTotalImageSize()+"张");
                 if(mFolders.size()>0){
                     Folder f = mFolders.get(0);
-//                    Picasso.with(mContext)
-//                            .load(new File(f.cover.path))
-//                            .error(R.drawable.default_error)
-//                            .resize(mImageSize, mImageSize)
-//                            .centerCrop()
-//                            .into(holder.cover);
                     GlideUtils.getInstance().LoadContextBitmap(mContext, f.cover.path, holder.cover);
                 }
             }else {
@@ -129,10 +122,10 @@ public class FolderAdapter extends BaseAdapter {
         TextView size;
         ImageView indicator;
         ViewHolder(View view){
-            cover = (ImageView)view.findViewById(R.id.cover);
-            name = (TextView) view.findViewById(R.id.name);
-            size = (TextView) view.findViewById(R.id.size);
-            indicator = (ImageView) view.findViewById(R.id.indicator);
+            cover = view.findViewById(R.id.cover);
+            name = view.findViewById(R.id.name);
+            size = view.findViewById(R.id.size);
+            indicator = view.findViewById(R.id.indicator);
             view.setTag(this);
         }
 
@@ -140,14 +133,7 @@ public class FolderAdapter extends BaseAdapter {
             name.setText(data.name);
             size.setText(data.images.size()+"张");
             // 显示图片
-//            Picasso.with(mContext)
-//                    .load(new File(data.cover.path))
-//                    .placeholder(R.drawable.default_error)
-//                    .resize(mImageSize, mImageSize)
-//                    .centerCrop()
-//                    .into(cover);
             GlideUtils.getInstance().LoadContextBitmap(mContext, data.cover.path, cover);
-            // TODO 选择标识
         }
     }
 

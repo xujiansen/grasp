@@ -1,4 +1,4 @@
-package lib.grasp.helper;
+package lib.grasp.http.okhttpprogress;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,44 +6,55 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.rooten.BaApp;
 import com.rooten.frame.AppHandler;
 import com.rooten.frame.IHandler;
-import lib.grasp.http.okhttpprogress.ProgressHelper;
-import lib.grasp.http.okhttpprogress.UIProgressResponseListener;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import lib.grasp.helper.LoadListener;
 import lib.grasp.util.FileUtil;
+import lib.grasp.util.NumberUtil;
 import lib.grasp.widget.LoadingDlgGrasp;
 import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * 下载帮助类（包括界面显示）
+ * 上传帮助类（包括界面显示, 多文件/重量级请使用{@link com.rooten.help.filehttp.FileUploadMgr} ）
  *
  * 使用代码实例：
- * DownLoadHelper loadHelper = new DownLoadHelper(this, mDownUrl, mDownPath);
+ * String localFilePath = mLocalFilePath;
+ *         List<String> list = new ArrayList<>();
+ *         list.add(localFilePath);
+ *
+ *         UpLoadHelper loadHelper = new UpLoadHelper(this, mUpUrl, list);
  *         loadHelper.setLoadListener(new lib.grasp.helper.LoadListener() {
  *             @Override
  *             public void onSuccess() {
- *                 doConfirmToInstall();
+ *                 MessageBoxGrasp.infoMsg(TestActivity.this, "上传完成");
  *             }
  *
  *             @Override
  *             public void onFail() {
- *                 doIndicateFailMsg();
+ *                 MessageBoxGrasp.infoMsg(TestActivity.this, "上传失败");
  *             }
  *         });
  *         loadHelper.startLoad();
  */
-public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandler {
+public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler {
     private Context mCtx;
     private BaApp mApp;
 
     private String mUrl;
-    private String mSaveFilePath;
+    private List<String> mResFilePaths;
 
     private boolean isCancel = false;
     private LoadingDlgGrasp mDlg;
@@ -57,10 +68,10 @@ public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandl
         this.mLoadListener = mLoadListener;
     }
 
-    public DownLoadHelper(Context mCtx, String mUrl, String mSaveFilePath) {
+    public UpLoadHelper(Context mCtx, String mUrl, List<String> resFilePaths) {
         this.mCtx = mCtx;
         this.mUrl = mUrl;
-        this.mSaveFilePath = mSaveFilePath;
+        this.mResFilePaths = resFilePaths;
 
         mApp = (BaApp) mCtx.getApplicationContext();
         mLocalHandler = new AppHandler(this);
@@ -83,16 +94,23 @@ public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandl
 
     /** 开始传输 */
     public void startLoad(){
-        if(TextUtils.isEmpty(mUrl) || TextUtils.isEmpty(mSaveFilePath)) return;
+        if(TextUtils.isEmpty(mUrl) || mResFilePaths == null || mResFilePaths.size() == 0) return;
         mDlg.show();
 
-        //这个是ui线程回调，可直接操作UI
-        UIProgressResponseListener mUiProgressResponseListener = new UIProgressResponseListener() {
+        List<File> files = new ArrayList<>();
+        for(String str : mResFilePaths){
+            if(!FileUtil.isFileExists(str)) continue;
+            files.add(new File(str));
+        }
+
+        final UIProgressRequestListener uiProgressRequestListener = new UIProgressRequestListener() {
             @Override
-            public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
+            public void onUIRequestProgress(long bytesWrite, long contentLength, boolean done) {
+                System.out.println("------onUIRequestProgress:" + NumberUtil.getProgress(bytesWrite, contentLength));
+
                 if(mHandler == null || isCancel) return;
                 Bundle bundle = new Bundle();
-                bundle.putLong("curSize", bytesRead);
+                bundle.putLong("curSize", bytesWrite);
                 bundle.putLong("allLen" , contentLength);
                 Message msg = Message.obtain();
                 msg.setData(bundle);
@@ -102,6 +120,8 @@ public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandl
 
             @Override
             public void onFailure(Call call, IOException e) {
+                System.out.println("------onFailure:" + e);
+
                 Bundle bundle = new Bundle();
                 Message msg = Message.obtain();
                 msg.setData(bundle);
@@ -110,36 +130,37 @@ public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandl
             }
 
             @Override
-            public void onResponse(Call call, Response response){   // 开始，结束的时候格调一次
-                if (!FileUtil.isFileExists(mSaveFilePath)) FileUtil.ensureFileExists(mSaveFilePath);
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("------onResponse:" + response);
 
+                if(mDlg == null || isCancel) return;
                 Bundle bundle = new Bundle();
                 Message msg = Message.obtain();
                 msg.setData(bundle);
-                try {
-                    FileUtil.saveOkHttpFile(response, new File(mSaveFilePath)); // 从Response里面读取数据，同时维持http读取状态
-                    if(mDlg == null || isCancel) return;
-                    msg.what = LoadingDlgGrasp.MSG_UPDATE_STATUS_SUCC;
-                    mLocalHandler.sendMessage(msg);
-                }
-                catch (Exception e){
-                    msg.what = LoadingDlgGrasp.MSG_UPDATE_STATUS_FAIL;
-                    mLocalHandler.sendMessage(msg);
-                }
+                msg.what = LoadingDlgGrasp.MSG_UPDATE_STATUS_SUCC;
+                mLocalHandler.sendMessage(msg);
             }
         };
 
-        //构造请求
-        final Request request1 = new Request
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+        for(File file : files){
+            builder.addPart(RequestBody.create(MediaType.parse("application/octet-stream"), file));
+        }
+        MultipartBody multipartBody = builder.build();
+
+        ProgressRequestBody progressRequestBody = ProgressHelper
+                .addProgressRequestListener(multipartBody, uiProgressRequestListener);
+
+        final Request request = new Request
                 .Builder()
                 .url(mUrl)
+                .post(progressRequestBody)
                 .build();
 
-        //包装Response使其支持进度回调
-        ProgressHelper
-                .addProgressResponseListener(mUiProgressResponseListener)
-                .newCall(request1)
-                .enqueue(mUiProgressResponseListener);
+        new OkHttpClient()
+                .newCall(request)
+                .enqueue(uiProgressRequestListener);
     }
 
     @Override

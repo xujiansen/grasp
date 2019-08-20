@@ -10,9 +10,6 @@ import okhttp3.Callback;
 
 /**
  * 请求体回调实现类，用于UI层回调
- * User:lizhangqu(513163535@qq.com)
- * Date:2015-09-02
- * Time: 22:34
  */
 public abstract class UIProgressResponseListener implements ProgressResponseListener, Callback {
     private static final int RESPONSE_UPDATE = 0x02;

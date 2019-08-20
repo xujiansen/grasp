@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 /**
  * UI进度回调实体类
- * User:lizhangqu(513163535@qq.com)
- * Date:2015-09-02
- * Time: 22:39
  */
 public class ProgressModel implements Serializable {
     //当前读取字节长度

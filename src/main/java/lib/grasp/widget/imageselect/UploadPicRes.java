@@ -1,4 +1,4 @@
-package lib.grasp.entity;
+package lib.grasp.widget.imageselect;
 
 import com.google.gson.annotations.SerializedName;
 

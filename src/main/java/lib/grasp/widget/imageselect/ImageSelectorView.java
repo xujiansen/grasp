@@ -1,9 +1,11 @@
-package lib.grasp.widget;
+package lib.grasp.widget.imageselect;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,14 +33,28 @@ import com.rooten.help.filehttp.HttpUploadRequest;
 import com.rooten.help.filehttp.HttpUtil;
 
 import lib.grasp.R;
-import lib.grasp.entity.UploadPicRes;
-import lib.grasp.helper.AvatarHelper;
+import lib.grasp.helper.ImagePickHelper;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.glide.GlideUtils;
 import lib.grasp.util.NumberUtil;
 
 import static com.rooten.help.filehttp.FileUploadMgr.UploadStatus_FALIURE;
 import static com.rooten.help.filehttp.FileUploadMgr.UploadStatus_SUCCESS;
+
+/*
+        ImageSelectorView mImageSelectorView = mView.findViewById(R.id.imageSelector);
+        mImageSelectorView.setAct(this);
+        mImageSelectorView.setOnAllUploadedListener(this);
+        if(mApp.getFileUploadMgr() == null) return;
+        List<HttpUploadRequest> list = mImageSelectorView.getUploadEntity();
+        if(list == null||list.size() == 0){
+            onAllUploadedListener();
+            return;
+        }
+        for(HttpUploadRequest request : list){
+            mApp.getFileUploadMgr().addUploadWork(UPLOAD_ID, request);
+        }
+ */
 
 /**
  * 选择图片上传(进度监听)
@@ -116,17 +132,17 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
         }
 
         for (HttpUploadRequest entity : mSelected) {
-            View sonView        = mSonViews.get(mSelected.indexOf(entity));
+            View sonView = mSonViews.get(mSelected.indexOf(entity));
             setClickListener(sonView, mSelected.indexOf(entity));
             resetSingleViewWithStatus(sonView, entity, -1);
         }
 
-        if(mSelected.size() >= mImageCount) return;
+        if (mSelected.size() >= mImageCount) return;
         View sonView = mSonViews.get(mSelected.size());
-        ImageView           iv  = sonView.findViewById(R.id.iv);  // 图片
-        IconTextView        itv = sonView.findViewById(R.id.icon); // 叉号
-        RoundProgressBar    progressBar = sonView.findViewById(R.id.progressbar);  // 进度
-        IconTextView        itvResult = sonView.findViewById(R.id.tv_result);  // 结果文字提示
+        ImageView iv = sonView.findViewById(R.id.iv);  // 图片
+        IconTextView itv = sonView.findViewById(R.id.icon); // 叉号
+        RoundProgressBar progressBar = sonView.findViewById(R.id.progressbar);  // 进度
+        IconTextView itvResult = sonView.findViewById(R.id.tv_result);  // 结果文字提示
 
         sonView.setVisibility(VISIBLE);
         iv.setImageDrawable(null);
@@ -136,7 +152,9 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
         setClickListener(sonView, mSelected.size());
     }
 
-    /** 初始化子view的大小参数(长宽一样) */
+    /**
+     * 初始化子view的大小参数(长宽一样)
+     */
     private View initItemView(View view) {
         int widthOfSons = getMeasuredWidth() / (Math.max(mImageCount, 4));
         if (view == null) view = View.inflate(getContext(), R.layout.img_select_item, null);
@@ -157,23 +175,23 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
         IconTextView itv = view.findViewById(R.id.icon);
 
         // 点击选择图片
-        view.setOnClickListener(v -> new AvatarHelper(mApp, mAct, false, (picCompressPath, base64Coder) -> { // 点击选择图片---回调
-            if (TextUtils.isEmpty(picCompressPath)) return;
-            if(mSelected.size() <= index){  // 新选择
-                HashMap<String, String> header = new HashMap<>();
-                header.put("token", mApp.getUserData().token);
-                HttpUploadRequest request = HttpUploadRequest.createDefaultReq(UUID.randomUUID().toString(), Constant.UPLOAD_PIC, new File(picCompressPath), header, new HashMap<>(), this);
-                mSelected.add(request);
-            }
-            else{                           // 改旧的
-                mSelected.get(index).uploadFile = new File(picCompressPath);
-                mSelected.get(index).loadStatus = 0;
-            }
-            reInitView();
-        }).doSelectPic());
+        view.setOnClickListener(v -> new ImagePickHelper(mAct)
+                .doSingleSelect(true, true, (picCompressPath, base64Coder) -> {     // 点击选择图片---回调
+                    if (TextUtils.isEmpty(picCompressPath)) return;
+                    if (mSelected.size() <= index) {  // 新选择
+                        HashMap<String, String> header = new HashMap<>();
+                        header.put("token", mApp.getUserData().token);
+                        HttpUploadRequest request = HttpUploadRequest.createDefaultReq(UUID.randomUUID().toString(), Constant.UPLOAD_PIC, new File(picCompressPath), header, new HashMap<>(), this);
+                        mSelected.add(request);
+                    } else {                           // 改旧的
+                        mSelected.get(index).uploadFile = new File(picCompressPath);
+                        mSelected.get(index).loadStatus = 0;
+                    }
+                    reInitView();
+                }));
 
         itv.setOnClickListener(v -> {   // 点击删除
-            if(mSelected.size() <= index) return;
+            if (mSelected.size() <= index) return;
             mSelected.remove(index);
             reInitView();
         });
@@ -197,7 +215,7 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
     public void onProgress(String requestID, String url, long curSize, long allLen) {
         refreshLoadStatus(requestID, curSize, allLen);
 
-        if(allLen != UploadStatus_SUCCESS && allLen != UploadStatus_FALIURE) return;
+        if (allLen != UploadStatus_SUCCESS && allLen != UploadStatus_FALIURE) return;
 
         HttpUploadRequest targetEntity = null;
         for (HttpUploadRequest entity : mSelected) {
@@ -220,20 +238,22 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
         mHandler.sendMessage(msg);
     }
 
-    /** 检查是否已经全部上传 */
-    private boolean checkAllUpLoaded(){
-        for(HttpUploadRequest entity : mSelected){
-            if(entity.loadStatus != UploadStatus_SUCCESS) return false;
+    /**
+     * 检查是否已经全部上传
+     */
+    private boolean checkAllUpLoaded() {
+        for (HttpUploadRequest entity : mSelected) {
+            if (entity.loadStatus != UploadStatus_SUCCESS) return false;
         }
         return true;
     }
 
     @Override
     public boolean handleMessage(Message msg) {
-        Bundle bundle 	= msg.getData();
-        String uuid 	= com.rooten.util.Util.getString(bundle, "uuid");
-        long curSize 	= com.rooten.util.Util.getLong(bundle, "curSize");
-        long allLen 	= com.rooten.util.Util.getLong(bundle, "allLen");
+        Bundle bundle = msg.getData();
+        String uuid = com.rooten.util.Util.getString(bundle, "uuid");
+        long curSize = com.rooten.util.Util.getLong(bundle, "curSize");
+        long allLen = com.rooten.util.Util.getLong(bundle, "allLen");
 
         HttpUploadRequest targetEntity = null;
         for (HttpUploadRequest entity : mSelected) {
@@ -250,8 +270,8 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
             targetEntity.loadStatus = UploadStatus_SUCCESS;
             resetSingleViewWithStatus(sonView, targetEntity, -1);
 
-            if(checkAllUpLoaded()) {   // 所有的都上传成功
-                if(this.mListener != null) this.mListener.onAllUploadedListener();
+            if (checkAllUpLoaded()) {   // 所有的都上传成功
+                if (this.mListener != null) this.mListener.onAllUploadedListener();
             }
         } else if (allLen == UploadStatus_FALIURE) {    // 下载失败
             targetEntity.loadStatus = UploadStatus_FALIURE;
@@ -264,7 +284,7 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
         return true;
     }
 
-    public interface OnAllUploadedListener{
+    public interface OnAllUploadedListener {
         // 全部上传成功回调
         void onAllUploadedListener();
     }
@@ -275,29 +295,33 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
         this.mListener = mListener;
     }
 
-    /** 获取服务器返回的所有信息(返回NULL,代表没有全部上传成功) */
-    public List<UploadPicRes> getAllRequest(){
+    /**
+     * 获取服务器返回的所有信息(返回NULL,代表没有全部上传成功)
+     */
+    public List<UploadPicRes> getAllRequest() {
         List<UploadPicRes> list = new ArrayList<>();
         for (HttpUploadRequest entity : mSelected) {
-            if(entity.loadStatus != FileUploadMgr.UploadStatus_SUCCESS) continue;
+            if (entity.loadStatus != FileUploadMgr.UploadStatus_SUCCESS) continue;
             try {
                 UploadPicRes res = new Gson().fromJson(entity.resInfo, UploadPicRes.class);
                 list.add(res);
+            } catch (Exception e) {
             }
-            catch (Exception e){}
         }
         return list;
     }
 
 
-    /** 按不同状态显示数据 */
-    private void resetSingleViewWithStatus(View sonView, HttpUploadRequest entity, int progress){
+    /**
+     * 按不同状态显示数据
+     */
+    private void resetSingleViewWithStatus(View sonView, HttpUploadRequest entity, int progress) {
         if (sonView == null || entity == null) return;
 
-        ImageView           iv  = sonView.findViewById(R.id.iv);  // 图片
-        IconTextView        itv = sonView.findViewById(R.id.icon); // 叉号
-        RoundProgressBar    progressBar = sonView.findViewById(R.id.progressbar);  // 进度
-        IconTextView        itvResult = sonView.findViewById(R.id.tv_result);  // 结果文字提示
+        ImageView iv = sonView.findViewById(R.id.iv);  // 图片
+        IconTextView itv = sonView.findViewById(R.id.icon); // 叉号
+        RoundProgressBar progressBar = sonView.findViewById(R.id.progressbar);  // 进度
+        IconTextView itvResult = sonView.findViewById(R.id.tv_result);  // 结果文字提示
 
         sonView.setVisibility(VISIBLE);
 
@@ -307,25 +331,22 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
             itv.setVisibility(GONE);
             progressBar.setVisibility(GONE);
             itvResult.setVisibility(GONE);
-        }
-        else if(entity.loadStatus == 0){    // 已选择图片,未上传
+        } else if (entity.loadStatus == 0) {    // 已选择图片,未上传
             iv.setAlpha(1f);
             iv.setVisibility(VISIBLE);
             itv.setVisibility(GONE);
             progressBar.setVisibility(GONE);
             itvResult.setVisibility(GONE);
             GlideUtils.getInstance().LoadContextBitmap(getContext(), entity.uploadFile.getAbsolutePath(), iv);
-        }
-        else if(entity.loadStatus > 0){    // 传输中
+        } else if (entity.loadStatus > 0) {    // 传输中
             iv.setAlpha(0.5f);
             iv.setVisibility(VISIBLE);
             itv.setVisibility(GONE);
             progressBar.setVisibility(VISIBLE);
             itvResult.setVisibility(GONE);
-            if(progress >= 0) progressBar.setProgress(progress);
+            if (progress >= 0) progressBar.setProgress(progress);
             GlideUtils.getInstance().LoadContextBitmap(getContext(), entity.uploadFile.getAbsolutePath(), iv);
-        }
-        else if(entity.loadStatus == UploadStatus_SUCCESS){   // 上传成功
+        } else if (entity.loadStatus == UploadStatus_SUCCESS) {   // 上传成功
             iv.setAlpha(0.5f);
             iv.setVisibility(VISIBLE);
             itv.setVisibility(GONE);
@@ -333,8 +354,7 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
             itvResult.setVisibility(VISIBLE);
             itvResult.setText("{md-check}");
             itvResult.setTextColor(getResources().getColor(R.color.colorPrimary));
-        }
-        else if(entity.loadStatus == UploadStatus_FALIURE){   // 上传失败
+        } else if (entity.loadStatus == UploadStatus_FALIURE) {   // 上传失败
             iv.setAlpha(0.5f);
             iv.setVisibility(VISIBLE);
             itv.setVisibility(GONE);

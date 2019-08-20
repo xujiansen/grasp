@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 /**
- * Created by GaQu_Dev on 2019/5/17.
+ * 禁止下拉菜单的view
  */
 public class ProhibitViewGroup extends ViewGroup {
 

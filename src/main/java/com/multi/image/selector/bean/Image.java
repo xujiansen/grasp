@@ -1,7 +1,5 @@
 package com.multi.image.selector.bean;
 
-import android.util.ArrayMap;
-
 /**
  * 图片实体
  * Created by Nereo on 2015/4/7.

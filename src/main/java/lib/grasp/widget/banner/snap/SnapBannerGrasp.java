@@ -34,7 +34,7 @@ import lib.grasp.util.ScreenUtil;
  */
 
 /**
- * 新版本特性
+ * 轮播弹窗(基于RecyclerView)
  */
 public class SnapBannerGrasp extends FrameLayout implements IHandler {
     private final int MSG_UPDATE_TIME = 1;

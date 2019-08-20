@@ -17,6 +17,7 @@ import java.util.List;
 import com.rooten.BaApp;
 
 import lib.grasp.R;
+import lib.grasp.util.ScreenUtil;
 import lib.grasp.widget.diaglog.CheckMultiAdapter;
 import lib.grasp.widget.diaglog.CheckMultiEntity;
 import lib.grasp.widget.diaglog.CheckOneAdapter;
@@ -24,7 +25,7 @@ import lib.grasp.widget.diaglog.CheckOneEntity;
 import lib.grasp.widget.diaglog.RadioOneAdapter;
 import lib.grasp.widget.diaglog.RadioOneEntity;
 
-
+/** 各种框子(提示, 确认, 选择) */
 final public class MessageBoxGrasp {
 
     /**
@@ -108,6 +109,7 @@ final public class MessageBoxGrasp {
         int maxHeight = 600;
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)recyclerView.getLayoutParams();
         params.height = Math.min(maxHeight, recyclerView.getMeasuredHeight());
+        params.width = ScreenUtil.getScreenWidthPixels(ctx) * 4 / 5;
         recyclerView.setLayoutParams(params);
         showDlg(dlg);
     }

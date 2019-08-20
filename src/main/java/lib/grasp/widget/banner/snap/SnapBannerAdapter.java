@@ -14,7 +14,7 @@ import lib.grasp.adapter.BaseAdapter;
 import lib.grasp.util.glide.GlideUtils;
 
 /**
- * Created by JS_grasp on 2019/1/29.
+ * 轮播适配器(基于RecyclerView)
  */
 public class SnapBannerAdapter extends BaseAdapter<SnapBannerAdapter.Holder, SnapBannerEntity> {
     private BaApp mApp;

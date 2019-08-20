@@ -7,7 +7,7 @@ import com.rooten.BaApp;
 
 import java.util.HashMap;
 
-import lib.grasp.http.ObjResponse;
+import lib.grasp.http.okhttp.ObjResponse;
 import lib.grasp.http.okhttp.OkHttpHelper;
 import lib.grasp.http.okhttp.ResponseCallback;
 import lib.grasp.util.TOAST;

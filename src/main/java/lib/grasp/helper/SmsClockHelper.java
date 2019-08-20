@@ -55,9 +55,11 @@ public class SmsClockHelper implements IHandler {
         mTargetTel = tel;
         mSmsHelper.sendSms(tel);
 
-        mBtnGetConfirm.setEnabled(false);
-        mBtnGetConfirm.setText("正在发送");
-        mBtnGetConfirm.setTextColor(Color.LTGRAY);
+        if(mBtnGetConfirm != null){
+            mBtnGetConfirm.setEnabled(false);
+            mBtnGetConfirm.setText("正在发送");
+            mBtnGetConfirm.setTextColor(Color.LTGRAY);
+        }
     }
 
     /** 发送验证码 */
@@ -65,9 +67,11 @@ public class SmsClockHelper implements IHandler {
         mTargetTel = tel;
         mSmsHelper.sendSms(tel, arg);
 
-        mBtnGetConfirm.setEnabled(false);
-        mBtnGetConfirm.setText("正在发送");
-        mBtnGetConfirm.setTextColor(Color.LTGRAY);
+        if(mBtnGetConfirm != null){
+            mBtnGetConfirm.setEnabled(false);
+            mBtnGetConfirm.setText("正在发送");
+            mBtnGetConfirm.setTextColor(Color.LTGRAY);
+        }
     }
 
     /** 验证码发送回调 */
@@ -106,7 +110,8 @@ public class SmsClockHelper implements IHandler {
                     stopClocking();
                     break;
                 }
-                mBtnGetConfirm.setText((Constant.YZM_VAILDATE_TIME - nSeconds) + "秒后重新获取");
+                long timeLeft = Constant.YZM_VAILDATE_TIME - nSeconds;
+                if(mBtnGetConfirm != null) mBtnGetConfirm.setText(String.valueOf(timeLeft).concat("秒后重新获取"));
                 break;
             }
         }
@@ -114,9 +119,11 @@ public class SmsClockHelper implements IHandler {
     }
 
     private void stopClocking(){
-        mBtnGetConfirm.setText("获取验证码");
-        mBtnGetConfirm.setEnabled(true);
-        mBtnGetConfirm.setTextColor(mApp.getResources().getColor(R.color.colorPrimary));
+        if(mBtnGetConfirm != null){
+            mBtnGetConfirm.setText("获取验证码");
+            mBtnGetConfirm.setEnabled(true);
+            mBtnGetConfirm.setTextColor(mApp.getResources().getColor(R.color.colorPrimary));
+        }
 
         if(mTimer == null) return;
         mTimer.cancel();

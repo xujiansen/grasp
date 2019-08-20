@@ -17,7 +17,6 @@ import java.util.List;
 import lib.grasp.R;
 import lib.grasp.util.glide.GlideUtils;
 
-
 /**
  * 图片Adapter
  * Created by Nereo on 2015/4/7.

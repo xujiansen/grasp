@@ -30,7 +30,7 @@ import lib.grasp.util.ScreenUtil;
  */
 
 /**
- * 新版本特性
+ * 轮播
  */
 public class BannerGrasp extends FrameLayout implements IHandler, ViewPager.OnPageChangeListener {
     private final int MSG_UPDATE_TIME = 1;

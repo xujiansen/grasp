@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by JS_grasp on 2018/12/19.
+ * 单选一个不消失
  */
 public class CheckOneEntity {
     public String id;

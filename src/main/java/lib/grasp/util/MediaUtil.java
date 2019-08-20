@@ -1,6 +1,7 @@
 package lib.grasp.util;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
@@ -120,5 +121,22 @@ public class MediaUtil {
      */
     public interface EventListener{
         void onStop();
+    }
+
+
+
+
+    /** 获取媒体音量 */
+    public static int getMediaVol(Context context){
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if(audioManager == null) return -1;
+        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    }
+
+    /** 设置媒体音量(不是百分比) */
+    public static void setMediaVol(Context context, int vol){
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if(audioManager == null) return;
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, vol, AudioManager.FLAG_PLAY_SOUND);
     }
 }

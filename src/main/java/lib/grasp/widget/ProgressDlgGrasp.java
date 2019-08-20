@@ -19,6 +19,7 @@ import com.rooten.frame.IHandler;
 import lib.grasp.R;
 import lib.grasp.util.L;
 
+/** 一直转圈圈的Dialog */
 public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnClickListener {
     private final int MSG_UPDATE_TIME = 1;
 

@@ -1,6 +1,5 @@
 package lib.grasp.widget.banner.snap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -11,10 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lib.grasp.R;
-import lib.grasp.widget.imagepreview.ImagePreviewPop;
 
 /**
- * Created by GaQu_Dev on 2018/9/26.
+ * 轮播单项实体(基于RecyclerView)
  */
 public class SnapBannerEntity {
     /** 点击跳转url */

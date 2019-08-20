@@ -9,11 +9,27 @@ import com.rooten.BaApp;
 import com.rooten.ctrl.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.SecureRandom;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 import lib.grasp.util.L;
 import lib.grasp.util.StringUtil;
@@ -26,6 +42,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.internal.platform.Platform;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -113,6 +130,7 @@ public class OkHttpHelper {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new OkHttpInterceptor()).setLevel(HttpLoggingInterceptor.Level.BODY);
 
         synchronized (OkHttpHelper.class){
+
             mOkHttpClient = new okhttp3.OkHttpClient.Builder()
                     .connectTimeout(mTimeout,   TimeUnit.SECONDS)
                     .writeTimeout(  mTimeout,   TimeUnit.SECONDS)

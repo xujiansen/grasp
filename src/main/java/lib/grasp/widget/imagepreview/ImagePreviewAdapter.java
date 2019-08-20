@@ -13,7 +13,7 @@ import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
- * Created by JS_grasp on 2019/1/23.
+ * 查看图片弹窗的ViewPager的适配器
  */
 public class ImagePreviewAdapter extends PagerAdapter {
     private Context mCtx;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by JS_grasp on 2018/12/19.
+ * 多选不消失
  */
 public class CheckMultiEntity {
     public String id;

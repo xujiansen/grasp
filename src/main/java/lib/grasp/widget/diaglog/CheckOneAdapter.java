@@ -12,7 +12,7 @@ import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;
 
 /**
- * 运动记录列表项
+ * 单选一个不消失
  */
 public class CheckOneAdapter extends BaseAdapter<CheckOneAdapter.Holder, CheckOneEntity> {
 

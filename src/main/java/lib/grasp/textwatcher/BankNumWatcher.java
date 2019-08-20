@@ -5,6 +5,7 @@ import android.text.Selection;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+/** 银行卡的Watcher(格式化) */
 public class BankNumWatcher implements TextWatcher {
 
     //a max length = 21 + 5 space

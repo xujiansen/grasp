@@ -7,9 +7,6 @@ import okhttp3.Response;
 
 /**
  * 进度回调辅助类
- * User:lizhangqu(513163535@qq.com)
- * Date:2015-09-02
- * Time: 17:33
  */
 public class ProgressHelper {
     /**
