@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.rooten.BaApp;
+
 /**
  * Created by wangwentao on 2017/1/25.
  * Toast统一管理类
@@ -39,10 +41,23 @@ public class TOAST {
 
     /**
      * 短时间显示Toast
-     *
-     * @param context
-     * @param message
      */
+    public static void showShort(CharSequence message) {
+        if (isShow){
+            if (mToast == null) {
+                mToast = Toast.makeText(BaApp.getApp(), message, Toast.LENGTH_SHORT);
+            } else {
+                mToast.setText(message);
+            }
+            mToast.show();
+        }
+    }
+
+
+    /**
+     * 短时间显示Toast
+     */
+    @Deprecated
     public static void showShort(Context context, CharSequence message) {
         if (isShow){
             if (mToast == null) {
@@ -56,10 +71,9 @@ public class TOAST {
 
     /**
      * 短时间显示Toast
-     *
-     * @param context
      * @param resId 资源ID:getResources().getString(R.string.xxxxxx);
      */
+    @Deprecated
     public static void showShort(Context context, int resId) {
         if (isShow){
             if (mToast == null) {
@@ -73,10 +87,8 @@ public class TOAST {
 
     /**
      * 长时间显示Toast
-     *
-     * @param context
-     * @param message
      */
+    @Deprecated
     public static void showLong(Context context, CharSequence message) {
         if (isShow){
             if (mToast == null) {
@@ -90,10 +102,9 @@ public class TOAST {
 
     /**
      * 长时间显示Toast
-     *
-     * @param context
      * @param resId 资源ID:getResources().getString(R.string.xxxxxx);
      */
+    @Deprecated
     public static void showLong(Context context, int resId) {
         if (isShow){
             if (mToast == null) {
@@ -107,11 +118,9 @@ public class TOAST {
 
     /**
      * 自定义显示Toast时间
-     *
-     * @param context
-     * @param message
      * @param duration 单位:毫秒
      */
+    @Deprecated
     public static void show(Context context, CharSequence message, int duration) {
         if (isShow){
             if (mToast == null) {
@@ -125,11 +134,10 @@ public class TOAST {
 
     /**
      * 自定义显示Toast时间
-     *
-     * @param context
      * @param resId 资源ID:getResources().getString(R.string.xxxxxx);
      * @param duration 单位:毫秒
      */
+    @Deprecated
     public static void show(Context context, int resId, int duration) {
         if (isShow){
             if (mToast == null) {
@@ -143,11 +151,10 @@ public class TOAST {
 
     /**
      * 自定义Toast的View
-     * @param context
-     * @param message
      * @param duration 单位:毫秒
      * @param view 显示自己的View
      */
+    @Deprecated
     public static void customToastView(Context context, CharSequence message, int duration,View view) {
         if (isShow){
             if (mToast == null) {
@@ -164,13 +171,8 @@ public class TOAST {
 
     /**
      * 自定义Toast的位置
-     * @param context
-     * @param message
-     * @param duration 单位:毫秒
-     * @param gravity
-     * @param xOffset
-     * @param yOffset
      */
+    @Deprecated
     public static void customToastGravity(Context context, CharSequence message, int duration,int gravity, int xOffset, int yOffset) {
         if (isShow){
             if (mToast == null) {
@@ -185,14 +187,9 @@ public class TOAST {
 
     /**
      * 自定义带图片和文字的Toast，最终的效果就是上面是图片，下面是文字
-     * @param context
-     * @param message
      * @param iconResId 图片的资源id,如:R.drawable.icon
-     * @param duration
-     * @param gravity
-     * @param xOffset
-     * @param yOffset
      */
+    @Deprecated
     public static void showToastWithImageAndText(Context context, CharSequence message, int iconResId,int duration,int gravity, int xOffset, int yOffset) {
         if (isShow){
             if (mToast == null) {
@@ -211,18 +208,10 @@ public class TOAST {
 
     /**
      * 自定义Toast,针对类型CharSequence
-     * @param context
-     * @param message
-     * @param duration
-     * @param view
      * @param isGravity true,表示后面的三个布局参数生效,false,表示不生效
-     * @param gravity
-     * @param xOffset
-     * @param yOffset
      * @param isMargin true,表示后面的两个参数生效，false,表示不生效
-     * @param horizontalMargin
-     * @param verticalMargin
      */
+    @Deprecated
     public static void customToastAll(Context context, CharSequence message, int duration,View view,boolean isGravity,int gravity, int xOffset, int yOffset,boolean isMargin,float horizontalMargin, float verticalMargin) {
         if (isShow){
             if (mToast == null) {
@@ -245,18 +234,11 @@ public class TOAST {
 
     /**
      * 自定义Toast,针对类型resId
-     * @param context
-     * @param resId
-     * @param duration
      * @param view :应该是一个布局，布局中包含了自己设置好的内容
      * @param isGravity true,表示后面的三个布局参数生效,false,表示不生效
-     * @param gravity
-     * @param xOffset
-     * @param yOffset
      * @param isMargin true,表示后面的两个参数生效，false,表示不生效
-     * @param horizontalMargin
-     * @param verticalMargin
      */
+    @Deprecated
     public static void customToastAll(Context context, int resId, int duration,View view,boolean isGravity,int gravity, int xOffset, int yOffset,boolean isMargin,float horizontalMargin, float verticalMargin) {
         if (isShow){
             if (mToast == null) {

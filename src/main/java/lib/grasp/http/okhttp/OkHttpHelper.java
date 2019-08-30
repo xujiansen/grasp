@@ -1,5 +1,6 @@
 package lib.grasp.http.okhttp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -9,27 +10,11 @@ import com.rooten.BaApp;
 import com.rooten.ctrl.widget.SwipeRefreshLayout;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
 
 import lib.grasp.util.L;
 import lib.grasp.util.StringUtil;
@@ -42,15 +27,38 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.internal.platform.Platform;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+/*
+    OkHttpHelper.with(this)
+        .setURL("http://192.168.11.21:13000/test/http")
+        .setMethod(OkHttpHelper.POST_FORM)
+        .addHeadParam("head1", "head11")
+        .addHeadParam("head2", "head22")
+        .addParam("form1", "form11")
+        .addParam("form2", "form22")
+        .setIsShowProg(true, "测试")
+        .setRequestCode("123")
+        .setSwip(null)
+        .setTimeout(30)
+        .execute(new ResponseCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+                TOAST.showShort("String:" + s);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                TOAST.showShort("onFailure:" + e);
+            }
+        });
+ */
+
 /**
- * Volley网络访问请求
+ * OkHttp网络访问请求
  */
 public class OkHttpHelper {
     protected BaApp mApp;
-    protected Context mContext;
+    protected Activity mActivity;
 
     private ProgressDlgGrasp mProgressDlg;
     private SwipeRefreshLayout mSwip;
@@ -110,40 +118,40 @@ public class OkHttpHelper {
 
     private static OkHttpClient mOkHttpClient;
 
-    public static OkHttpHelper with(Context context) {
-        BaApp mApp = (BaApp) context.getApplicationContext();
-        return new OkHttpHelper(mApp, context);
+    public static OkHttpHelper with(Activity activity) {
+        BaApp mApp = (BaApp) activity.getApplicationContext();
+        return new OkHttpHelper(mApp, activity);
     }
 
-    private OkHttpHelper(BaApp app, Context context) {
-        this(app, context, false);
+    private OkHttpHelper(BaApp app, Activity activity) {
+        this(app, activity, false);
     }
 
-    private OkHttpHelper(BaApp app, Context context, boolean isShowProg) {
+    private OkHttpHelper(BaApp app, Activity activity, boolean isShowProg) {
         this.mApp = app;
-        this.mContext = context;
+        this.mActivity = activity;
         this.mIsShowProg = isShowProg;
-        this.mCallbackInner = new OkHttpCallback<>(context);
+        this.mCallbackInner = new OkHttpCallback<>(activity);
     }
 
-    private static void initOkHttpClient(int mTimeout) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new OkHttpInterceptor()).setLevel(HttpLoggingInterceptor.Level.BODY);
+    private static void initOkHttpClient(Activity activity, int mTimeout) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new LogInterceptor()).setLevel(HttpLoggingInterceptor.Level.BODY);
 
         synchronized (OkHttpHelper.class){
-
             mOkHttpClient = new okhttp3.OkHttpClient.Builder()
                     .connectTimeout(mTimeout,   TimeUnit.SECONDS)
                     .writeTimeout(  mTimeout,   TimeUnit.SECONDS)
                     .readTimeout(   mTimeout,   TimeUnit.SECONDS)
+                    .addInterceptor(new ParamInterceptor(activity))
                     .addInterceptor(interceptor)
-//                    .addNetworkInterceptor(new HttpLoggingInterceptor(new OkHttpInterceptor()))
+//                    .addNetworkInterceptor(new HttpLoggingInterceptor(new LogInterceptor()))
                     .retryOnConnectionFailure(false)
                     .build();
         }
     }
 
     private void initProgressDlg() {
-        mProgressDlg = new ProgressDlgGrasp(mContext);
+        mProgressDlg = new ProgressDlgGrasp(mActivity);
         mProgressDlg.setCanBeCancel(true);
         mProgressDlg.setCancelListener(v -> {
             mIsCancel = true;
@@ -162,7 +170,7 @@ public class OkHttpHelper {
         mIsCancel = false;
 
         if (mMethod == GET) mURL = encodeParameters(mURL, mParam);
-        if (mOkHttpClient == null) initOkHttpClient(mTimeout);
+        if (mOkHttpClient == null) initOkHttpClient(mActivity, mTimeout);
 
         Request request = null;
 

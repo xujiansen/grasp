@@ -1,5 +1,6 @@
 package lib.grasp.http.okhttp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -59,10 +60,10 @@ public class OkHttpCallback<T> implements Callback {
 
     private Handler mDeliveryHandler; //进行消息的转发
     private ResponseCallback<T> mListener;
-    private Context mContext;
+    private Activity mActivity;
 
-    public OkHttpCallback(Context ctx) {
-        this.mContext = ctx;
+    public OkHttpCallback(Activity ctx) {
+        this.mActivity = ctx;
         this.mDeliveryHandler = new Handler(Looper.getMainLooper());
     }
 
@@ -146,8 +147,8 @@ public class OkHttpCallback<T> implements Callback {
                     }
                 }
                 else if(result.getInt(RESULT_CODE) == SESSION_INVALIDATE){
-                    MessageBoxGrasp.infoMsg(mContext, "提示", "会话已过期,请重新登录!", false, v -> {
-                        BaApp app = (BaApp) mContext.getApplicationContext();
+                    MessageBoxGrasp.infoMsg(mActivity, "提示", "会话已过期,请重新登录!", false, v -> {
+                        BaApp app = (BaApp) mActivity.getApplicationContext();
                         LocalBroadMgr localBroadMgr = app.getLocalBroadMgr();
                         localBroadMgr.broadAction(Constant.ARG_TOKEN_EXPIRE);
                     });
@@ -157,11 +158,11 @@ public class OkHttpCallback<T> implements Callback {
                     if (!TextUtils.isEmpty(verStr)) {
                         Intent intent = new Intent();
                         intent.setAction(Constant.ARG_NEW_VERSION);
-                        intent.setPackage(mContext.getPackageName());
+                        intent.setPackage(mActivity.getPackageName());
                         intent.putExtra("data", verStr);
-                        mContext.sendBroadcast(intent);
+                        mActivity.sendBroadcast(intent);
                     }
-                    MessageBoxGrasp.infoMsg(mContext, "当前应用版本已过期, 请联系管理员");
+                    MessageBoxGrasp.infoMsg(mActivity, "当前应用版本已过期, 请联系管理员");
                 }
                 else { //将服务端返回的异常回调到应用层去处理
                     mListener.onFailure(new OkHttpException(OTHER_ERROR, result.get(ERROR_MSG) + ""));

@@ -44,8 +44,9 @@ public class Constant {
 
     /** 阿里云（测试机-windows） */
     public static final String PROTOCOL = "http";
-    public static final String IP       = "192.168.1.78";
-    public static final String PORT     = "8082";
+    public static final String IP       = "192.168.11.21";
+    public static final String PORT     = "15000";
+    public static final String BASE_URL = PROTOCOL + "://" + IP + ":" + PORT + "/";
 
     /** 上传图片 */
 //    public static final String UPLOAD_PIC               = PROTOCOL + "://" + IP + ":" + PORT + "/api/upload";

@@ -17,11 +17,11 @@
 
         <com.rooten.ctrl.widget.RoundProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            app:textSize="20sp"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            app:textSize="18sp"
             app:textColor="@color/gray"
-            app:roundWidth="15dp"
+            app:roundWidth="8dp"
             app:roundColor="@color/gray"
             app:roundProgressColor="@color/colorPrimary"/>
 

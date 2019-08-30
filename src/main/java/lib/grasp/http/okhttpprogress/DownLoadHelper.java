@@ -57,10 +57,8 @@ public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandl
         this.mLoadListener = mLoadListener;
     }
 
-    public DownLoadHelper(Context mCtx, String mUrl, String mSaveFilePath) {
+    public DownLoadHelper(Context mCtx) {
         this.mCtx = mCtx;
-        this.mUrl = mUrl;
-        this.mSaveFilePath = mSaveFilePath;
 
         mApp = (BaApp) mCtx.getApplicationContext();
         mLocalHandler = new AppHandler(this);
@@ -82,8 +80,10 @@ public class DownLoadHelper implements DialogInterface.OnDismissListener, IHandl
     }
 
     /** 开始传输 */
-    public void startLoad(){
+    public void startLoad(String mUrl, String mSaveFilePath){
         if(TextUtils.isEmpty(mUrl) || TextUtils.isEmpty(mSaveFilePath)) return;
+        this.mUrl = mUrl;
+        this.mSaveFilePath = mSaveFilePath;
         mDlg.show();
 
         //这个是ui线程回调，可直接操作UI

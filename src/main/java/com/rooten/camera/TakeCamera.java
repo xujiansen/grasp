@@ -1,5 +1,6 @@
 package com.rooten.camera;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -66,7 +67,7 @@ public class TakeCamera {
 
     public void onCapture(final onCameraReturnListener l) {
         if (!FileUtil.ensurePathExists(mPicPath)) {
-            MessageBoxGrasp.infoMsg(mContext, "图片保存目录不存在！");
+            MessageBoxGrasp.infoMsg((Activity)mContext, "图片保存目录不存在！");
             return;
         }
 

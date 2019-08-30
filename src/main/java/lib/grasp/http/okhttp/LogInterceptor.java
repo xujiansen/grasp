@@ -1,19 +1,12 @@
 package lib.grasp.http.okhttp;
 
-import android.util.Log;
-
-import java.io.IOException;
-
 import lib.grasp.util.L;
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by GaQu_Dev on 2019/7/1.
  */
-public class OkHttpInterceptor implements HttpLoggingInterceptor.Logger {
+public class LogInterceptor implements HttpLoggingInterceptor.Logger {
 
     private StringBuilder mMessage = new StringBuilder();
 
@@ -24,8 +17,7 @@ public class OkHttpInterceptor implements HttpLoggingInterceptor.Logger {
             mMessage.setLength(0);
         }
         // 以{}或者[]形式的说明是响应结果的json数据，需要进行格式化
-        if ((message.startsWith("{") && message.endsWith("}"))
-                || (message.startsWith("[") && message.endsWith("]"))) {
+        if ((message.startsWith("{") && message.endsWith("}")) || (message.startsWith("[") && message.endsWith("]"))) {
             message = formatJson(decodeUnicode(message));
         }
         mMessage.append(message.concat("\n"));

@@ -34,10 +34,16 @@ public class BaApp extends Application {
 
     public  ExecutorService     mAppThreadPool = Executors.newFixedThreadPool(3);
 
+    protected static BaApp APP;
+
+    public static BaApp getApp() {
+        return APP;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        BaApp.APP = this;
 
         init();                 // 初始化辅助类
         initAppPath();          // 初始化应用路径

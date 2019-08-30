@@ -1,5 +1,6 @@
 package lib.grasp.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSeekBar;
@@ -31,16 +32,16 @@ final public class MessageBoxGrasp {
     /**
      * 主标题默认为"提示框"
      */
-    public static void infoMsg(Context ctx, String strMsg) {
-        MessageBoxGrasp.infoMsg(ctx, "提示框", strMsg, true);
+    public static void infoMsg(Activity activity, String strMsg) {
+        MessageBoxGrasp.infoMsg(activity, "提示框", strMsg, true);
     }
 
     /**
      * @param strMsg       显示信息
      * @param isCancelAble 是否点击提示框外部取消
      */
-    public static void infoMsg(final Context ctx, String title, String strMsg, boolean isCancelAble) {
-        infoMsg(ctx, title, strMsg, isCancelAble, null);
+    public static void infoMsg(final Activity activity, String title, String strMsg, boolean isCancelAble) {
+        infoMsg(activity, title, strMsg, isCancelAble, null);
     }
 
     /**
@@ -49,15 +50,15 @@ final public class MessageBoxGrasp {
      * @param strMsg       显示信息
      * @param isCancelAble 是否点击提示框外部取消
      */
-    public static void infoMsg(final Context ctx, String title, String strMsg, boolean isCancelAble, View.OnClickListener listener) {
-        View view = View.inflate(ctx, R.layout.alertdialog_info, null);
+    public static void infoMsg(final Activity activity, String title, String strMsg, boolean isCancelAble, View.OnClickListener listener) {
+        View view = View.inflate(activity, R.layout.alertdialog_info, null);
         TextView tvTitle = view.findViewById(R.id.title);
         TextView tvContent = view.findViewById(R.id.content);
         TextView tvSubmit = view.findViewById(R.id.submit);
         tvTitle.setText(title);
         tvContent.setText(strMsg);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.dialog_grasp);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.dialog_grasp);
         builder.setView(view);
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
@@ -73,21 +74,21 @@ final public class MessageBoxGrasp {
     /**
      * 单选一个,点击就消失
      */
-    public static void radioOne(final Context ctx,
+    public static void radioOne(final Activity activity,
                                 String title,
                                 boolean isCancelAble,
                                 List<RadioOneEntity> list,
                                 View.OnClickListener listener) {
         if (list == null || list.size() == 0) return;
-        BaApp app = (BaApp) ctx.getApplicationContext();
-        View view = View.inflate(ctx, R.layout.alertdialog_radio, null);
+        BaApp app = (BaApp) activity.getApplicationContext();
+        View view = View.inflate(activity, R.layout.alertdialog_radio, null);
         LinearLayout llTitle = view.findViewById(R.id.ll_title);
         TextView tvTitle = view.findViewById(R.id.title);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         tvTitle.setText(TextUtils.isEmpty(title) ? "请选择" : title);
         llTitle.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.dialog_grasp);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.dialog_grasp);
         builder.setView(view);
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
@@ -99,9 +100,9 @@ final public class MessageBoxGrasp {
             if (listener != null) listener.onClick(v);
         };
 
-        RadioOneAdapter adapter = new RadioOneAdapter(app, ctx, listener1);
+        RadioOneAdapter adapter = new RadioOneAdapter(app, activity, listener1);
         adapter.getDatas().addAll(list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(ctx);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -109,7 +110,7 @@ final public class MessageBoxGrasp {
         int maxHeight = 600;
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)recyclerView.getLayoutParams();
         params.height = Math.min(maxHeight, recyclerView.getMeasuredHeight());
-        params.width = ScreenUtil.getScreenWidthPixels(ctx) * 4 / 5;
+        params.width = ScreenUtil.getScreenWidthPixels(activity) * 4 / 5;
         recyclerView.setLayoutParams(params);
         showDlg(dlg);
     }
@@ -117,15 +118,15 @@ final public class MessageBoxGrasp {
     /**
      * 单选一个,点击确定消失
      */
-    public static void checkOne(final Context ctx,
+    public static void checkOne(final Activity activity,
                                 String title,
                                 boolean isCancelAble,
                                 List<CheckOneEntity> list,
                                 final View.OnClickListener listenerOk,
                                 final View.OnClickListener listenerCancel) {
         if (list == null || list.size() == 0) return;
-        BaApp app = (BaApp) ctx.getApplicationContext();
-        View view = View.inflate(ctx, R.layout.alertdialog_check_one, null);
+        BaApp app = (BaApp) activity.getApplicationContext();
+        View view = View.inflate(activity, R.layout.alertdialog_check_one, null);
         TextView tvTitle = view.findViewById(R.id.title);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         TextView tvCancel = view.findViewById(R.id.cancel);
@@ -133,7 +134,7 @@ final public class MessageBoxGrasp {
 
         tvTitle.setText(TextUtils.isEmpty(title) ? "请选择" : title);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.dialog_grasp);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.dialog_grasp);
         builder.setView(view);
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
@@ -144,9 +145,9 @@ final public class MessageBoxGrasp {
             tvSubmit.setTag(v.getTag());
         };
 
-        CheckOneAdapter adapter = new CheckOneAdapter(app, ctx, listener1);
+        CheckOneAdapter adapter = new CheckOneAdapter(app, activity, listener1);
         adapter.getDatas().addAll(list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(ctx);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -171,15 +172,15 @@ final public class MessageBoxGrasp {
     /**
      * 多选,点击确定消失
      */
-    public static void checkMulti(final Context ctx,
+    public static void checkMulti(final Activity activity,
                                   String title,
                                   boolean isCancelAble,
                                   List<CheckMultiEntity> list,
                                   final View.OnClickListener listenerOk,
                                   final View.OnClickListener listenerCancel) {
         if (list == null || list.size() == 0) return;
-        BaApp app = (BaApp) ctx.getApplicationContext();
-        View view = View.inflate(ctx, R.layout.alertdialog_check_multi, null);
+        BaApp app = (BaApp) activity.getApplicationContext();
+        View view = View.inflate(activity, R.layout.alertdialog_check_multi, null);
         TextView tvTitle = view.findViewById(R.id.title);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         TextView tvCancel = view.findViewById(R.id.cancel);
@@ -187,15 +188,15 @@ final public class MessageBoxGrasp {
 
         tvTitle.setText(TextUtils.isEmpty(title) ? "请选择" : title);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.dialog_grasp);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.dialog_grasp);
         builder.setView(view);
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
         dlg.setCancelable(isCancelAble);
 
-        CheckMultiAdapter adapter = new CheckMultiAdapter(app, ctx);
+        CheckMultiAdapter adapter = new CheckMultiAdapter(app, activity);
         adapter.getDatas().addAll(list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(ctx);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -228,8 +229,8 @@ final public class MessageBoxGrasp {
     /**
      * 主标题默认为"确认提示框"
      */
-    public static void confirmMsg(Context ctx, String strMsg, View.OnClickListener listenerOk) {
-        MessageBoxGrasp.confirmMsg(ctx, "确认提示框", strMsg, listenerOk, null, true);
+    public static void confirmMsg(Activity activity, String strMsg, View.OnClickListener listenerOk) {
+        MessageBoxGrasp.confirmMsg(activity, "确认提示框", strMsg, listenerOk, null, true);
     }
 
     /**
@@ -241,13 +242,13 @@ final public class MessageBoxGrasp {
      * @param listenerCancel 点击取消回调
      * @param isCancelAble   是否点击提示框外部取消
      */
-    public static void confirmMsg(final Context ctx,
+    public static void confirmMsg(final Activity activity,
                                   String title,
                                   String strMsg,
                                   final View.OnClickListener listenerOk,
                                   final View.OnClickListener listenerCancel,
                                   boolean isCancelAble) {
-        View view = View.inflate(ctx, R.layout.alertdialog_confirm, null);
+        View view = View.inflate(activity, R.layout.alertdialog_confirm, null);
         TextView tvTitle = view.findViewById(R.id.title);
         TextView tvContent = view.findViewById(R.id.content);
         TextView tvCancel = view.findViewById(R.id.cancel);
@@ -255,7 +256,7 @@ final public class MessageBoxGrasp {
         tvTitle.setText(title);
         tvContent.setText(strMsg);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.dialog_grasp);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.dialog_grasp);
         builder.setView(view);
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
