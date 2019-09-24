@@ -4,10 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -261,6 +268,7 @@ final public class MessageBoxGrasp {
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
         dlg.setCancelable(isCancelAble);
+        if(dlg.getWindow() != null) dlg.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 临时加的
         showDlg(dlg);
 
         tvCancel.setOnClickListener(v -> {

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.SparseArray;
 
 import com.rooten.BaApp;
 import com.rooten.frame.AppHandler;
@@ -18,6 +19,7 @@ import java.util.List;
 import lib.grasp.helper.LoadListener;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.NumberUtil;
+import lib.grasp.util.TOAST;
 import lib.grasp.widget.LoadingDlgGrasp;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -62,16 +64,15 @@ public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler
     private AppHandler mHandler;
     private AppHandler mLocalHandler;
 
-    private LoadListener mLoadListener;
+    private LoadListener mAllLoadListener;  // 什么都听(只能有一个)
+    private SparseArray<LoadListener> mLoadListeners = new SparseArray<>(); // 只听自己关心的
 
-    public void setLoadListener(LoadListener mLoadListener) {
-        this.mLoadListener = mLoadListener;
+    public void setAllLoadListener(LoadListener mLoadListener) {
+        this.mAllLoadListener = mLoadListener;
     }
 
-    public UpLoadHelper(Context mCtx, String mUrl, List<String> resFilePaths) {
+    public UpLoadHelper(Context mCtx) {
         this.mCtx = mCtx;
-        this.mUrl = mUrl;
-        this.mResFilePaths = resFilePaths;
 
         mApp = (BaApp) mCtx.getApplicationContext();
         mLocalHandler = new AppHandler(this);
@@ -92,9 +93,26 @@ public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler
         });
     }
 
+
+//    /** 开始传输 */
+//    public void startLoad(String mUrl, List<String> resFilePaths, LoadListener mLoadListener){
+//        if(mLoadListeners == null) return;
+//        int hash = mUrl.hashCode();
+//        if(mLoadListeners.indexOfKey(hash) < 0){
+//            mLoadListeners.append(hash, mLoadListener);
+//        }
+//        else{
+//            TOAST.showShort("重复添加传输任务");
+//            return;
+//        }
+//        startLoad(mUrl, resFilePaths);
+//    }
+
     /** 开始传输 */
-    public void startLoad(){
-        if(TextUtils.isEmpty(mUrl) || mResFilePaths == null || mResFilePaths.size() == 0) return;
+    public void startLoad(String url, List<String> resFilePaths){
+        if(TextUtils.isEmpty(url) || mResFilePaths == null || mResFilePaths.size() == 0) return;
+        this.mUrl = url;
+        this.mResFilePaths = resFilePaths;
         mDlg.show();
 
         List<File> files = new ArrayList<>();
@@ -110,6 +128,7 @@ public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler
 
                 if(mHandler == null || isCancel) return;
                 Bundle bundle = new Bundle();
+                bundle.putString("url", mUrl);
                 bundle.putLong("curSize", bytesWrite);
                 bundle.putLong("allLen" , contentLength);
                 Message msg = Message.obtain();
@@ -123,6 +142,7 @@ public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler
                 System.out.println("------onFailure:" + e);
 
                 Bundle bundle = new Bundle();
+                bundle.putString("url", mUrl);
                 Message msg = Message.obtain();
                 msg.setData(bundle);
                 msg.what = LoadingDlgGrasp.MSG_UPDATE_STATUS_FAIL;
@@ -135,6 +155,7 @@ public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler
 
                 if(mDlg == null || isCancel) return;
                 Bundle bundle = new Bundle();
+                bundle.putString("url", mUrl);
                 Message msg = Message.obtain();
                 msg.setData(bundle);
                 msg.what = LoadingDlgGrasp.MSG_UPDATE_STATUS_SUCC;
@@ -167,15 +188,30 @@ public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler
     public boolean handleMessage(Message msg1) {
         // 传输完成
         if(mDlg == null || isCancel) return true;
-        mDlg.dismiss();
-        mDlg = null;
+        if(mDlg.isShowing()) mDlg.dismiss();
+
+        Bundle bundle = msg1.getData();
+        String url = bundle.getString("url");
+        if(TextUtils.isEmpty(url)) return true;
+        LoadListener listener = mLoadListeners.get(url.hashCode());
         switch (msg1.what){
+            case LoadingDlgGrasp.MSG_UPDATE_STATUS:{
+                long curSize    = bundle.getLong("curSize");
+                long allLen     = bundle.getLong("allLen");
+                if(listener != null)            listener.onProgress(url, curSize, allLen);
+                if(mAllLoadListener != null)    mAllLoadListener.onProgress(url, curSize, allLen);
+                break;
+            }
             case LoadingDlgGrasp.MSG_UPDATE_STATUS_SUCC:{
-                if(mLoadListener != null) mLoadListener.onSuccess();
+                if(listener != null)            listener.onSuccess(url);
+                if(mAllLoadListener != null)    mAllLoadListener.onSuccess(url);
+                mLoadListeners.remove(url.hashCode());
                 break;
             }
             case LoadingDlgGrasp.MSG_UPDATE_STATUS_FAIL:{
-                if(mLoadListener != null) mLoadListener.onFail();
+                if(listener != null)            listener.onFail(url);
+                if(mAllLoadListener != null)    mAllLoadListener.onFail(url);
+                mLoadListeners.remove(url.hashCode());
                 break;
             }
         }

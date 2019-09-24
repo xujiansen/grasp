@@ -284,7 +284,7 @@ public class AppUtil {
     /**
      * 获取已安装应用的 uid，-1 表示未安装此应用或程序异常
      */
-    private static int getPackageUid(Context context, String packageName) {
+    public static int getPackageUid(Context context, String packageName) {
         try {
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
             if (applicationInfo != null) {
@@ -340,12 +340,21 @@ public class AppUtil {
         }
     }
 
+
     /**
      * 获取App的VersionName
      */
     public static String getAppVersionName(Context context) {
+        String packageName = context.getPackageName();
+        return getAppVersionName(context, packageName);
+    }
+
+    /**
+     * 获取App的VersionName
+     */
+    public static String getAppVersionName(Context context, String packageName) {
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
             return info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             return "";
@@ -355,12 +364,20 @@ public class AppUtil {
     /**
      * 获取App的VersionCode
      */
-    public static String getAppVersionCode(Context context) {
+    public static int getAppVersionCode(Context context) {
+        String packageName = context.getPackageName();
+        return getAppVersionCode(context, packageName);
+    }
+
+    /**
+     * 获取App的VersionCode
+     */
+    public static int getAppVersionCode(Context context, String packageName) {
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return String.valueOf(info.versionCode);
+            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+            return info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            return "";
+            return -1;
         }
     }
 

@@ -148,7 +148,7 @@ public final class PreferenceUtil {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             Editor editor = sharedPreferences.edit();
             editor.putString(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -157,7 +157,7 @@ public final class PreferenceUtil {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             Editor editor = sharedPreferences.edit();
             editor.putInt(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -166,7 +166,7 @@ public final class PreferenceUtil {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             Editor editor = sharedPreferences.edit();
             editor.putLong(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -175,7 +175,7 @@ public final class PreferenceUtil {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             Editor editor = sharedPreferences.edit();
             editor.putFloat(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -184,7 +184,7 @@ public final class PreferenceUtil {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             Editor editor = sharedPreferences.edit();
             editor.putBoolean(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -199,7 +199,7 @@ public final class PreferenceUtil {
             for (String key : keys) {
                 editor.remove(key);
             }
-            editor.commit();
+            editor.apply();
         }
     }
 }

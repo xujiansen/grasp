@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import androidx.appcompat.app.AlertDialog;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class LoadingDlgGrasp extends AlertDialog implements IHandler, View.OnCli
 
     public LoadingDlgGrasp(Context context) {
         super(context, R.style.dialog_grasp);
+        getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
     }
 
     private AppHandler mHandler = new AppHandler(this);
