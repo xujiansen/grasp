@@ -240,3 +240,6 @@ public static java.lang.String TABLENAME;
 }
 -keep class com.bumptech.glide.GeneratedAppGlideModuleImpl { *; }
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+
+# orhanobut.logger
+-keep class com.orhanobut.logger.** { *; }

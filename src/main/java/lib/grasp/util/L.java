@@ -2,6 +2,8 @@ package lib.grasp.util;
 
 import android.os.Environment;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -28,10 +30,17 @@ public class L {
     private static SimpleDateFormat mLogFile = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());           // 日志文件名称前缀
     private static SimpleDateFormat mLogSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());  // 日志内容的时间格式
 
+    /**
+     * 打印
+     */
+    public static void log(Object msg) {
+        Logger.d(msg);
+    }
 
     /**
      * 打印
      */
+    @Deprecated
     public static void logOnly(Object msg) {
         if (!IS_SHOW_LOG_AND_PRINT) return;
         showLogCompletion(msg.toString(), MAX_LENGTH);
@@ -40,6 +49,7 @@ public class L {
     /**
      * 打印
      */
+    @Deprecated
     public static void logAndWrite(Object msg) {
         logOnly(msg);
         if (IS_WRITE_TO_FILE) writeLogToFile(defaultTag(), msg.toString());
@@ -48,6 +58,7 @@ public class L {
     /**
      * 删除指定日期前的日志文件
      */
+    @Deprecated
     public static void doDelFile() {
         String needDelFile = mLogFile.format(getDateBefore());
         File file = new File(LOG_PATH_SDCARD_DIR, needDelFile + LOGFILEName);
@@ -100,6 +111,7 @@ public class L {
      * @param log       原log文本
      * @param showCount 规定每段显示的长度（最好不要超过eclipse限制长度）
      */
+    @Deprecated
     public static void showLogCompletion(String log, int showCount) {
         if(log.length() < showCount){
             show(log);

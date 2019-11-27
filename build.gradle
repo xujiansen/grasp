@@ -57,7 +57,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2' //这里gradle版本改成你自己的版本
+        classpath 'com.android.tools.build:gradle:3.5.2' //这里gradle版本改成你自己的版本
     }
 }
 
@@ -74,10 +74,12 @@ allprojects {
 }
 
 dependencies {
+    /* 依赖冲突的话可以通过[依赖传递]解决 */
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 //    implementation 'androidx.palette:palette:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -111,4 +113,6 @@ dependencies {
     implementation 'com.joanzapata.iconify:android-iconify-material-community:2.1.0'
 
     implementation 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
+
+    implementation 'com.orhanobut:logger:2.2.0'                     // log
 }

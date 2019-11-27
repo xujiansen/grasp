@@ -61,13 +61,13 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
     @Override
     public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
         GroupInte entity = mGroups.get(groupPosition);
-        holder.setText(R.id.tv_header, entity.getHeader());
+        holder.setText(R.id.tv_header, "-" + entity.getHeader() + "-");
     }
 
     @Override
     public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
         GroupInte entity = mGroups.get(groupPosition);
-        holder.setText(R.id.tv_footer, entity.getFooter());
+        holder.setText(R.id.tv_footer, "-" + entity.getFooter() + "-");
     }
 
     @Override

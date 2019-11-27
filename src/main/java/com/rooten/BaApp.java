@@ -7,10 +7,19 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Process;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.MaterialCommunityModule;
 import com.joanzapata.iconify.fonts.MaterialModule;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.CsvFormatStrategy;
+import com.orhanobut.logger.DiskLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.rooten.base.UserData;
 import com.rooten.help.ActivityMgr;
 import com.rooten.help.LocalBroadMgr;
@@ -21,6 +30,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import lib.grasp.util.L;
 import lib.grasp.util.PathUtil;
 
 public class BaApp extends Application {
@@ -45,9 +55,10 @@ public class BaApp extends Application {
         super.onCreate();
         BaApp.APP = this;
 
-        init();                 // 初始化辅助类
-        initAppPath();          // 初始化应用路径
+        init();                 // 初始化 辅助类
+        initAppPath();          // 初始化 应用路径
         initIconify();          // 初始化 Iconify
+        initLogUtil();          // 初始化 日志类
     }
 
     private void init() {
@@ -64,6 +75,30 @@ public class BaApp extends Application {
         Iconify.with(new FontAwesomeModule())
                 .with(new MaterialModule())
                 .with(new MaterialCommunityModule());
+    }
+
+    private void initLogUtil() {
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
+                .methodCount(2)         // (Optional) How many method line to show. Default 2
+                .methodOffset(1)        // (Optional) Hides internal method calls up to offset. Default 5
+                .tag("GRASP")           // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        FormatStrategy formatStrategy2 = CsvFormatStrategy.newBuilder()
+                .tag("GRASP-log")
+                .build();
+        Logger.addLogAdapter(new DiskLogAdapter(formatStrategy2){
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                return super.isLoggable(priority, tag);
+            }
+
+            @Override
+            public void log(int priority, @Nullable String tag, @NonNull String message) {
+                super.log(priority, tag, message);
+            }
+        });
     }
 
 
