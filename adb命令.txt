@@ -1,17 +1,17 @@
-卸载
+鍗歌浇
 adb shell pm uninstall --user 0 com.gaqu.adplayer65
-安装
+瀹夎
 adb install E:\Down\Chrome\dangbeimarket_4.1.7_znds.apk
-打开
+鎵撳紑
 adb shell am start -n com.gaqu.adplayer65/.view.AdActivity
 
-小米电视专用
-卸载预装
+灏忕背鐢佃涓撶敤
+鍗歌浇棰勮
 adb shell pm uninstall --user 0 com.miui.systemAdSolution
 adb shell pm uninstall --user 0 com.pptv.tvsports.preinstall
 adb shell pm uninstall --user 0 com.duokan.videodaily
 adb shell pm uninstall --user 0 com.pplive.atv
 adb shell pm uninstall --user 0 com.xiaomi.mitv.advertise
 adb shell pm uninstall --user 0 com.mitv.tvhome
-连接
+杩炴帴
 adb connect 192.168.1.156:5555
