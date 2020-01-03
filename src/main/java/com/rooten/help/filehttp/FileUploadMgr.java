@@ -177,7 +177,7 @@ public class FileUploadMgr {
         }
     }
 
-    private void doUpload(String categoryID, HttpUploadRequest req) {
+    protected void doUpload(String categoryID, HttpUploadRequest req) {
         UploadTask task = new UploadTask(categoryID, req);
         if (task.onUpload()) {
             req.progress.onProgress(req.reqId, req.requestUrl, 0, UploadStatus_SUCCESS);

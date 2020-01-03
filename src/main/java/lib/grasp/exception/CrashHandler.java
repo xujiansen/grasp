@@ -140,7 +140,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
         String timeNowFormatted = mDf.format(new Date());
 
-        String errorParent = PathUtil.getErrorPath();
+        String errorParent = PathUtil.getLogErrorPath();
         String errorLogPath = errorParent + timeNowFormatted + ".log";
         FileUtil.appendStrToFile(mCtx, errorLogPath, sb.toString());
     }

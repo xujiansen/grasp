@@ -12,14 +12,20 @@ import java.util.List;
 
 public class JobUtil {
 
-    // 安排一个定期执行的工作
+    /**
+     * 安排一个[定期]执行的工作
+     * @param context
+     * @param service
+     * @param jobId
+     * @param intervalMillis
+     */
     public static void schedulePeriodicJob(Context context, Class<? extends JobService> service, int jobId, int intervalMillis) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
 
         JobInfo.Builder builder = new JobInfo.Builder(jobId, new ComponentName(context, service));
         builder.setPersisted(false);                                    // 是否需要开机启动
-        builder.setMinimumLatency(0l);                                  // 最小延迟时间
-        builder.setOverrideDeadline(0l);                                // 截至日期
+        builder.setMinimumLatency(0);                                   // 最小延迟时间
+        builder.setOverrideDeadline(0);                                 // 截至日期
         builder.setPeriodic(intervalMillis);                            // 定期任务 不能设置最小延迟和戒指日期
         builder.setRequiresCharging(false);                             // 是否需要充电
         builder.setRequiresDeviceIdle(false);                           // 设备空闲
@@ -31,7 +37,13 @@ public class JobUtil {
         jobScheduler.schedule(job);
     }
 
-    // 安排一个延迟时间执行的工作
+    /**
+     * 安排一个[延迟]时间执行的工作
+     * @param context
+     * @param service
+     * @param jobId
+     * @param intervalMillis
+     */
     public static void scheduleLatencyJob(Context context, Class<? extends JobService> service, int jobId, int intervalMillis) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
 

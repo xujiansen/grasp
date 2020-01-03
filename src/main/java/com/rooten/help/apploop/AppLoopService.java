@@ -14,14 +14,12 @@ import com.rooten.help.apploop.util.LoopHelper;
  * App轮询服务
  */
 public class AppLoopService extends Service {
-    private BaApp mApp;
     /** 系统轮训帮助类 */
     public LoopHelper mLoopHelper = new LoopHelper();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mApp = (BaApp) getApplication();
     }
 
     @Override
@@ -29,7 +27,8 @@ public class AppLoopService extends Service {
         if(intent == null) return START_STICKY;
 
         // 从intent里面获取参数
-        int opId            = intent.getIntExtra("operationId", -1);             // 是新建任务还是, 删除任务(1: 新增任务, 0: 删除任务)
+        // 是新建任务还是, 删除任务(1: 新增任务, 0: 删除任务)
+        int opId            = intent.getIntExtra("operationId", -1);
         String broadcastStr = intent.getStringExtra("broadcastStr");
         int intervalTime    = intent.getIntExtra("intervalSecond", 0);
 

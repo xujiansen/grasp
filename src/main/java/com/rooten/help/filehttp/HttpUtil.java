@@ -1,6 +1,6 @@
 package com.rooten.help.filehttp;
 
-import net.minidev.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;

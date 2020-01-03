@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
 
-import net.minidev.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

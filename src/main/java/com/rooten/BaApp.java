@@ -35,12 +35,12 @@ import lib.grasp.util.PathUtil;
 
 public class BaApp extends Application {
     private Handler             mHandler        = new Handler();                // 主线程执行  　
-    private UserData            mUserData;                // 用户数据
+    protected UserData            mUserData;                // 用户数据
     private Map<String, Object> mIntentParams   = new HashMap<>();
     private ActivityMgr         mActivityMgr    = null; // Activity管理辅助类
     private NotificationHelper  mNotiHelper     = null; // Notification辅助类
 
-    private LocalBroadMgr       mLocalBroadMgr = null; // 本地广播管理
+    protected LocalBroadMgr       mLocalBroadMgr = null; // 本地广播管理
 
     public  ExecutorService     mAppThreadPool = Executors.newFixedThreadPool(3);
 
@@ -61,14 +61,14 @@ public class BaApp extends Application {
         initLogUtil();          // 初始化 日志类
     }
 
-    private void init() {
+    protected void init() {
         mLocalBroadMgr      = new LocalBroadMgr(this);          // 本地广播管理
         mActivityMgr        = new ActivityMgr();                // Activity管理辅助类
         mNotiHelper         = new NotificationHelper(this);
     }
 
     private void initAppPath() {
-        PathUtil.initPath(this);
+        PathUtil.initPath();
     }
 
     private void initIconify() {

@@ -23,6 +23,7 @@ import com.rooten.Constant;
 import com.rooten.frame.ActivityEx;
 
 import lib.grasp.util.FileUtil;
+import lib.grasp.util.PathUtil;
 import lib.grasp.util.ScreenUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -101,7 +102,7 @@ public class ImagePickHelper {
 //        intent.putExtra("return-data", true);      //原本的裁剪方式
 
         // mUriTempFile为Uri类变量，实例化uritempFile，转化为uri方式解决问题
-        final Uri mUriTempFile = Uri.parse("file://" + "/" + mApp.getUserData().getCropAvatarPath() + "/" + UUID.randomUUID() + Constant.SUFFIX_AVATAR_NAME);
+        final Uri mUriTempFile = Uri.parse("file://" + "/" + PathUtil.getCropAvatarPath() + "/" + UUID.randomUUID() + Constant.SUFFIX_AVATAR_NAME);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUriTempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
@@ -109,7 +110,7 @@ public class ImagePickHelper {
             if (resultCode != RESULT_OK) return;
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(mAct.getContentResolver().openInputStream(mUriTempFile));
-                String picCropPath = saveCropImage(bitmap, mApp.getUserData().getCropAvatarPath()); // 将Bitmap储存并返回路径
+                String picCropPath = saveCropImage(bitmap, PathUtil.getCropAvatarPath()); // 将Bitmap储存并返回路径
                 if (isCompress) {
                     doCompressImage(picCropPath);
                 }

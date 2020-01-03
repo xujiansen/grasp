@@ -102,8 +102,7 @@ public class LoopHelper implements IHandler {
         }
     }
 
-    private void
-    doSendBroadCast(Context context, String str){
+    private void doSendBroadCast(Context context, String str){
         Message msg = handler.obtainMessage();
         msg.obj = context;
 

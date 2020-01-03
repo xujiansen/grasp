@@ -48,7 +48,7 @@ public class TakeCamera {
     // 拍照返回参数名称
     private static final String RETURN_IMAGES = "return_images";
 
-    private String mPicPath = PathUtil.PATH_CAMERA_TEMP;
+    private String mPicPath = PathUtil.getCameraTempPath();
     private String mPicSize = LARGER_IMAGE_SIZE;
     private int mMaxPics = 1;
     private boolean mDrawDate = false;

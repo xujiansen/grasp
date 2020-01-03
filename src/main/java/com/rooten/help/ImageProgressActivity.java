@@ -12,12 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import net.minidev.json.JSONArray;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.alibaba.fastjson.JSONArray;
 import com.rooten.util.Util;
 import lib.grasp.R;
 import com.rooten.ctrl.widget.RoundProgressBar;

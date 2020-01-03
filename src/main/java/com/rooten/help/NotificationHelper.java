@@ -40,8 +40,8 @@ public class NotificationHelper {
 
     public void addAppNotification() {
         String title = "您还没有登录";
-//        if (!StringUtil.isEmpty(mApp.getUserData().name)) {
-//            title = mApp.getUserData().name + " 你好";
+//        if (!StringUtil.isEmpty(App.getApp().getUserData().name)) {
+//            title = App.getApp().getUserData().name + " 你好";
 //        }
 
         String clsName = mApp.getPackageManager().getLaunchIntentForPackage(mApp.getPackageName())
@@ -64,8 +64,37 @@ public class NotificationHelper {
 //        contentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        PendingIntent intent = PendingIntent.getActivity(mApp, 0, contentIntent, 0);
 //
-//        String title = mApp.getUserData().getName() + " 你好";
+//        String title = App.getApp().getUserData().getName() + " 你好";
 //        newNotification(title, intent, NOTIFY_APP);
+    }
+
+    public void addMsgLockNotification(int num)
+    {
+        String title = "您有" + num + "条未读信息";
+
+        Intent contentIntent = new Intent();
+//        contentIntent.setComponent(new ComponentName(mApp, AppHome.class));
+        contentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent intent = PendingIntent.getActivity(mApp, 0, contentIntent, 0);
+
+        CharSequence appName = mApp.getResources().getText(R.string.app_name);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mApp);
+        builder.setContentTitle(title)
+                .setContentText(appName + "正在后台运行").setTicker(null)
+                .setContentIntent(intent).setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_DEFAULT | Notification.FLAG_SHOW_LIGHTS)
+                .setOngoing(false).setAutoCancel(true).setLights(0xFF00FF00, 2000, 5000);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        {
+            builder.setSmallIcon(R.drawable.ic_launcher);
+        }
+        else
+        {
+            builder.setSmallIcon(R.drawable.ic_launcher_tran);
+        }
+
+        mNotiManager.notify(NOTIFY_IMXX, builder.build());
     }
 
     private void newNotification(String title, PendingIntent intent, int notiId) {

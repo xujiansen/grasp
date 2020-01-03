@@ -16,11 +16,12 @@ import com.rooten.BaApp;
 public class LocalBroadMgr {
     public static final String PACKAGE_NAME = "PACKAGE_NAME";
 
-    public static final String ACTION_BROAD_FILE_DOWNLOAD_PROGRESS  = "com.rooten.action.im.broad_file_download_progress";   // 广播文件下载进度
+    /** 广播文件下载进度 */
+    public static final String ACTION_BROAD_FILE_DOWNLOAD_PROGRESS  = "com.rooten.action.im.broad_file_download_progress";
 
-    private BaApp mApp;
-    private String mPckName;
-    private LocalBroadcastManager mLocalBroad;
+    protected BaApp mApp;
+    protected String mPckName;
+    protected LocalBroadcastManager mLocalBroad;
 
     public LocalBroadMgr(BaApp app) {
         mApp = app;

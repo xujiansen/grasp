@@ -870,4 +870,15 @@ public final class BarUtils {
             parent.addView(createAlphaStatusBarView(activity, alpha));
         }
     }
+
+
+    public static int getActionBarSize(Context cxt)
+    {
+        TypedValue tv = new TypedValue();
+        if (cxt.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+        {
+            return TypedValue.complexToDimensionPixelSize(tv.data, cxt.getResources().getDisplayMetrics());
+        }
+        return 0;
+    }
 }

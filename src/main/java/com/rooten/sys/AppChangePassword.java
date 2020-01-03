@@ -93,7 +93,7 @@ public class AppChangePassword extends AppActivity {
 //
 //        VolleyHelper task = new VolleyHelper(mApp, this, null, true);
 //        task.setParam(map)
-//                .setHeadParam(mApp.getUserData().getHeadParam(map))
+//                .setHeadParam(App.getApp().getUserData().getHeadParam(map))
 //                .setMethod(Request.Method.POST)
 //                .setURL(Constants.CHANGE_PWD)
 //                .setmInfoStr("正在提交数据")

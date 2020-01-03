@@ -1,13 +1,12 @@
 package com.rooten.help;
 
-import net.minidev.json.JSONObject;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 
+import com.alibaba.fastjson.JSONObject;
 import com.rooten.BaApp;
 import com.rooten.util.Util;
 
@@ -56,7 +55,7 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
     private void writeError(String error) {
 //        if (!Constant.APP_DEBUG) return;
 
-        String errorParent = PathUtil.PATH_LOG_ERROR;
+        String errorParent = PathUtil.getLogErrorPath();
         String filename = TimeDateUtil.getDateTimeEx(new Date()) + ".txt";
 
         FileOutputStream out = null;

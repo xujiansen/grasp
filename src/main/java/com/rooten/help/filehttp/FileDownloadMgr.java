@@ -26,7 +26,7 @@ public class FileDownloadMgr implements IHandler {
     /** 锁 - 实现[添加]与[读取]任务都是同步互斥的 */
     private Lock mLock = new ReentrantLock();
     /** 是否准备停止各传输线程 */
-    private boolean mQuit = false;
+    protected boolean mQuit = false;
 
     /** 最大下载线程数(包含各类传输任务) */
     private int DOWNLOAD_MAX = 2;
@@ -204,7 +204,7 @@ public class FileDownloadMgr implements IHandler {
     }
 
     /** 开始一个传输任务, 回调传输过程中的各种数据 */
-    private void doDownload(String categoryID, HttpDownloadRequest req) {
+    protected void doDownload(String categoryID, HttpDownloadRequest req) {
         DownloadTask task = new DownloadTask(categoryID, req);
 
         if (task.doRealDownload()) {
@@ -229,7 +229,7 @@ public class FileDownloadMgr implements IHandler {
 
         /** 真正开始下载(会阻塞线程, 等到传输结束时返回传输结果) */
         private boolean doRealDownload() {
-            String okFilePath = PathUtil.PATH_DOWN_OK + mReq.saveFile.getName();
+            String okFilePath = PathUtil.getDownOkPath() + mReq.saveFile.getName();
             L.logOnly(okFilePath + "文件已经存在, 且传输完成");
             if(FileUtil.isFileExists(new File(okFilePath))) return true;
             return HttpUtil.downloadFile(mReq, this);
@@ -276,7 +276,7 @@ public class FileDownloadMgr implements IHandler {
 
         if(curSize == DOWNLOADSTATUS_SUCCESS){  // 下载成功, 将temp文件转移到OK文件夹
             String oldFile = request.saveFile.getAbsolutePath();
-            String newFile = PathUtil.PATH_DOWN_OK + request.saveFile.getName();
+            String newFile = PathUtil.getDownOkPath() + request.saveFile.getName();
             FileUtil.renameFile(oldFile, newFile);
         }
         return true;

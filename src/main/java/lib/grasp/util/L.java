@@ -37,6 +37,15 @@ public class L {
         Logger.d(msg);
     }
 
+
+    /**
+     * 打印
+     */
+    @Deprecated
+    public static void log(Class classs, String title, Object msg) {
+        Logger.d(title + ": " +  msg);
+    }
+
     /**
      * 打印
      */

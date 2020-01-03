@@ -180,7 +180,7 @@ public class ImageSelectorView extends LinearLayout implements HttpUtil.onHttpPr
                     if (TextUtils.isEmpty(picCompressPath)) return;
                     if (mSelected.size() <= index) {  // 新选择
                         HashMap<String, String> header = new HashMap<>();
-                        header.put("token", mApp.getUserData().token);
+                        header.put("token", mApp.getUserData().mToken);
                         HttpUploadRequest request = HttpUploadRequest.createDefaultReq(UUID.randomUUID().toString(), Constant.UPLOAD_PIC, new File(picCompressPath), header, new HashMap<>(), this);
                         mSelected.add(request);
                     } else {                           // 改旧的

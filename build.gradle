@@ -106,13 +106,14 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.zxing:core:3.4.0'
-    implementation 'net.minidev:json-smart:2.3'
+    api 'net.minidev:json-smart:2.3'
+    api 'com.alibaba:fastjson:1.2.62'
 
-    implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
-    implementation 'com.joanzapata.iconify:android-iconify-material:2.1.0'
-    implementation 'com.joanzapata.iconify:android-iconify-material-community:2.1.0'
+    api 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    api 'com.joanzapata.iconify:android-iconify-material:2.1.0'
+    api 'com.joanzapata.iconify:android-iconify-material-community:2.1.0'
 
-    implementation 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
+    api 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
 
     implementation 'com.orhanobut:logger:2.2.0'                     // log
 }

@@ -31,8 +31,8 @@ public class ParamInterceptor implements Interceptor {
         Request.Builder requestBuilder = oldRequest.newBuilder();
 //        requestBuilder.addHeader("Content-Type", "application/json");
         if (mApp != null && mApp.getUserData() != null) {
-            String token = mApp.getUserData().token;
-            if(!TextUtils.isEmpty(token)) requestBuilder.addHeader("token", mApp.getUserData().token);
+            String token = mApp.getUserData().mToken;
+            if(!TextUtils.isEmpty(token)) requestBuilder.addHeader("token", mApp.getUserData().mToken);
         }
         Request request = requestBuilder.build();
         return chain.proceed(request);
