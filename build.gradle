@@ -77,8 +77,6 @@ dependencies {
     /* 依赖冲突的话可以通过[依赖传递]解决 */
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-//    implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
