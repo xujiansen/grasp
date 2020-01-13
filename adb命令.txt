@@ -1,3 +1,5 @@
+查看手机上应用的包名
+adb shell pm list packages
 卸载
 adb shell pm uninstall --user 0 com.gaqu.adplayer65
 安装
