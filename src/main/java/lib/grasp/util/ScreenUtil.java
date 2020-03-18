@@ -16,7 +16,7 @@ public class ScreenUtil {
 
 
 
-    /** 固定值适配各种屏幕密度 */
+    /** 固定值适配各种屏幕密度(将xml里面的数字转成代码里面的数值) */
     public static int getValueByDpi(Context ctx, int value) {
         float density = ctx.getResources().getDisplayMetrics().density;
         return (int) (value * density + 0.5f);

@@ -33,23 +33,27 @@ import okhttp3.Response;
  * 上传帮助类（包括界面显示, 多文件/重量级请使用{@link com.rooten.help.filehttp.FileUploadMgr} ）
  *
  * 使用代码实例：
- * String localFilePath = mLocalFilePath;
- *         List<String> list = new ArrayList<>();
- *         list.add(localFilePath);
+ *          String localFilePath = "/sdcard/test.txt";
+ *          List<String> list = new ArrayList<>();
+ *          list.add(localFilePath);
+ *          UpLoadHelper loadHelper = new UpLoadHelper(activity);
+ *          loadHelper.setAllLoadListener(new LoadListener() {
+ *              @Override
+ *              public void onSuccess(String url) {
+ *                  if(activity != null) MessageBoxGrasp.infoMsg(activity, "上传完成");
+ *              }
  *
- *         UpLoadHelper loadHelper = new UpLoadHelper(this, mUpUrl, list);
- *         loadHelper.setLoadListener(new lib.grasp.helper.LoadListener() {
- *             @Override
- *             public void onSuccess() {
- *                 MessageBoxGrasp.infoMsg(TestActivity.this, "上传完成");
- *             }
+ *              @Override
+ *              public void onFail(String url) {
+ *                  if(activity != null)MessageBoxGrasp.infoMsg(activity, "上传失败");
+ *              }
  *
- *             @Override
- *             public void onFail() {
- *                 MessageBoxGrasp.infoMsg(TestActivity.this, "上传失败");
- *             }
- *         });
- *         loadHelper.startLoad();
+ *              @Override
+ *              public void onProgress(String url, long curSize, long allSize) {
+ *
+ *              }
+ *          });
+ *          loadHelper.startLoad("http://192.168.....", list);
  */
 public class UpLoadHelper implements DialogInterface.OnDismissListener, IHandler {
     private Context mCtx;

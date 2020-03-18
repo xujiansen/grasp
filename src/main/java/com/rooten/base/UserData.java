@@ -17,11 +17,11 @@ public class UserData{
     public String   mToken;
 
     /** 用户ID */
-    public String	mStrUserID 		= "";
+    public String	mStrUserID 		= "default_user_id";
     /** 用户名称 */
-    public String	mStrName   		= "";
+    public String	mStrName   		= "default_user_name";
     /** 用户密码(登录时输入) */
-    public String   mStrPwd         = "";
+    public String   mStrPwd         = "default_user_pwd";
 
     /** post/get 放在头里面-----系统里面的通用业务模块使用（没办法） */
     public Map<String, String> getOsHeadParam(){

@@ -134,7 +134,6 @@ public class AudioRecorder {
 	}
 
 	public double getAmplitude() {
-		// TODO Auto-generated method stub
 		if (!isRecording) {
 			return 0;
 		}

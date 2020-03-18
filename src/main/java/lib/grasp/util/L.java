@@ -1,20 +1,30 @@
 package lib.grasp.util;
 
+import android.app.Activity;
 import android.os.Environment;
 
 import com.orhanobut.logger.Logger;
+import com.rooten.frame.ActivityEx;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import lib.grasp.helper.LoadListener;
+import lib.grasp.http.okhttpprogress.UpLoadHelper;
+import lib.grasp.widget.MessageBoxGrasp;
 
 /**
  * 带日志文件输入的，又可控开关的日志调试
+ * <br/>
+ * todo 上传功能待实现
  */
 public class L {
     private static final String LOG_FILE_PATH = Environment.getExternalStorageDirectory() + "/LOG/";
@@ -53,6 +63,31 @@ public class L {
     public static void logOnly(Object msg) {
         if (!IS_SHOW_LOG_AND_PRINT) return;
         showLogCompletion(msg.toString(), MAX_LENGTH);
+    }
+
+    public void doUpload(Activity activity){
+        String localFilePath = "/sdcard/test.txt";
+        List<String> list = new ArrayList<>();
+        list.add(localFilePath);
+        UpLoadHelper loadHelper = new UpLoadHelper(activity);
+        loadHelper.setAllLoadListener(new LoadListener() {
+            @Override
+            public void onSuccess(String url) {
+                if(activity != null) MessageBoxGrasp.infoMsg(activity, "上传完成");
+            }
+
+            @Override
+            public void onFail(String url) {
+                if(activity != null)MessageBoxGrasp.infoMsg(activity, "上传失败");
+            }
+
+            @Override
+            public void onProgress(String url, long curSize, long allSize) {
+
+            }
+        });
+        loadHelper.startLoad("http://192.168.....", list);
+
     }
 
     /**
@@ -130,7 +165,7 @@ public class L {
         String show = log.substring(0, showCount);
         show(show);
 
-        if ((log.length() - showCount) > showCount) {                   //剩下的文本还是大于规定长度
+        if ((log.length() - showCount) > showCount) {                   // 剩下的文本还是大于规定长度
             String partLog = log.substring(showCount);
             showLogCompletion(partLog, showCount);
         } else {

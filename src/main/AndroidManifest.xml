@@ -78,6 +78,7 @@
         <activity android:name=".widget.recyclerview.group.activity.ExpandableActivity" />
         <activity android:name=".widget.recyclerview.group.activity.VariousActivity" />
         <activity android:name=".widget.recyclerview.group.activity.VariousChildActivity" />
+        <activity android:name="com.multi.image.selector.MultiImageSelectorActivity" />
 
 
         <receiver android:name="com.rooten.help.apploop.imp.AppLoopReceiver"

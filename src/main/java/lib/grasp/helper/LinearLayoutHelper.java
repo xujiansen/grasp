@@ -14,6 +14,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
 
 import lib.grasp.R;
@@ -89,6 +91,29 @@ public final class LinearLayoutHelper {
         view.setGravity(Gravity.CENTER_VERTICAL| Gravity.LEFT);
         view.setPadding(ScreenUtil.getValueByDpi(ctx, 8), 0, ScreenUtil.getValueByDpi(ctx, 8), 0);
         ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
+    }
+
+    /** 添加文字按钮 */
+    @Nullable
+    public static TextView addBtn(Context ctx, View.OnClickListener listener, LinearLayout ll, int height, String title, String tag) {
+        if(ll == null) return null;
+        TextView view = new TextView(ctx);
+        view.setTextColor(Color.WHITE);
+        view.setText(title);
+        view.setGravity(Gravity.CENTER);
+        view.setBackground(ctx.getResources().getDrawable(R.drawable.layout_btn_bg));
+        view.setPadding(ScreenUtil.getValueByDpi(ctx, 8), 0, ScreenUtil.getValueByDpi(ctx, 8), 0);
+        view.setTag(tag);
+        view.setOnClickListener(listener);
+        LayoutParams params = (LayoutParams) view.getLayoutParams();
+        if(params == null) params = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        params.width = MATCH_PARENT;
+        params.height = ScreenUtil.getValueByDpi(ctx, height);
+        int marginV = ScreenUtil.getValueByDpi(ctx, 25);
+        int marginH = ScreenUtil.getValueByDpi(ctx, 15);
+        params.setMargins(marginH, marginV, marginH, marginV);
+        ll.addView(view, params);
+        return view;
     }
 
     /** 添加分割线 */
@@ -171,6 +196,36 @@ public final class LinearLayoutHelper {
         container.setOnClickListener(listener);
         view.setTag(tag);
         view.setOnClickListener(isShowArrow ? listener : null);
+        ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
+        return ivValue;
+    }
+
+
+    /** 添加左键右图片行(不显示箭头) */
+    @Nullable
+    public static ImageView addKeyImgLine(Context ctx, View.OnClickListener listener, LinearLayout ll, String title, String url, String tag) {
+        return addKeyImgArrowLine(ctx, listener, ll, title, url, tag, ScreenUtil.getValueByDpi(ctx, 40), false);
+    }
+
+    /** 添加左键右图片+箭头行 */
+    @Nullable
+    public static ImageView addKeyImgArrowLine(Context ctx, View.OnClickListener listener, LinearLayout ll, String title, String url, String tag, int height, boolean isShowArrow) {
+        if(ll == null || TextUtils.isEmpty(title)) return null;
+        View view = View.inflate(ctx, R.layout.key_value_img_arrow_line, null);
+        TextView tvTitle = (TextView)view.findViewById(R.id.title);
+        ImageView ivValue = (ImageView)view.findViewById(R.id.iv_value);
+        ImageView ivArrow = (ImageView)view.findViewById(R.id.iv_arrow);
+        LinearLayout container = (LinearLayout) view.findViewById(R.id.ll_ivcontainer);
+        tvTitle.setText(title);
+        ivArrow.setVisibility(isShowArrow ? View.VISIBLE : View.GONE);
+        Glide.with(ctx).load(url).into(ivValue);
+        ivValue.setClickable(false);
+        ivArrow.setClickable(false);
+        container.setTag(tag);
+        container.setOnClickListener(listener);
+        view.setTag(tag);
+//        view.setOnClickListener(isShowArrow ? listener : null);
+        view.setOnClickListener(listener);
         ll.addView(view, MATCH_PARENT, ScreenUtil.getValueByDpi(ctx, height));
         return ivValue;
     }

@@ -35,7 +35,7 @@ import lib.grasp.util.PathUtil;
 
 public class BaApp extends Application {
     private Handler             mHandler        = new Handler();                // 主线程执行  　
-    protected UserData            mUserData;                // 用户数据
+    protected UserData            mUserData = new UserData();                // 用户数据
     private Map<String, Object> mIntentParams   = new HashMap<>();
     private ActivityMgr         mActivityMgr    = null; // Activity管理辅助类
     private NotificationHelper  mNotiHelper     = null; // Notification辅助类
