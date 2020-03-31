@@ -64,7 +64,7 @@ public class ImageProgressActivity extends ActivityEx implements
         super.onDestroy();
 
         // 注销广播的注册
-        mApp.getLocalBroadMgr().unRegisterReceiver(mLocalBroad);
+        LocalBroadMgr.getDefault().unRegisterReceiver(mLocalBroad);
     }
 
     private void initWidget() {
@@ -93,7 +93,7 @@ public class ImageProgressActivity extends ActivityEx implements
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(LocalBroadMgr.ACTION_BROAD_FILE_DOWNLOAD_PROGRESS);    // 文件下载进度广播
-        mApp.getLocalBroadMgr().registerReceiver(mLocalBroad, filter);
+        LocalBroadMgr.getDefault().registerReceiver(mLocalBroad, filter);
     }
 
     private void initRunParams() {

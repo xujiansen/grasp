@@ -113,5 +113,7 @@ dependencies {
 
     api 'uk.co.senab.photoview:PhotoView:1.2.4@aar'
 
+    api 'org.greenrobot:eventbus:3.0.0'                 // eventbus
+
     implementation 'com.orhanobut:logger:2.2.0'                     // log
 }

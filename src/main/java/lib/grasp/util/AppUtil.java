@@ -20,6 +20,8 @@ import android.telephony.TelephonyManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import com.rooten.help.ActivityMgr;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -477,5 +479,19 @@ public class AppUtil {
                 }
             }
         }).start();
+    }
+
+    /**
+     * 完全退出App,
+     * 如果不把当前所未关闭的Activity关闭, 在杀死进程之后, 会重新启动栈顶的Activity
+     */
+    public static void destroyApp(boolean isKillProcess) {
+        // 销毁Activity管理类
+        ActivityMgr.getDefault().onDestroy();
+
+        // 杀死本进程
+        if (isKillProcess) android.os.Process.killProcess(android.os.Process.myPid());
+
+//        System.exit(1); // ?
     }
 }

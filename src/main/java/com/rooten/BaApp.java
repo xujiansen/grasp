@@ -32,20 +32,35 @@ import java.util.concurrent.Executors;
 
 import lib.grasp.util.L;
 import lib.grasp.util.PathUtil;
+import lib.grasp.util.SPUtil;
 
 public class BaApp extends Application {
-    private Handler             mHandler        = new Handler();                // 主线程执行  　
-    protected UserData            mUserData = new UserData();                // 用户数据
-    private Map<String, Object> mIntentParams   = new HashMap<>();
-    private ActivityMgr         mActivityMgr    = null; // Activity管理辅助类
-    private NotificationHelper  mNotiHelper     = null; // Notification辅助类
 
-    protected LocalBroadMgr       mLocalBroadMgr = null; // 本地广播管理
+    /**
+     * 主线程执行
+     */
+    private Handler mHandler = new Handler();
 
-    public  ExecutorService     mAppThreadPool = Executors.newFixedThreadPool(3);
+    /**
+     * 临时数据
+     */
+    private Map<String, Object> mTempParams   = new HashMap<>();
 
+    /**
+     * 用户数据
+     */
+    protected UserData mUserData = new UserData();
+
+    /**
+     * 应用级上下文
+     */
     protected static BaApp APP;
 
+    /**
+     * 应用级上下文
+     * <br/>
+     * 这个方法强烈建议子类重写
+     */
     public static BaApp getApp() {
         return APP;
     }
@@ -54,96 +69,39 @@ public class BaApp extends Application {
     public void onCreate() {
         super.onCreate();
         BaApp.APP = this;
-
-        init();                 // 初始化 辅助类
-        initAppPath();          // 初始化 应用路径
-        initIconify();          // 初始化 Iconify
-        initLogUtil();          // 初始化 日志类
+        initBiz();
     }
 
-    protected void init() {
-        mLocalBroadMgr      = new LocalBroadMgr(this);          // 本地广播管理
-        mActivityMgr        = new ActivityMgr();                // Activity管理辅助类
-        mNotiHelper         = new NotificationHelper(this);
+    private void initBiz(){
+        initAppPath();
+        initIconify();
+        initLogUtil();
     }
 
+    /** 初始化应用路径 */
     private void initAppPath() {
         PathUtil.initPath();
     }
 
+    /** 初始化 Iconify */
     private void initIconify() {
         Iconify.with(new FontAwesomeModule())
                 .with(new MaterialModule())
                 .with(new MaterialCommunityModule());
     }
 
+    /** 初始化日志工具类 */
     private void initLogUtil() {
-        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
-                .methodCount(2)         // (Optional) How many method line to show. Default 2
-                .methodOffset(1)        // (Optional) Hides internal method calls up to offset. Default 5
-                .tag("GRASP")           // (Optional) Global tag for every log. Default PRETTY_LOGGER
-                .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
-        FormatStrategy formatStrategy2 = CsvFormatStrategy.newBuilder()
-                .tag("GRASP-log")
-                .build();
-        Logger.addLogAdapter(new DiskLogAdapter(formatStrategy2){
-            @Override
-            public boolean isLoggable(int priority, @Nullable String tag) {
-                return super.isLoggable(priority, tag);
-            }
-
-            @Override
-            public void log(int priority, @Nullable String tag, @NonNull String message) {
-                super.log(priority, tag, message);
-            }
-        });
+        L.init();
     }
 
-
-    /** 获取设备名称 */
-    static public String getDeviceName() {
-        return Build.MANUFACTURER + " " + Build.MODEL;
-    }
-
-    /** 获取设备品牌 */
-    static public String getDeviceType() {
-        return Build.BRAND;
-    }
-
-    /** 获取操作系统 */
-    static public String getOSName() {
-        return "Android";
-    }
-
-    /** 获取APP版本名称 */
-    public String getAppVersionName() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
-            return info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            return "";
-        }
-    }
-
-    /** 获取APP版本Code */
-    public int getAppVersionCode() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
-            return info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            return -1;
-        }
-    }
-
-    /** 添加主线程任务 */
+    /** 添加任务(立刻执行) */
     public void runOnUiThread(Runnable r) {
         if (r == null) return;
         mHandler.post(r);
     }
 
-    /** 添加主线程(延时)任务 */
+    /** 添加任务(延时执行) */
     public void runOnUiThread(Runnable r, long delay) {
         if (r == null) return;
         mHandler.postDelayed(r, delay);
@@ -152,19 +110,19 @@ public class BaApp extends Application {
     /** 添加全局参数 */
     public void putArg(String name, Object value) {
         if (name == null || name.length() == 0) return;
-        mIntentParams.put(name, value);
+        mTempParams.put(name, value);
     }
 
     /** 获取全局参数 */
     public Object getArg(String name) {
         if (name == null || name.length() == 0) return null;
-        return mIntentParams.get(name);
+        return mTempParams.get(name);
     }
 
-    /** 删除全局参数 */
+    /** 删除全局参数并返回 */
     public Object removeArg(String name) {
         if (name == null || name.length() == 0) return null;
-        return mIntentParams.remove(name);
+        return mTempParams.remove(name);
     }
 
     /** 获取当前用户 */
@@ -177,27 +135,11 @@ public class BaApp extends Application {
         this.mUserData = mUserData;
     }
 
-    /** 获取本地广告代理者 */
-    public LocalBroadMgr getLocalBroadMgr() {
-        return mLocalBroadMgr;
-    }
-
-    /** 获取Noti代理者 */
-    public NotificationHelper getNotiHelper() {
-        return mNotiHelper;
-    }
-
-    /** 获取Activity管理者 */
-    public ActivityMgr getActivityMgr() {
-        return mActivityMgr;
-    }
-
     /** 完全退出App，如果不把当前所未关闭的Activity关闭，在杀死进程之后，会重新启动栈顶的Activity */
     public void destroyApp(boolean isKillProcess) {
-        mActivityMgr.onDestroy();       // 销毁Activity管理类
+        ActivityMgr.getDefault().onDestroy();                               // 销毁Activity管理类
         if (isKillProcess) android.os.Process.killProcess(Process.myPid()); // 杀死本进程
     }
-
 }
 
 

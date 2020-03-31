@@ -3,7 +3,15 @@ package lib.grasp.util;
 import android.app.Activity;
 import android.os.Environment;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.CsvFormatStrategy;
+import com.orhanobut.logger.DiskLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.rooten.frame.ActivityEx;
 
 import java.io.BufferedWriter;
@@ -63,31 +71,6 @@ public class L {
     public static void logOnly(Object msg) {
         if (!IS_SHOW_LOG_AND_PRINT) return;
         showLogCompletion(msg.toString(), MAX_LENGTH);
-    }
-
-    public void doUpload(Activity activity){
-        String localFilePath = "/sdcard/test.txt";
-        List<String> list = new ArrayList<>();
-        list.add(localFilePath);
-        UpLoadHelper loadHelper = new UpLoadHelper(activity);
-        loadHelper.setAllLoadListener(new LoadListener() {
-            @Override
-            public void onSuccess(String url) {
-                if(activity != null) MessageBoxGrasp.infoMsg(activity, "上传完成");
-            }
-
-            @Override
-            public void onFail(String url) {
-                if(activity != null)MessageBoxGrasp.infoMsg(activity, "上传失败");
-            }
-
-            @Override
-            public void onProgress(String url, long curSize, long allSize) {
-
-            }
-        });
-        loadHelper.startLoad("http://192.168.....", list);
-
     }
 
     /**
@@ -199,5 +182,29 @@ public class L {
             tag = log.getClassName() + "." + log.getMethodName();
         }
         return tag;
+    }
+
+    public static void init(){
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
+                .methodCount(2)         // (Optional) How many method line to show. Default 2
+                .methodOffset(1)        // (Optional) Hides internal method calls up to offset. Default 5
+                .tag("GRASP")           // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        FormatStrategy formatStrategy2 = CsvFormatStrategy.newBuilder()
+                .tag("GRASP-log")
+                .build();
+        Logger.addLogAdapter(new DiskLogAdapter(formatStrategy2){
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                return super.isLoggable(priority, tag);
+            }
+
+            @Override
+            public void log(int priority, @Nullable String tag, @NonNull String message) {
+                super.log(priority, tag, message);
+            }
+        });
     }
 }

@@ -1,13 +1,12 @@
 package lib.grasp.util;
 
-import android.content.Context;
 import android.os.Environment;
-
-import java.util.List;
 
 import com.rooten.BaApp;
 import com.rooten.util.ListAvailableStorage;
 import com.rooten.util.StorageInfo;
+
+import java.util.List;
 
 import lib.grasp.R;
 
@@ -34,7 +33,11 @@ public class PathUtil {
     private static final String DIR_AVATAR_COMPRESS         = "avatar/compress";  // 头像压缩
     private static final String DIR_AVATAR_CROP             = "avatar/crop";      // 头像裁切
 
-    /** 本方法最好在用户登录成功之后调用, 因为具体文件是以用户为单位存放的 */
+    /**
+     * 本方法最好在用户登录成功之后调用, 因为具体文件是以用户为单位存放的
+     * <br/>
+     * 项目的根目录与资源文件里面的 ${dir_name} 字符串有关
+     */
     public static void initPath() {
         APP_ROOT_DIR        = BaApp.getApp().getResources().getString(R.string.dir_name) + "/";
         APP_PROJECT_DIR     = getProjectRootPath();    // 项目cache目录

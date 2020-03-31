@@ -2,6 +2,8 @@ package lib.grasp.util;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import lib.grasp.widget.MessageBoxGrasp;
@@ -25,5 +27,15 @@ public class PhoneUtil {
             intent.setData(data);
             activity.startActivity(intent);
         }, null, true);
+    }
+
+    /** 获取设备品牌 */
+    static public String getDeviceType() {
+        return Build.BRAND;
+    }
+
+    /** 获取设备名称 */
+    static public String getDeviceName() {
+        return Build.MANUFACTURER + " " + Build.MODEL;
     }
 }

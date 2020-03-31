@@ -10,8 +10,11 @@ import java.util.ArrayList;
 
 import com.rooten.BaApp;
 
+import lib.grasp.util.EventBusUtil;
+
 /**
  * 本地广播广播工具类
+ * @deprecated 建议使用 {@link EventBusUtil}
  */
 public class LocalBroadMgr {
     public static final String PACKAGE_NAME = "PACKAGE_NAME";
@@ -20,13 +23,31 @@ public class LocalBroadMgr {
     public static final String ACTION_BROAD_FILE_DOWNLOAD_PROGRESS  = "com.rooten.action.im.broad_file_download_progress";
 
     protected BaApp mApp;
-    protected String mPckName;
-    protected LocalBroadcastManager mLocalBroad;
+    private String mPckName;
+    private LocalBroadcastManager mLocalBroad;
 
-    public LocalBroadMgr(BaApp app) {
-        mApp = app;
-        mPckName = app.getPackageName();
-        mLocalBroad = LocalBroadcastManager.getInstance(app);
+    /** 单例 */
+    private static volatile LocalBroadMgr defaultInstance;
+
+    /**
+     * @deprecated 建议使用 {@link EventBusUtil}
+     */
+    @Deprecated
+    public static LocalBroadMgr getDefault() {
+        if (defaultInstance == null) {
+            synchronized (LocalBroadMgr.class) {
+                if (defaultInstance == null) {
+                    defaultInstance = new LocalBroadMgr();
+                }
+            }
+        }
+        return defaultInstance;
+    }
+
+    private LocalBroadMgr() {
+        mApp = BaApp.getApp();
+        mPckName = mApp.getPackageName();
+        mLocalBroad = LocalBroadcastManager.getInstance(mApp);
     }
 
     // 发送普通广播
@@ -73,11 +94,13 @@ public class LocalBroadMgr {
         mLocalBroad.sendBroadcast(intent);
     }
 
+    /** 注册(应用内广播监听) */
     public void registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
         if (receiver == null || mLocalBroad == null) return;
         mLocalBroad.registerReceiver(receiver, filter);
     }
 
+    /** 解注册(应用内广播监听) */
     public void unRegisterReceiver(BroadcastReceiver receiver) {
         if (receiver == null || mLocalBroad == null) return;
         mLocalBroad.unregisterReceiver(receiver);

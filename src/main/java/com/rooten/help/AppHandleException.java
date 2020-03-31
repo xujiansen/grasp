@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.rooten.BaApp;
 import com.rooten.util.Util;
 
+import lib.grasp.util.AppUtil;
 import lib.grasp.util.L;
 import lib.grasp.util.PathUtil;
 import lib.grasp.util.StreamUtil;
@@ -21,24 +22,32 @@ import lib.grasp.util.TimeDateUtil;
 public class AppHandleException implements Thread.UncaughtExceptionHandler {
     private BaApp mApp;
 
-    private static AppHandleException mInstance;
+    /** 单例 */
+    private static AppHandleException defaultInstance;
 
-    private AppHandleException() {
+    public static AppHandleException getDefault() {
+        if (defaultInstance == null) {
+            synchronized (AppHandleException.class) {
+                if (defaultInstance == null) {
+                    defaultInstance = new AppHandleException();
+                    defaultInstance.mApp = BaApp.getApp();
+                }
+            }
+        }
+        return defaultInstance;
     }
 
-    public static void register(BaApp app) {
-        if (!Util.isMainThread() || mInstance != null) return;
-
-        mInstance = new AppHandleException();
-        mInstance.mApp = app;
-        Thread.setDefaultUncaughtExceptionHandler(mInstance);
+    /** 注册全局监听 */
+    public static void doRegister() {
+        if (!Util.isMainThread()) return;
+        Thread.setDefaultUncaughtExceptionHandler(AppHandleException.getDefault());
     }
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         // 清除所有的notification
-        mApp.getNotiHelper().cancelAll();
-        mApp.getNotiHelper().cancelYyspNoti();
+        NotificationHelper.getDefault().cancelAll();
+        NotificationHelper.getDefault().cancelYyspNoti();
 
         // 保存错误日志
         StringWriter writer = new StringWriter();
@@ -49,7 +58,7 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
 //        mApp.startAppOnService();
 
         // 销毁本程序
-        mApp.destroyApp(true);
+        AppUtil.destroyApp(true);
     }
 
     private void writeError(String error) {
@@ -68,7 +77,7 @@ public class AppHandleException implements Thread.UncaughtExceptionHandler {
             obj.put("errInfo", error);
             out.write(obj.toJSONString().getBytes("utf-8"));
         } catch (Exception e) {
-            L.logOnly("writeError::Exception" + e.toString());
+            L.log("writeError::Exception" + e.toString());
         } finally {
             StreamUtil.closeOutputStream(out);
         }

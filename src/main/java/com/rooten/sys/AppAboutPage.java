@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import lib.grasp.R;
+import lib.grasp.util.AppUtil;
+
+import com.rooten.BaApp;
 import com.rooten.frame.LinearPage;
 
 class AppAboutPage extends LinearPage implements View.OnClickListener {
@@ -44,7 +47,7 @@ class AppAboutPage extends LinearPage implements View.OnClickListener {
 
     @Override
     public void loadData() {
-        mTvVersion.setText(mApp.getAppVersionName());
+        mTvVersion.setText(AppUtil.getAppVersionName(BaApp.getApp()));
     }
 
     @Override

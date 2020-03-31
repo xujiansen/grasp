@@ -4,7 +4,24 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
+/** Activity管理器 */
 public class ActivityMgr {
+
+    /** 单例 */
+    private static volatile ActivityMgr defaultInstance;
+
+    /** Activity管理器 */
+    public static ActivityMgr getDefault() {
+        if (defaultInstance == null) {
+            synchronized (ActivityMgr.class) {
+                if (defaultInstance == null) {
+                    defaultInstance = new ActivityMgr();
+                }
+            }
+        }
+        return defaultInstance;
+    }
+
     private ArrayList<Activity> mActivityList = new ArrayList<>();
 
     public void addActivity(Activity activity) {
@@ -46,7 +63,11 @@ public class ActivityMgr {
         return mActivityList.isEmpty();
     }
 
-
+    /**
+     * 1. 手动Finish所有的Activity
+     * <br/>
+     * 2. 清空成员变量(Activity列表)
+     */
     public void onDestroy() {
         // 遍历Activity列表，销毁Activity
         for (Activity activity : mActivityList) {

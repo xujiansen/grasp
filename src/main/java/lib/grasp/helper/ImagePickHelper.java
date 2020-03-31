@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.Executors;
 
 import com.rooten.BaApp;
 import com.rooten.Constant;
@@ -138,7 +139,7 @@ public class ImagePickHelper {
 
         CompressImageTask task = new CompressImageTask(mApp, mAct, true, picCropPath);
         task.setListener(listener);
-        task.executeOnExecutor(mApp.mAppThreadPool);
+        task.executeOnExecutor(Executors.newFixedThreadPool(1));
     }
 
     /**

@@ -13,29 +13,47 @@ import com.rooten.BaApp;
 
 import lib.grasp.R;
 
+/** 通知栏通知管理器 */
 public class NotificationHelper {
     private final int NOTIFY_FIRSRT = 0;
-    private final int NOTIFY_APP = NOTIFY_FIRSRT + 1;
-    private final int NOTIFY_GPS = NOTIFY_FIRSRT + 2;
-    private final int NOTIFY_XTXX = NOTIFY_FIRSRT + 3;
-    private final int NOTIFY_IMXX = NOTIFY_FIRSRT + 4;
-    private final int NOTIFY_YYSP = NOTIFY_FIRSRT + 5;
+    private final int NOTIFY_APP    = NOTIFY_FIRSRT + 1;
+    private final int NOTIFY_GPS    = NOTIFY_FIRSRT + 2;
+    private final int NOTIFY_XTXX   = NOTIFY_FIRSRT + 3;
+    private final int NOTIFY_IMXX   = NOTIFY_FIRSRT + 4;
+    private final int NOTIFY_YYSP   = NOTIFY_FIRSRT + 5;
 
     private BaApp mApp;
-    private NotificationManager mNotiManager;
+    private NotificationManager mNotifyManager;
 
-    public NotificationHelper(BaApp app) {
-        mApp = app;
-        mNotiManager = (NotificationManager) mApp.getSystemService(Context.NOTIFICATION_SERVICE);
+    /** 单例 */
+    private static volatile NotificationHelper defaultInstance;
+
+    /** 通知栏通知管理器 */
+    public static NotificationHelper getDefault() {
+        if (defaultInstance == null) {
+            synchronized (NotificationHelper.class) {
+                if (defaultInstance == null) {
+                    defaultInstance = new NotificationHelper();
+                }
+            }
+        }
+        return defaultInstance;
     }
 
+    private NotificationHelper() {
+        mApp = BaApp.getApp();
+        mNotifyManager = (NotificationManager) mApp.getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    /** 取消所有的通知 */
     public void cancelAll() {
-        mNotiManager.cancel(NOTIFY_APP);
-        mNotiManager.cancel(NOTIFY_IMXX);
+        mNotifyManager.cancel(NOTIFY_APP);
+        mNotifyManager.cancel(NOTIFY_IMXX);
     }
 
+    /** 取消指定的通知 */
     public void cancelYyspNoti() {
-        mNotiManager.cancel(NOTIFY_YYSP);
+        mNotifyManager.cancel(NOTIFY_YYSP);
     }
 
     public void addAppNotification() {
@@ -94,7 +112,7 @@ public class NotificationHelper {
             builder.setSmallIcon(R.drawable.ic_launcher_tran);
         }
 
-        mNotiManager.notify(NOTIFY_IMXX, builder.build());
+        mNotifyManager.notify(NOTIFY_IMXX, builder.build());
     }
 
     private void newNotification(String title, PendingIntent intent, int notiId) {
@@ -111,10 +129,10 @@ public class NotificationHelper {
             builder.setSmallIcon(R.drawable.ic_launcher_tran);
         }
 
-        mNotiManager.notify(notiId, builder.build());
+        mNotifyManager.notify(notiId, builder.build());
     }
 
     public NotificationManager getNotificationMgr() {
-        return mNotiManager;
+        return mNotifyManager;
     }
 }

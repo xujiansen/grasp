@@ -14,7 +14,9 @@ import android.view.WindowManager.LayoutParams;
 import java.util.Hashtable;
 
 import com.rooten.BaApp;
+import com.rooten.help.ActivityMgr;
 import com.rooten.help.AppHelper;
+import com.rooten.help.NotificationHelper;
 
 import lib.grasp.R;
 import lib.grasp.mvp.BaseMvpActivity;
@@ -23,7 +25,6 @@ import lib.grasp.util.ViewUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 
 public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> implements IShowError, IActivityResult, IHandler {
-    protected BaApp mApp;
 
     private int mResultCode = 1;
     private boolean mIsOnResume = false;
@@ -41,7 +42,6 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
         lp.windowAnimations = R.style.ActivityAnim;
         getWindow().setAttributes(lp);
 
-        mApp = (BaApp) getApplication();
         mResultListener = new Hashtable<>();
 
         // 防止重复点击多次进入
@@ -53,7 +53,7 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
 //			return;
 //		}
 
-        mApp.getActivityMgr().addActivity(this);
+        ActivityMgr.getDefault().addActivity(this);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
 
     @Override
     protected void onDestroy() {
-        mApp.getActivityMgr().removeActivity(this);
+        ActivityMgr.getDefault().removeActivity(this);
         super.onDestroy();
     }
 
@@ -144,8 +144,7 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
         super.onResume();
         mIsOnResume = true;
 
-        // 取消所有的notification
-        mApp.getNotiHelper().cancelAll();
+        NotificationHelper.getDefault().cancelAll(); // 取消所有的notification
     }
 
     @Override
@@ -156,25 +155,22 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
         boolean isBeforeLollipop = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
         int time = isBeforeLollipop ? 0 : 200;
 
-        mApp.runOnUiThread(action, time);
+        BaApp.getApp().runOnUiThread(action, time);
     }
 
     public void exitApp() {
         mIsExitApp = true;
     }
 
-    Runnable action = new Runnable() {
-        @Override
-        public void run() {
-            if (mIsOnResume || mIsExitApp) {
-                mApp.getNotiHelper().cancelAll();
-                return;
-            }
+    private Runnable action = () -> {
+        if (mIsOnResume || mIsExitApp) {
+            NotificationHelper.getDefault().cancelAll();
+            return;
+        }
 
 //			if (!mApp.isTopActivity())
 //			{
 //				mApp.getNotiHelper().addAppNotification();
 //			}
-        }
     };
 }
