@@ -226,7 +226,7 @@ public class OkHttpHelper {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                L.logOnly("OkHttp::" + e.getMessage());
+                L.log("OkHttp::" + e.getMessage());
                 dismissView();
                 if (mIsCancel) mIsCancel = false;
                 mCallbackInner.onFailure(call, e);
@@ -236,14 +236,14 @@ public class OkHttpHelper {
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
                 if (response == null) return;
 
-                L.logOnly("OkHttp::" + response.toString());
+                L.log("OkHttp::" + response.toString());
                 dismissView();
                 if (mIsCancel) mIsCancel = false;
                 mCallbackInner.onResponse(call, response);
             }
         });
 
-        L.logOnly("请求URL:: " + mURL);
+        L.log("请求URL:: " + mURL);
     }
 
     /** 清除所有的加载界面的显示 */

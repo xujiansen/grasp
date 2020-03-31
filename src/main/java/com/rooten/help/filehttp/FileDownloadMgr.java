@@ -170,7 +170,7 @@ public class FileDownloadMgr implements IHandler {
         @Override
         public void run() {
             String threadName = Thread.currentThread().getName();
-            L.logOnly("下载线程:" + threadName + "开始运行");
+            L.log("下载线程:" + threadName + "开始运行");
             while (!mQuit) {
                 if (TextUtils.isEmpty(mCategoryID)) break;
 
@@ -186,10 +186,10 @@ public class FileDownloadMgr implements IHandler {
 
                     doDownload(mCategoryID, req);   // 开始下载
                 } catch (Exception e) {
-                    L.logOnly("下载线程异常:" + e.toString());
+                    L.log("下载线程异常:" + e.toString());
                 }
             }
-            L.logOnly("下载线程:" + threadName + "停止运行");
+            L.log("下载线程:" + threadName + "停止运行");
         }
     }
 
@@ -208,10 +208,10 @@ public class FileDownloadMgr implements IHandler {
         DownloadTask task = new DownloadTask(categoryID, req);
 
         if (task.doRealDownload()) {
-            L.logOnly("传输完成");
+            L.log("传输完成");
             sendMsg(req, categoryID, req.requestUrl, DOWNLOADSTATUS_SUCCESS, 1);   // 传输成功
         } else {
-            L.logOnly("传输失败");
+            L.log("传输失败");
             sendMsg(req, categoryID, req.requestUrl, DOWNLOADSTATUS_FALIURE, 1);   // 传输成功
         }
     }
@@ -230,7 +230,7 @@ public class FileDownloadMgr implements IHandler {
         /** 真正开始下载(会阻塞线程, 等到传输结束时返回传输结果) */
         private boolean doRealDownload() {
             String okFilePath = PathUtil.getDownOkPath() + mReq.saveFile.getName();
-            L.logOnly(okFilePath + "文件已经存在, 且传输完成");
+            L.log(okFilePath + "文件已经存在, 且传输完成");
             if(FileUtil.isFileExists(new File(okFilePath))) return true;
             return HttpUtil.downloadFile(mReq, this);
         }

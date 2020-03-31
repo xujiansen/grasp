@@ -187,7 +187,7 @@ public final class SPUtil {
             objectOutputStream.close();
             return string;
         } catch (IOException e) {
-            L.logOnly(e);
+            L.log(e);
             return null;
         }
     }

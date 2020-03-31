@@ -72,7 +72,7 @@ public class BaApp extends Application {
         initBiz();
     }
 
-    private void initBiz(){
+    protected void initBiz(){
         initAppPath();
         initIconify();
         initLogUtil();
@@ -133,12 +133,6 @@ public class BaApp extends Application {
     /** 设置当前用户 */
     public void setUserData(UserData mUserData) {
         this.mUserData = mUserData;
-    }
-
-    /** 完全退出App，如果不把当前所未关闭的Activity关闭，在杀死进程之后，会重新启动栈顶的Activity */
-    public void destroyApp(boolean isKillProcess) {
-        ActivityMgr.getDefault().onDestroy();                               // 销毁Activity管理类
-        if (isKillProcess) android.os.Process.killProcess(Process.myPid()); // 杀死本进程
     }
 }
 

@@ -393,7 +393,7 @@ public class AppUtil {
         try {
             bool = new File("/system/bin/su").exists() || new File("/system/xbin/su").exists();
         } catch (Exception e) {
-            L.logOnly(e.getMessage());
+            L.log(e.getMessage());
         }
         return bool;
     }
@@ -459,13 +459,13 @@ public class AppUtil {
                 while ((line = errorStream.readLine()) != null) {
                     msg += line;
                 }
-                L.logOnly("install msg is " + msg);
+                L.log("install msg is " + msg);
                 // 如果执行结果中包含Failure字样就认为是安装失败，否则就认为安装成功
                 if (!msg.contains("Failure")) {
                     result = true;
                 }
             } catch (Exception e) {
-                L.logOnly(e.getMessage());
+                L.log(e.getMessage());
             } finally {
                 try {
                     if (dataOutputStream != null) {
@@ -475,7 +475,7 @@ public class AppUtil {
                         errorStream.close();
                     }
                 } catch (IOException e) {
-                    L.logOnly(e.getMessage());
+                    L.log(e.getMessage());
                 }
             }
         }).start();

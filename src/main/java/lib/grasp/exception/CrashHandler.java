@@ -9,6 +9,9 @@ import android.os.Process;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.rooten.BaApp;
+import com.rooten.util.Util;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -20,6 +23,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import lib.grasp.util.AppUtil;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.PathUtil;
 
@@ -28,20 +32,13 @@ import lib.grasp.util.PathUtil;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
-    private Context mCtx;
+    /** 单例 */
     private static CrashHandler mInstance;
-    private Thread.UncaughtExceptionHandler mDefaultHandler;
-    private Map<String, String> mInfo = new HashMap<>(); // 日志相关字段
-    private DateFormat mDf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-
-    private CrashHandler(){}
 
     /** 注册全局异常监听 */
-    public static void init(Context ctx){
-        mInstance = getInstance();
-        mInstance.mCtx = ctx;
-        mInstance.mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.setDefaultUncaughtExceptionHandler(mInstance.mDefaultHandler);
+    public static void init(){
+        if (!Util.isMainThread()) return;
+        Thread.setDefaultUncaughtExceptionHandler(getInstance());
     }
 
     private static CrashHandler getInstance() {
@@ -53,12 +50,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         return mInstance;
     }
 
+
+
+    private Map<String, String> mInfo = new HashMap<>(); // 日志相关字段
+    private DateFormat mDf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        // 1. 收集
-        // 2. 保存
-        // 2. 上传
-
         if(isHandleException(e)) {
             try {
                 Thread.sleep(1000);
@@ -69,51 +67,44 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             Process.killProcess(Process.myPid());
             System.exit(1);
         }
-        if(mDefaultHandler == null) return;
-
-
     }
 
     /** 是否已经自己手动处理 */
     private boolean isHandleException(Throwable e){
         if(e == null) return false;
-        new Thread(){
-            @Override
-            public void run() {
-                Looper.prepare();
-                Toast.makeText(mCtx, "UnCaughtException", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
-        }.start();
-
+//        if(e == null) return true;
         collectErrInfo();
         saveErrInfo(e);
-        return false;
+        return true;
     }
 
     private void collectErrInfo(){
-        PackageManager pm = mCtx.getPackageManager();
+        PackageManager pm = BaApp.getApp().getPackageManager();
         try {
-            PackageInfo pi = pm.getPackageInfo(mCtx.getPackageName(), PackageManager.GET_ACTIVITIES);
+            PackageInfo pi = pm.getPackageInfo(BaApp.getApp().getPackageName(), PackageManager.GET_ACTIVITIES);
             if(pi == null) return;
 
             String versionName = TextUtils.isEmpty(pi.versionName) ? "未知版本" : pi.versionName;
             String versionCode = Long.toString(pi.getLongVersionCode());
-            mInfo.put("VersionName", versionName);
-            mInfo.put("VersionCode", versionCode);
+            mInfo.put("版本名", versionName);
+            mInfo.put("版本号", versionCode);
+            mInfo.put("品牌", Build.BRAND);
+            mInfo.put("型号", Build.MODEL);
+            mInfo.put("CPU版本", Build.CPU_ABI);
 
-            Field[] fields = Build.class.getFields();
-            if(fields == null || fields.length <= 0) return;
-            for(Field field : fields){
-                field.setAccessible(true);
-                mInfo.put(field.getName(), field.get(null).toString());
-            }
+//            Field[] fields = Build.class.getFields();
+//            if(fields == null || fields.length <= 0) return;
+//            for(Field field : fields){
+//                field.setAccessible(true);
+//                mInfo.put(field.getName(), field.get(null).toString());
+//            }
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         }
+//        catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void saveErrInfo(Throwable e){
@@ -139,9 +130,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         sb.append(result);
 
         String timeNowFormatted = mDf.format(new Date());
-
         String errorParent = PathUtil.getLogErrorPath();
         String errorLogPath = errorParent + timeNowFormatted + ".log";
-        FileUtil.appendStrToFile(mCtx, errorLogPath, sb.toString());
+        FileUtil.appendStrToFile(BaApp.getApp(), errorLogPath, sb.toString());
     }
 }

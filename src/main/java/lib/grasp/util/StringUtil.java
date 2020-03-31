@@ -18,7 +18,7 @@ public final class StringUtil {
             return str;
         }
         catch (Exception localException) {
-            L.logOnly("toURLEncoded error:" + paramString + localException);
+            L.log("toURLEncoded error:" + paramString + localException);
         }
         return "";
     }

@@ -120,7 +120,7 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
         try {
             super.dismiss();
         }catch (Exception e){
-            L.logOnly(e);
+            L.log(e);
         }
     }
 

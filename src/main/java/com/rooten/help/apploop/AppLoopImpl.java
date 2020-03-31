@@ -9,7 +9,7 @@ import lib.grasp.util.L;
  */
 public class AppLoopImpl {
     public static void onLooper(BaApp app, int looperId) {
-        L.logAndWrite(AppLoopImpl.class.getSimpleName() + "AppLoopImpl--onLooper------------looperId:" + looperId);
+        L.log(AppLoopImpl.class.getSimpleName() + "AppLoopImpl--onLooper------------looperId:" + looperId);
 //        switch (looperId) {
 //            case Constant.ID_POLL: {
 //                long curSysTime = System.currentTimeMillis();

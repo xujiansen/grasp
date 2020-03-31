@@ -77,7 +77,7 @@ public class OkHttpCallback<T> implements Callback {
      */
     @Override
     public void onFailure(@NonNull Call call, @NonNull final IOException e) {
-        L.logOnly("请求失败=" + e.getMessage());
+        L.log("请求失败=" + e.getMessage());
         if(mListener == null) return;
         mDeliveryHandler.post(new Runnable() {
             @Override
@@ -164,12 +164,12 @@ public class OkHttpCallback<T> implements Callback {
                 }
                 else { //将服务端返回的异常回调到应用层去处理
                     mListener.onFailure(new OkHttpException(OTHER_ERROR, result.get(ERROR_MSG) + ""));
-                    L.logOnly("onResponse处理失败");
+                    L.log("onResponse处理失败");
                 }
             }
         } catch (Exception e) {
             mListener.onFailure(new OkHttpException(OTHER_ERROR, e.getMessage()));
-            L.logOnly("onResponse处理失败" + e.getMessage());
+            L.log("onResponse处理失败" + e.getMessage());
         }
     }
 }

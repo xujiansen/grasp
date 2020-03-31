@@ -432,7 +432,8 @@ public class FileUtil {
     public static void saveStrToFile(Context context, String fileName, String textContent) {
         FileOutputStream outStream = null;
         try {
-            outStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+//            outStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            outStream = new FileOutputStream(new File(fileName));
             outStream.write(textContent.getBytes());
 
         } catch (Exception e) {
@@ -453,7 +454,8 @@ public class FileUtil {
     public static String readStrFromFile(Context context, String fileName) {
         byte[] content = null;
         try {
-            FileInputStream fis = context.openFileInput(fileName);
+//            FileInputStream fis = context.openFileInput(fileName);
+            FileInputStream fis = new FileInputStream(new File(fileName));
             byte[] b = new byte[1024];
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             while (fis.read(b) != -1) {
@@ -472,7 +474,8 @@ public class FileUtil {
     // 删除文件到手机
     public static void deleteFile(Context context, String fileName) {
         try {
-            context.deleteFile(fileName);
+            new File(fileName).delete();
+//            context.deleteFile(fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -56,12 +56,12 @@ public class HttpUtil {
         String CONTENT_TYPE = "multipart/form-data"; // 内容类型
         try {
             if (req.uploadFile == null || !req.uploadFile.exists()) {
-                L.logOnly("uploadFile::uploadFile" + "上传文件为空或者不存在");
+                L.log("uploadFile::uploadFile" + "上传文件为空或者不存在");
                 return false;
             }
 
-            L.logOnly("uploadFile::requestUrl" + req.requestUrl);
-            L.logOnly("uploadFile::uploadFile" + req.uploadFile.toString());
+            L.log("uploadFile::requestUrl" + req.requestUrl);
+            L.log("uploadFile::uploadFile" + req.uploadFile.toString());
 
             URL url = new URL(req.requestUrl);
             conn = (HttpURLConnection) url.openConnection();
@@ -122,7 +122,7 @@ public class HttpUtil {
             if (uploadSize > 0) {
                 long skipBytes = is.skip(uploadSize);
                 if (skipBytes != uploadSize) {
-                    L.logOnly("uploadFile::skip-error" + "跳过头错误!");
+                    L.log("uploadFile::skip-error" + "跳过头错误!");
                     return false;
                 }
             }
@@ -148,17 +148,17 @@ public class HttpUtil {
 
             // 获取响应码 200=成功 当响应成功，获取响应的流
             int code = conn.getResponseCode();
-            L.logOnly("uploadFile::code" + String.valueOf(code));
+            L.log("uploadFile::code" + String.valueOf(code));
             if (code == 200) {
                 String res = readResponseString(conn);
                 return true;
             } else {
                 String err = readErrStream(conn);
-                L.logOnly("uploadFile::err" + err);
+                L.log("uploadFile::err" + err);
                 return false;
             }
         } catch (Exception e) {
-            L.logOnly("uploadFile::Exception" + e.toString());
+            L.log("uploadFile::Exception" + e.toString());
             return false;
         } finally {
             if (conn != null) conn.disconnect();
@@ -188,7 +188,7 @@ public class HttpUtil {
         InputStream in = null;
 
         try {
-            L.logOnly("downloadFile::requestUrl: " + req.requestUrl);
+            L.log("downloadFile::requestUrl: " + req.requestUrl);
 
             // 因为是urlEncode编码格式并且是GET方法所以，参数必须拼接在url后面
             // 传输请求体参数
@@ -224,17 +224,17 @@ public class HttpUtil {
             conn.connect();
 
             int code = conn.getResponseCode();
-            L.logOnly("downloadFile::code" + String.valueOf(code));
+            L.log("downloadFile::code" + String.valueOf(code));
             if (code < 200 || code >= 300) {
                 String err = readErrStream(conn);
                 System.out.println("downloadFile::err" + err);
-                L.logOnly("downloadFile::err" + err);
+                L.log("downloadFile::err" + err);
                 return false;
             }
 
             // 读取文件数据
             int contentLength = conn.getContentLength();
-            L.logOnly("downloadFile::contentLength: " + String.valueOf(contentLength));
+            L.log("downloadFile::contentLength: " + String.valueOf(contentLength));
             if (contentLength <= 0) return false;
 
             // 设置下载块的大小
@@ -249,7 +249,7 @@ public class HttpUtil {
 
             File saveFile = req.saveFile;
             if (saveFile == null) {
-                L.logOnly("downloadFile::saveFile: 保存路径为空");
+                L.log("downloadFile::saveFile: 保存路径为空");
                 return false;
             }
 
@@ -257,7 +257,7 @@ public class HttpUtil {
             if (!parent.exists()) {
                 boolean isMkdirs = parent.mkdirs();
                 if (!isMkdirs) {
-                    L.logOnly("downloadFile::mkdirs-savePath" + "创建保存父路径失败");
+                    L.log("downloadFile::mkdirs-savePath" + "创建保存父路径失败");
                     return false;
                 }
             }
@@ -282,10 +282,10 @@ public class HttpUtil {
                 }
             }
 
-            L.logOnly("downloadFile::finish-length" + String.valueOf(rac.length()));
+            L.log("downloadFile::finish-length" + String.valueOf(rac.length()));
             return true; // 成功
         } catch (Exception e) {
-            L.logOnly("downloadFile::Exception" + e.toString());
+            L.log("downloadFile::Exception" + e.toString());
             return false; // 失败
         } finally {
             StreamUtil.closeRandomAccessStream(rac);
@@ -313,7 +313,7 @@ public class HttpUtil {
         InputStream in = null;
 
         try {
-            L.logOnly("downloadFileByJson::requestUrl" + req.requestUrl);
+            L.log("downloadFileByJson::requestUrl" + req.requestUrl);
 
             URL url = new URL(req.requestUrl);
             conn = (HttpURLConnection) url.openConnection();
@@ -346,16 +346,16 @@ public class HttpUtil {
             out.flush();
 
             int code = conn.getResponseCode();
-            L.logOnly("downloadFileByJson::code" + String.valueOf(code));
+            L.log("downloadFileByJson::code" + String.valueOf(code));
             if (code < 200 || code >= 300) {
                 String err = readErrStream(conn);
-                L.logOnly("downloadFileByJson::err" + err);
+                L.log("downloadFileByJson::err" + err);
                 return false;
             }
 
             // 读取文件数据
             int contentLength = conn.getContentLength();
-            L.logOnly("downloadFileByJson::contentLength" + String.valueOf(contentLength));
+            L.log("downloadFileByJson::contentLength" + String.valueOf(contentLength));
             if (contentLength <= 0) return false;
 
             // 设置下载块的大小
@@ -370,7 +370,7 @@ public class HttpUtil {
 
             File saveFile = req.saveFile;
             if (saveFile == null) {
-                L.logOnly("downloadFileByJson::saveFile" + "保存路径为空");
+                L.log("downloadFileByJson::saveFile" + "保存路径为空");
                 return false;
             }
 
@@ -378,7 +378,7 @@ public class HttpUtil {
             if (!parent.exists()) {
                 boolean isMkdirs = parent.mkdirs();
                 if (!isMkdirs) {
-                    L.logOnly("downloadFileByJson::mkdirs-savePath" + "创建保存父路径失败");
+                    L.log("downloadFileByJson::mkdirs-savePath" + "创建保存父路径失败");
                     return false;
                 }
             }
@@ -403,10 +403,10 @@ public class HttpUtil {
                 }
             }
 
-            L.logOnly("downloadFileByJson::finish-length" + String.valueOf(rac.length()));
+            L.log("downloadFileByJson::finish-length" + String.valueOf(rac.length()));
             return true; // 成功
         } catch (Exception e) {
-            L.logOnly("downloadFileByJson::Exception" + e.toString());
+            L.log("downloadFileByJson::Exception" + e.toString());
             return false; // 失败
         } finally {
             closeRandomAccessStream(rac);
@@ -424,7 +424,7 @@ public class HttpUtil {
         OutputStream out = null;
 
         try {
-            L.logOnly("urlPost::requestUrl" + requestUrl);
+            L.log("urlPost::requestUrl" + requestUrl);
 
             URL url = new URL(requestUrl);
             conn = (HttpURLConnection) url.openConnection();
@@ -453,14 +453,14 @@ public class HttpUtil {
             out.flush();
 
             int code = conn.getResponseCode();
-            L.logOnly("urlPost::code" + String.valueOf(code));
+            L.log("urlPost::code" + String.valueOf(code));
             if (code != 200) {
                 String err = readErrStream(conn);
-                L.logOnly("urlPost::err" + err);
+                L.log("urlPost::err" + err);
             }
             return code == 200;
         } catch (Exception e) {
-            L.logOnly("urlPost::Exception" + e.toString());
+            L.log("urlPost::Exception" + e.toString());
             return false;
         } finally {
             closeOutputStream(out);
@@ -476,7 +476,7 @@ public class HttpUtil {
         OutputStream out = null;
 
         try {
-            L.logOnly("urlPostByJson::requestUrl" + requestUrl);
+            L.log("urlPostByJson::requestUrl" + requestUrl);
 
             URL url = new URL(requestUrl);
             conn = (HttpURLConnection) url.openConnection();
@@ -497,14 +497,14 @@ public class HttpUtil {
             out.flush();
 
             int code = conn.getResponseCode();
-            L.logOnly("urlPostByJson::code" + String.valueOf(code));
+            L.log("urlPostByJson::code" + String.valueOf(code));
             if (code != 200) {
                 String err = readErrStream(conn);
-                L.logOnly("urlPostByJson::err" + err);
+                L.log("urlPostByJson::err" + err);
             }
             return code == 200;
         } catch (Exception e) {
-            L.logOnly("urlPostByJson::Exception" + e.toString());
+            L.log("urlPostByJson::Exception" + e.toString());
             return false;
         } finally {
             closeOutputStream(out);
@@ -521,7 +521,7 @@ public class HttpUtil {
         OutputStream out = null;
 
         try {
-            L.logOnly("urlPostByJson::requestUrl" + requestUrl);
+            L.log("urlPostByJson::requestUrl" + requestUrl);
 
             URL url = new URL(requestUrl);
             conn = (HttpURLConnection) url.openConnection();
@@ -548,15 +548,15 @@ public class HttpUtil {
             out.flush();
 
             int code = conn.getResponseCode();
-            L.logOnly("urlPostByJson::code" + String.valueOf(code));
+            L.log("urlPostByJson::code" + String.valueOf(code));
             if (code != 200) {
                 String err = readErrStream(conn);
-                L.logOnly("urlPostByJson::err" + err);
+                L.log("urlPostByJson::err" + err);
             }
 
             return readResponseString(conn);
         } catch (Exception e) {
-            L.logOnly("urlPostByJson::Exception" + e.toString());
+            L.log("urlPostByJson::Exception" + e.toString());
             return "";
         } finally {
             closeOutputStream(out);

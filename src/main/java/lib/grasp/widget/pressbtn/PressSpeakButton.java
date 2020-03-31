@@ -282,7 +282,7 @@ public class PressSpeakButton extends AppCompatButton {
 
     // 录音Dialog图片随录音音量大小切换
     private void setDialogImage() {
-//        L.logOnly("setDialogImage", voiceValue);
+//        L.log("setDialogImage", voiceValue);
         if (voiceValue < 600.0) {
             mDialogImg.setImageResource(R.drawable.record_animate_01);
         } else if (voiceValue > 600.0 && voiceValue < 1000.0) {

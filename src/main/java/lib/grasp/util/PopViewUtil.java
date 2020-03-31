@@ -106,22 +106,4 @@ public class PopViewUtil
 
     }
 
-    class A extends View{
-
-        public A(Context context) {
-            super(context);
-        }
-
-
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent event) {
-            L.log("----------------dispatchKeyEvent");
-            return super.dispatchKeyEvent(event);
-        }
-    }
-
-
-
-
-
 }

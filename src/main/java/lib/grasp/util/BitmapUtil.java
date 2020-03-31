@@ -26,7 +26,7 @@ public class BitmapUtil {
             bmp.recycle();
             bmp = null;
         } catch (Exception e) {
-            L.logOnly("recycle" + e.toString());
+            L.log("recycle" + e.toString());
         }
     }
 

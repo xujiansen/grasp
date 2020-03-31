@@ -151,7 +151,7 @@ public class FileUploadMgr {
         @Override
         public void run() {
             String threadName = Thread.currentThread().getName();
-            L.logOnly("UploadRun>>run::start"+threadName + "开始运行");
+            L.log("UploadRun>>run::start"+threadName + "开始运行");
 
             while (!mQuit) {
                 if (TextUtils.isEmpty(mCategoryID)) break;
@@ -169,11 +169,11 @@ public class FileUploadMgr {
                     // 开始上传
                     doUpload(mCategoryID, req);
                 } catch (Exception e) {
-                    L.logOnly("UploadRun>>run" + e.toString());
+                    L.log("UploadRun>>run" + e.toString());
                 }
             }
 
-            L.logOnly("UploadRun>>run::stop" + threadName + "停止运行");
+            L.log("UploadRun>>run::stop" + threadName + "停止运行");
         }
     }
 

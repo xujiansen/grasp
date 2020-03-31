@@ -79,7 +79,7 @@ public class ObjectLoader {
     private Action1<Throwable> mErrAction = new Action1<Throwable>() {
         @Override
         public void call(Throwable throwable) {
-            L.logOnly("---------------报错啦, throwable" + throwable);
+            L.log("---------------报错啦, throwable" + throwable);
             // 这里记得关掉加载框
             if(mIsShowDialog && mProgressDlg != null && mProgressDlg.isShowing()){
                 mProgressDlg.dismiss();
