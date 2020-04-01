@@ -1,13 +1,10 @@
 package lib.grasp.exception;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Looper;
 import android.os.Process;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.rooten.BaApp;
 import com.rooten.util.Util;
@@ -15,7 +12,6 @@ import com.rooten.util.Util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +19,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import lib.grasp.util.AppUtil;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.PathUtil;
 
