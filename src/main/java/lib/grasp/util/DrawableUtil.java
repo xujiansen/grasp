@@ -11,10 +11,13 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by JS_grasp on 2019/1/24.
+ * Drawable工具类
  */
 public class DrawableUtil {
-    // 将字符串转化成Drawable
+
+    /**
+     * 将字符串转化成Drawable
+     */
     public synchronized static Drawable StringToDrawable(String icon) {
         if (icon == null || icon.length() < 10)
             return null;
@@ -30,7 +33,9 @@ public class DrawableUtil {
         return null;
     }
 
-    // 将drawable转化成字符串
+    /**
+     * 将drawable转化成字符串
+     */
     public synchronized static String DrawableToString(Drawable drawable) {
         if (drawable != null) {
             Bitmap bitmap = Bitmap

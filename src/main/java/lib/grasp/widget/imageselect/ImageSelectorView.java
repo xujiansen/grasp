@@ -24,16 +24,16 @@ import java.util.UUID;
 
 import com.rooten.BaApp;
 import com.rooten.Constant;
-import com.rooten.ctrl.widget.RoundProgressBar;
-import com.rooten.frame.ActivityEx;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.frame.widget.RoundProgressBar;
+import com.rooten.ActivityEx;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 import com.rooten.help.filehttp.FileUploadMgr;
 import com.rooten.help.filehttp.HttpUploadRequest;
 import com.rooten.help.filehttp.HttpUtil;
 
 import lib.grasp.R;
-import lib.grasp.helper.ImagePickHelper;
+import lib.grasp.helper.imgpicker.ImagePickHelper;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.glide.GlideUtils;
 import lib.grasp.util.NumberUtil;

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * 音视频
+ * 本地音视频播放工具类
  */
 public class MediaUtil {
     private static final String TAG = "MediaUtil";

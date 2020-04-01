@@ -6,9 +6,11 @@ import android.graphics.Matrix;
 import android.media.MediaMetadataRetriever;
 
 /**
- * Created by GaQu_Dev on 2019/5/8.
+ * Bitmap工具类
  */
 public class BitmapUtil {
+
+    /** 缩放 */
     public static Bitmap scaleBitmap(Bitmap src, float scale) {
         if (src == null) return null;
 
@@ -21,6 +23,7 @@ public class BitmapUtil {
         return Bitmap.createBitmap(src, 0, 0, width, height, matrix, true);
     }
 
+    /** 回收 */
     public static void recycle(Bitmap bmp) {
         try {
             bmp.recycle();
@@ -29,7 +32,6 @@ public class BitmapUtil {
             L.log("recycle" + e.toString());
         }
     }
-
 
     /** 显示视频第一帧 */
     public static Bitmap shotFirstFrame(Context context, String videoPath) {

@@ -7,12 +7,25 @@ import android.content.Intent;
 import android.os.Message;
 
 import com.rooten.BaApp;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 
+import lib.grasp.util.EventBusUtil;
+
+/**
+ * 广播接收分发类
+ * <br/>
+ * 主要是转到主线程上面
+ * @deprecated 建议使用 {@link EventBusUtil}
+ */
 public class BroadReceiverImpl extends BroadcastReceiver implements IHandler {
+
     private onBroadReceiverListener mReceive;
 
+    /**
+     * 广播接收分发类
+     * @deprecated 建议使用 {@link EventBusUtil}
+     */
     public BroadReceiverImpl(onBroadReceiverListener l) {
         mReceive = l;
     }
@@ -27,6 +40,10 @@ public class BroadReceiverImpl extends BroadcastReceiver implements IHandler {
         handle.sendMessage(msg);
     }
 
+
+
+
+
     private AppHandler handle = new AppHandler(this);
 
     @Override
@@ -40,6 +57,12 @@ public class BroadReceiverImpl extends BroadcastReceiver implements IHandler {
         mReceive.onReceive(action, intent);
         return true;
     }
+
+
+
+
+
+
 
     public interface onBroadReceiverListener {
         void onReceive(String action, Intent intent);

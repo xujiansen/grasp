@@ -11,6 +11,7 @@ import lib.grasp.R;
  */
 public class ViewUtil {
 
+    /** 摇晃View */
     public static void shakeView(Context context, final View view) {
         view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_x));
     }
@@ -25,6 +26,7 @@ public class ViewUtil {
         view.setMinimumWidth(Math.max(w, h));
     }
 
+    /** 获取焦点 */
     public static boolean setFocusView(final View view) {
         if (view != null) {
             return view.requestFocus();

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 import com.rooten.util.Util;
 
 import java.io.File;

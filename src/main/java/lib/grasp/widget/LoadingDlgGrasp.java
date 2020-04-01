@@ -15,9 +15,9 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.rooten.ctrl.widget.RoundProgressBar;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.frame.widget.RoundProgressBar;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 import com.rooten.util.Util;
 import lib.grasp.R;
 import lib.grasp.util.L;

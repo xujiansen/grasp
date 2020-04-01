@@ -1,6 +1,5 @@
 package lib.grasp.http.okhttpprogress;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
@@ -8,13 +7,13 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.rooten.BaApp;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 
 import java.io.File;
 import java.io.IOException;
 
-import lib.grasp.helper.LoadListener;
+import lib.grasp.helper.interf.LoadListener;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.TOAST;
 import lib.grasp.widget.LoadingDlgGrasp;
@@ -27,7 +26,7 @@ import okhttp3.Response;
  *
  * 使用代码实例：
  * DownLoadHelper loadHelper = new DownLoadHelper(this, mDownUrl, mDownPath);
- *         loadHelper.setLoadListener(new lib.grasp.helper.LoadListener() {
+ *         loadHelper.setLoadListener(new lib.grasp.helper.interf.LoadListener() {
  *             @Override
  *             public void onSuccess() {
  *                 doConfirmToInstall();

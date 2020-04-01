@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.rooten.ctrl.widget.SwipeRefreshLayout
+    <com.rooten.frame.widget.swip.SwipeRefreshLayout
         android:id="@+id/image_grid_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -17,7 +17,7 @@
             android:id="@+id/image_grid_recycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.rooten.ctrl.widget.SwipeRefreshLayout>
+    </com.rooten.frame.widget.swip.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

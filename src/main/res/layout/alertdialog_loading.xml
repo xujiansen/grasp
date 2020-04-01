@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/radiu_alterdialog_bg"
+    android:background="@drawable/shape_alterdialog_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:padding="20dp"
         android:background="?attr/selectableItemBackground">
 
-        <com.rooten.ctrl.widget.RoundProgressBar
+        <com.rooten.frame.widget.RoundProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="88dp"
             android:layout_height="88dp"

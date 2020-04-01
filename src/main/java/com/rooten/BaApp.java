@@ -1,38 +1,18 @@
 package com.rooten;
 
 import android.app.Application;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Handler;
-import android.os.Process;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.MaterialCommunityModule;
 import com.joanzapata.iconify.fonts.MaterialModule;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.CsvFormatStrategy;
-import com.orhanobut.logger.DiskLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
-import com.rooten.base.UserData;
-import com.rooten.help.ActivityMgr;
-import com.rooten.help.LocalBroadMgr;
-import com.rooten.help.NotificationHelper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import lib.grasp.util.L;
 import lib.grasp.util.PathUtil;
-import lib.grasp.util.SPUtil;
 
 public class BaApp extends Application {
 

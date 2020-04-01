@@ -29,12 +29,12 @@
             android:textSize="12sp"/>
     </LinearLayout>
 
-    <com.rooten.ctrl.tab.AppTabTextView
+    <com.rooten.frame.tab.AppTabTextView
         android:id="@+id/app_tab_item_pop"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/pop_text_normal_bg"
+        android:background="@drawable/shape_pop_text_normal_bg"
         android:layout_marginLeft="8dip"
         android:textColor="@color/white"
         android:gravity="center"

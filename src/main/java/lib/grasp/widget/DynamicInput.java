@@ -45,7 +45,7 @@ public class DynamicInput extends RelativeLayout {
     }
 
     private void initView(){
-        View view = View.inflate(getContext(), R.layout.dynamicinput, null);
+        View view = View.inflate(getContext(), R.layout.dynamic_input, null);
 
         mEt = view.findViewById(R.id.et);
         mEt.setTextSize(16);

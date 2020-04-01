@@ -17,6 +17,8 @@ import lib.grasp.R;
 import lib.grasp.util.ScreenUtil;
 
 /**
+ * 当时做的是月历(嘎趣跑跑)
+ * <p/>
  * 1. 默认显示最后一页
  * 2. 维护与当前页的distance(单位差值)
  */
@@ -24,7 +26,7 @@ public class ViewPagerHelper {
     private Context         mContext;
     private ViewGroup       mView;
     private ViewPager       mViewPager;
-    private List<View>      mDatas      = new ArrayList<>();
+    private List<View>      mData      = new ArrayList<>();
     private PageAdapter     mAdapter    = new PageAdapter();
 
     public ViewPagerHelper(Context context, OnDateSelectListener mListener, ViewGroup view, ViewPager viewPager) {
@@ -62,13 +64,12 @@ public class ViewPagerHelper {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-            }
+            public void onPageScrollStateChanged(int state) { }
         });
 
         if (mListener == null) return;
         for (int i = 0; i < Constant.MAX_PAGE_COUNT; i++) {
-            mDatas.add(mListener.getDefaultPage());
+            mData.add(mListener.getDefaultPage());
         }
         mAdapter.notifyDataSetChanged();
         int last = Constant.MAX_DISTANCE - 1;
@@ -105,6 +106,7 @@ public class ViewPagerHelper {
         }
     }
 
+    /** 跳转指定页 */
     public void jumpTo(int distance) {
         int index = Constant.MAX_DISTANCE + distance - 1;
         if (index < 0) index = 0;
@@ -114,9 +116,9 @@ public class ViewPagerHelper {
 
     /** 按当前index返回取余后的view */
     private View getPositionView(int position, boolean isRemoveParent) {
-        if (mDatas == null) return mListener.getDefaultPage();
+        if (mData == null) return mListener.getDefaultPage();
         int left = (position % Constant.MAX_PAGE_COUNT);
-        View child = mDatas.get(left);
+        View child = mData.get(left);
         if (!isRemoveParent) return child;
 
         ViewParent parent = child.getParent();

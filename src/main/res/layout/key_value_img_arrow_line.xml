@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/list_selector_background_white"
+    android:background="@drawable/selector_background_white"
     android:paddingLeft="12dp"
     android:paddingRight="12dp">
 
@@ -25,7 +25,7 @@
         android:focusable="true"
         android:orientation="horizontal">
 
-        <com.rooten.ctrl.widget.RoundImageView
+        <com.rooten.frame.widget.RoundImageView
             android:id="@+id/iv_value"
             android:layout_width="40dp"
             android:layout_height="40dp"

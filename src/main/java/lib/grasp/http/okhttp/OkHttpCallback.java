@@ -1,7 +1,6 @@
 package lib.grasp.http.okhttp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,9 +9,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rooten.BaApp;
 import com.rooten.Constant;
-import com.rooten.help.LocalBroadMgr;
+import com.rooten.help.LocalBroadHelper;
 
 import org.json.JSONObject;
 
@@ -148,7 +146,7 @@ public class OkHttpCallback<T> implements Callback {
                 }
                 else if(result.getInt(RESULT_CODE) == SESSION_INVALIDATE){
                     MessageBoxGrasp.infoMsg(mActivity, "提示", "会话已过期,请重新登录!", false, v -> {
-                        LocalBroadMgr.getDefault().broadAction(Constant.ARG_TOKEN_EXPIRE);
+                        LocalBroadHelper.getDefault().broadAction(Constant.ARG_TOKEN_EXPIRE);
                     });
                 }
                 else if (result.getInt(RESULT_CODE) == VERSION_INVALIDATE_402 || result.getInt(RESULT_CODE) == VERSION_INVALIDATE_402){

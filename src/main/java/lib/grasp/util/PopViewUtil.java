@@ -21,7 +21,7 @@ import lib.grasp.R;
 import lib.grasp.widget.imagepreview.ImagePreviewAdapter;
 
 /**
- * 查看图片弹窗
+ * 弹窗工具类
  */
 public class PopViewUtil
 {

@@ -3,7 +3,7 @@ package lib.grasp.util;
 import android.bluetooth.BluetoothAdapter;
 
 /**
- * Created by GaQu_Dev on 2018/10/31.
+ * BlueTooth工具类
  */
 public class BlueToothUtil {
     /**

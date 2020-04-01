@@ -14,7 +14,7 @@
         android:gravity="center"
         android:textSize="24sp"
         android:textColor="@color/black"
-        android:background="@drawable/radiu_verify_input_item_line_bg">
+        android:background="@drawable/selector_verify_input_item_line_bg">
 
     </TextView>
 

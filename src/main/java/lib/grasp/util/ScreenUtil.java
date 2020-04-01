@@ -11,10 +11,12 @@ import android.view.WindowManager;
 
 import java.io.FileOutputStream;
 
-
+/**
+ * 屏幕相关属性/操作
+ * <br/>
+ * 分辨率换算/截屏
+ */
 public class ScreenUtil {
-
-
 
     /** 固定值适配各种屏幕密度(将xml里面的数字转成代码里面的数值) */
     public static int getValueByDpi(Context ctx, int value) {
@@ -70,7 +72,7 @@ public class ScreenUtil {
      * @param activity
      * @param strFileName 文件全路径:例如 "/sdcard/screen_shot_20160424.jpg"
      */
-    public static void savScreenShot(Activity activity, String strFileName) {
+    public static void saveScreenShot(Activity activity, String strFileName) {
         Bitmap takeShot = takeShot(activity);
         savePic(takeShot, strFileName);
     }
@@ -107,7 +109,6 @@ public class ScreenUtil {
 
         return b;
     }
-
 
     private static DisplayMetrics getDisplayMetrics(Context context) {
         DisplayMetrics outMetrics = new DisplayMetrics();

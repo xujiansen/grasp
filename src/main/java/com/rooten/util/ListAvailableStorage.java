@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/** 手机可用的存储 */
 public class ListAvailableStorage {
     public static List<StorageInfo> listAvailableStorage(Context context) {
         ArrayList<StorageInfo> storageList = new ArrayList<>();

@@ -7,8 +7,8 @@ import android.os.Message;
 
 import com.rooten.BaApp;
 import com.rooten.Constant;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 
 import static lib.grasp.util.AppUtil.getExplicitIntent;
 

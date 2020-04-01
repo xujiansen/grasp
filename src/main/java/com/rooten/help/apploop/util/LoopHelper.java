@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rooten.Constant;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 import com.rooten.help.apploop.imp.AppLoopJob;
 import com.rooten.help.apploop.imp.AppLoopReceiver;
 import com.rooten.help.apploop.loopentity.TaskItem;

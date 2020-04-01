@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="5dp"
     android:clickable="true"
-    android:background="@drawable/radius_circle_gray">
+    android:background="@drawable/selector_circle_gray">
 
     <ImageView
         android:id="@+id/iv"
@@ -24,7 +24,7 @@
         android:textSize="20sp"
         android:layout_gravity="right|top"/>
 
-    <com.rooten.ctrl.widget.RoundProgressBar
+    <com.rooten.frame.widget.RoundProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

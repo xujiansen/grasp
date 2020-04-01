@@ -13,7 +13,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.Switch;
 import android.widget.TextView;
 
-
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +21,7 @@ import lib.grasp.R;
 import lib.grasp.util.ScreenUtil;
 import lib.grasp.widget.LastInputEditText;
 
+/** 动态添加各种行 */
 public final class LinearLayoutHelper {
     public static final int MATCH_PARENT = LayoutParams.MATCH_PARENT;
     public static final int WRAP_CONTENT = LayoutParams.WRAP_CONTENT;
@@ -101,7 +101,7 @@ public final class LinearLayoutHelper {
         view.setTextColor(Color.WHITE);
         view.setText(title);
         view.setGravity(Gravity.CENTER);
-        view.setBackground(ctx.getResources().getDrawable(R.drawable.layout_btn_bg));
+        view.setBackground(ctx.getResources().getDrawable(R.drawable.selector_layout_btn_bg));
         view.setPadding(ScreenUtil.getValueByDpi(ctx, 8), 0, ScreenUtil.getValueByDpi(ctx, 8), 0);
         view.setTag(tag);
         view.setOnClickListener(listener);

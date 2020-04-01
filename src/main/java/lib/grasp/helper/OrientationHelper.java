@@ -16,37 +16,42 @@ public class OrientationHelper implements SensorEventListener {
 
     private OnOrientationListener onOrientationListener;
 
-    public OrientationHelper(Context context) {
+    /** 方向传感器帮助类 */
+    public OrientationHelper(Context context, OnOrientationListener listener) {
         this.context = context;
+        this.onOrientationListener = listener;
+
         // 获得传感器管理器
-        sensorManager = (SensorManager) context
-                .getSystemService(Context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) context .getSystemService(Context.SENSOR_SERVICE);
     }
 
-    // 开始
+    /**
+     * 开始检测方向传感器
+     * <p/>
+     * 最好在比如灭屏等情况之下停止检测
+     */
     public void start() {
-
         if (sensorManager != null) {
             // 获得方向传感器
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+            // 注册
+            if (sensor != null) {
+                sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            }
         }
-        // 注册
-        if (sensor != null) {//SensorManager.SENSOR_DELAY_UI
-            sensorManager.registerListener(this, sensor,
-                    SensorManager.SENSOR_DELAY_UI);
-        }
-
     }
 
-    // 停止检测
+    /**
+     * 停止检测方向
+     * <p/>
+     * 最好在比如灭屏等情况之下停止检测
+     */
     public void stop() {
         sensorManager.unregisterListener(this);
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -59,14 +64,13 @@ public class OrientationHelper implements SensorEventListener {
                 onOrientationListener.onOrientationChanged(x);
             }
             lastX = x;
-
         }
     }
 
+    /** 注册监听 */
     public void setOnOrientationListener(OnOrientationListener onOrientationListener) {
         this.onOrientationListener = onOrientationListener;
     }
-
 
     public interface OnOrientationListener {
         /** 设备朝向传感器发生回调 */

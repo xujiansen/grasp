@@ -19,11 +19,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import lib.grasp.BuildConfig;
 import lib.grasp.util.FileUtil;
 import lib.grasp.util.PathUtil;
 
 /**
- * Created by JS_grasp on 2018/12/23.
+ * 全局异常监听
+ * <p/>
+ * 在业务的Application里面CrashHandler.init();
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
@@ -78,7 +81,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             if(pi == null) return;
 
             String versionName = TextUtils.isEmpty(pi.versionName) ? "未知版本" : pi.versionName;
-            String versionCode = Long.toString(pi.getLongVersionCode());
+            String versionCode = Integer.toString(BuildConfig.VERSION_CODE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                versionCode = Long.toString(pi.getLongVersionCode());
+            }
             mInfo.put("版本名", versionName);
             mInfo.put("版本号", versionCode);
             mInfo.put("品牌", Build.BRAND);

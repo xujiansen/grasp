@@ -51,11 +51,7 @@ public class NumberUtil {
         } else {
             Pattern p = Pattern.compile(regex);
             Matcher m = p.matcher(phone);
-            boolean isMatch = m.matches();
-            if (!isMatch) {
-                return false;
-            }
-            return isMatch;
+            return m.matches();
         }
     }
 
@@ -63,8 +59,7 @@ public class NumberUtil {
      * 判断是否是银行卡号
      */
     public static boolean isBankCard(String cardNo) {
-        char bit = getBankCardCheckCode(cardNo
-                .substring(0, cardNo.length() - 1));
+        char bit = getBankCardCheckCode(cardNo.substring(0, cardNo.length() - 1));
         if (bit == 'N') {
             return false;
         }

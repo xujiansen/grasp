@@ -71,7 +71,9 @@ public class CryptUtil {
         return null;
     }
 
-    // 加密
+    /**
+     * Base64 加密
+     */
     public static String encrypt(String plaintext) {
         if (plaintext == null) {
             return null;
@@ -79,7 +81,9 @@ public class CryptUtil {
         return new String(Base64.encode(plaintext.getBytes(), Base64.DEFAULT));
     }
 
-    // 解密
+    /**
+     * Base64 解密
+     */
     public static String decrypt(String ciphertext) {
         if (ciphertext == null) {
             return null;

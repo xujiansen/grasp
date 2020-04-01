@@ -1,16 +1,21 @@
 
 package com.rooten.util;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import lib.grasp.R;
 
 final public class Util {
 
@@ -210,5 +215,14 @@ final public class Util {
 
     public static String getOSName() {
         return "Android";
+    }
+
+    public static void setStatusBarBgInKitKat(Activity activity) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT_WATCH) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            int statusBg = activity.getResources().getColor(R.color.colorPrimaryDark);
+            activity.getWindow().getDecorView().setBackgroundColor(statusBg);
+        }
     }
 }

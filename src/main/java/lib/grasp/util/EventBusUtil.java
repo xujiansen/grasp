@@ -1,13 +1,13 @@
 package lib.grasp.util;
 
-import com.rooten.help.LocalBroadMgr;
-
 import org.greenrobot.eventbus.EventBus;
 
-import lib.grasp.eventbus.entity.Event;
+import lib.grasp.eventbus.Event;
 
 /**
- * Created by netuo_888 on 2020/3/30.
+ * EventBusUtil
+ * <br/>
+ * https://www.jianshu.com/p/e00297348f17
  */
 public class EventBusUtil {
     /** 注册监听 */

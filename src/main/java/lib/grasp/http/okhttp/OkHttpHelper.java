@@ -1,13 +1,12 @@
 package lib.grasp.http.okhttp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.rooten.BaApp;
-import com.rooten.ctrl.widget.SwipeRefreshLayout;
+import com.rooten.frame.widget.swip.SwipeRefreshLayout;
 
 import java.io.IOException;
 import java.util.HashMap;

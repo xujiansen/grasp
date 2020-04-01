@@ -1,6 +1,7 @@
 package lib.grasp.util;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
@@ -12,22 +13,24 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.util.Hashtable;
 
 /**
- * Created by GaQu_Dev on 2019/5/8.
+ * 二维码工具类
  */
 public class QrUtil {
-    public static void createQRcodeImage(String url, ImageView iv) {
+
+    /**
+     * 将字符串转化为二维码打印在ImageView上
+     */
+    public static void printQRCodeOnImageView(String Str, ImageView iv) {
         int w = iv.getWidth();
         int h = iv.getHeight();
         if(w == 0 || h == 0)return;
         try {
             //判断URL合法性
-            if (url == null || "".equals(url) || url.length() < 1) {
-                return;
-            }
+            if (TextUtils.isEmpty(Str)) return;
             Hashtable<EncodeHintType, String> hints = new Hashtable<>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
             //图像数据转换，使用了矩阵转换
-            BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, w, h, hints);
+            BitMatrix bitMatrix = new QRCodeWriter().encode(Str, BarcodeFormat.QR_CODE, w, h, hints);
             int[] pixels = new int[w * h];
             //下面这里按照二维码的算法，逐个生成二维码的图片，
             //两个for循环是图片横列扫描的结果

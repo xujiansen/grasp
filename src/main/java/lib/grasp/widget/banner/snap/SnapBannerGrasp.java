@@ -19,8 +19,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.rooten.BaApp;
-import com.rooten.frame.AppHandler;
-import com.rooten.frame.IHandler;
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
 
 import lib.grasp.R;
 import lib.grasp.adapter.BaseAdapter;

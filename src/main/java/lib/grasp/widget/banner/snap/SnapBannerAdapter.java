@@ -32,7 +32,7 @@ public class SnapBannerAdapter extends BaseAdapter<SnapBannerAdapter.Holder, Sna
 
     @Override
     public SnapBannerAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.banner_grasp_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.banner_snap_item, parent, false);
         RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(params);
         return new Holder(view);
