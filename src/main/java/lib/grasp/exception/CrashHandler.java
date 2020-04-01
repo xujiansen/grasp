@@ -91,7 +91,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 //                field.setAccessible(true);
 //                mInfo.put(field.getName(), field.get(null).toString());
 //            }
-
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
