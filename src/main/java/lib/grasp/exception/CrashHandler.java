@@ -45,8 +45,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         return mInstance;
     }
 
-
-
     private Map<String, String> mInfo = new HashMap<>(); // 日志相关字段
     private DateFormat mDf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
 
