@@ -268,7 +268,7 @@ final public class MessageBoxGrasp {
         final AlertDialog dlg = builder.create();
         dlg.setCanceledOnTouchOutside(isCancelAble);
         dlg.setCancelable(isCancelAble);
-        if(dlg.getWindow() != null) dlg.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 临时加的
+//        if(dlg.getWindow() != null) dlg.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 临时加的
         showDlg(dlg);
 
         tvCancel.setOnClickListener(v -> {

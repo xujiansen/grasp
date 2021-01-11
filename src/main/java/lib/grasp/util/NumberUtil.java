@@ -6,6 +6,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -305,6 +306,37 @@ public class NumberUtil {
             if (sNextGeneratedId.compareAndSet(result, newValue)) {
                 return result;
             }
+        }
+    }
+
+
+    public static final int PRICE_FORMAT_DEFAULT = 0;
+    public static final int PRICE_FORMAT_PREFIX = 1;
+    public static final int PRICE_FORMAT_SUFFIX = 2;
+    public static final int PRICE_FORMAT_PREFIX_WITH_BLANK = 3;
+    public static final int PRICE_FORMAT_SUFFIX_WITH_BLANK = 4;
+    public static final String[] PRICE_FORMATS = {
+            "", "￥", "元", "￥ ", " 元"
+    };
+
+    /**获取价格，保留两位小数
+     * @param price
+     * @param formatType 添加单位（元）
+     * @return
+     */
+    public static String getPrice(double price, int formatType) {
+        String s = new DecimalFormat("#########0.00").format(price);
+        switch (formatType) {
+            case PRICE_FORMAT_PREFIX:
+                return PRICE_FORMATS[PRICE_FORMAT_PREFIX] + s;
+            case PRICE_FORMAT_SUFFIX:
+                return s + PRICE_FORMATS[PRICE_FORMAT_SUFFIX];
+            case PRICE_FORMAT_PREFIX_WITH_BLANK:
+                return PRICE_FORMATS[PRICE_FORMAT_PREFIX_WITH_BLANK] + s;
+            case PRICE_FORMAT_SUFFIX_WITH_BLANK:
+                return s + PRICE_FORMATS[PRICE_FORMAT_SUFFIX_WITH_BLANK];
+            default:
+                return s;
         }
     }
 

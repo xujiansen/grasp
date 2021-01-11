@@ -59,7 +59,7 @@ class SmsSendHelper {
                 .setURL(mUrl)
                 .setMethod(GET)
                 .setHeadParam(headMap)
-                .setParam(map)
+                .setStringParam(map)
                 .setIsShowProg(false, "正在加载")
                 .setSwip(null)
                 .execute(new ResponseCallback<ObjResponse<String>>() {

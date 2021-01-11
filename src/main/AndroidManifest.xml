@@ -65,9 +65,6 @@
         <activity android:name="com.zxing.android.CaptureActivity" />
         <activity android:name="com.rooten.biz.AppAboutActivity" />
         <activity android:name="com.rooten.biz.AppChangePwdActivity" />
-        <activity
-            android:name="com.rooten.image.ImagePreviewActivity"
-            android:theme="@style/Theme.App" />
 
         <activity android:name=".widget.recyclerview.group.activity.StickyActivity" />
         <activity android:name=".widget.recyclerview.group.activity.GroupedListActivity" />
@@ -79,11 +76,6 @@
         <activity android:name=".widget.recyclerview.group.activity.VariousActivity" />
         <activity android:name=".widget.recyclerview.group.activity.VariousChildActivity" />
         <activity android:name="com.multi.image.selector.MultiImageSelectorActivity" />
-        <activity android:name="com.rooten.camera.CameraActivity"
-            android:theme="@style/FullScreen"
-            />
-        <activity android:name="com.rooten.image.ImageManagerActivity" />
-
 
         <receiver android:name="com.rooten.help.apploop.imp.AppLoopReceiver"
             android:enabled="true"

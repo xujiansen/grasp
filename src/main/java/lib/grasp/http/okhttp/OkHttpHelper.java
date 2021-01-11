@@ -97,13 +97,13 @@ public class OkHttpHelper {
     private int mMethod = POST_FORM;
 
     /**
-     * POST-body参数
+     * 头参数
      */
     private Map<String, String> mHeadParam = new HashMap<>();
     /**
-     * 头参数
+     * POST-body参数
      */
-    private Map<String, String> mParam = new HashMap<>();
+    private Map<String, Object> mParam = new HashMap<>();
 
     /**
      * 进度条提示信息
@@ -193,8 +193,8 @@ public class OkHttpHelper {
             case POST_FORM: {
                 FormBody.Builder builder = new FormBody.Builder();
                 //添加参数
-                for(Map.Entry<String,String> entry : mParam.entrySet()){
-                    builder.addEncoded(entry.getKey(), entry.getValue());
+                for(Map.Entry<String,Object> entry : mParam.entrySet()){
+                    builder.addEncoded(entry.getKey(), entry.getValue().toString());
                 }
                 FormBody formBody = builder.build();
 
@@ -302,7 +302,7 @@ public class OkHttpHelper {
     /**
      * 添加本次请求的参数
      */
-    public OkHttpHelper addParam(String key, String value) {
+    public OkHttpHelper addParam(String key, Object value) {
         if(this.mParam == null) this.mParam = new HashMap<>();
         this.mParam.put(key, value);
         return this;
@@ -311,8 +311,17 @@ public class OkHttpHelper {
     /**
      * 设置本次请求的参数
      */
-    public OkHttpHelper setParam(Map<String, String> mParam) {
+    public OkHttpHelper setParam(Map<String, Object> mParam) {
         this.mParam = mParam;
+        return this;
+    }
+
+    /**
+     * 设置本次请求的参数
+     */
+    public OkHttpHelper setStringParam(Map<String, String> mParam) {
+        this.mParam = new HashMap<>();
+        this.mParam.putAll(mParam);
         return this;
     }
 
@@ -344,13 +353,13 @@ public class OkHttpHelper {
     /**
      * 编辑get参数-方式1
      */
-    private String encodeParameters(String url, Map<String, String> params) {
+    private String encodeParameters(String url, Map<String, Object> params) {
         StringBuilder encodedParams = new StringBuilder("?");
         try {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
                 encodedParams.append(entry.getKey());
                 encodedParams.append('=');
-                encodedParams.append(StringUtil.toURLEncoded(entry.getValue()));
+                encodedParams.append(StringUtil.toURLEncoded(entry.getValue().toString()));
                 encodedParams.append('&');
             }
             String newUrl = url + encodedParams.toString();

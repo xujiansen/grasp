@@ -68,6 +68,13 @@ public class TimeDateUtil {
     }
 
     /** 获取以arg为月数距离的月份 */
+    public static Date getDateWithDistanceDay(int distance){
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.DATE, distance);
+        return now.getTime();
+    }
+
+    /** 获取以arg为月数距离的月份 */
     public static int getMothWithDistance(int distance){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MONTH, distance);

@@ -40,6 +40,7 @@ public class PathUtil {
      */
     public static void initPath() {
         APP_ROOT_DIR        = BaApp.getApp().getResources().getString(R.string.dir_name) + "/";
+//        APP_ROOT_DIR        = "data/data/com.example.eggcollect/";
         APP_PROJECT_DIR     = getProjectRootPath();    // 项目cache目录
     }
 
@@ -63,6 +64,12 @@ public class PathUtil {
      */
     public static String getDbPath(){
         String filePath = APP_PROJECT_DIR + BaApp.getApp().getUserData().mStrUserID + "/" + DIR_NAME_DB + "/";
+        FileUtil.ensurePathExists(filePath);
+        return filePath;
+    }
+
+    public static String getDbPath1(){
+        String filePath = "/data/data/com.example.eggcollect/db/";
         FileUtil.ensurePathExists(filePath);
         return filePath;
     }

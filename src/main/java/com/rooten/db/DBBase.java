@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import java.io.File;
 
 import lib.grasp.util.FileUtil;
+import lib.grasp.util.L;
+import lib.grasp.util.PathUtil;
 
 /** 数据库基类 */
 public class DBBase {
@@ -18,7 +20,9 @@ public class DBBase {
         if (TextUtils.isEmpty(dbPath)) return;
         if (!FileUtil.ensurePathExists(dbPath)) return;
 
+        L.log("dbPath:" + dbPath);
         String strPathName = dbPath + dbName;
+        L.log("strPathName:" + strPathName);
         mDB = SQLiteDatabase.openOrCreateDatabase(strPathName, null);
     }
 

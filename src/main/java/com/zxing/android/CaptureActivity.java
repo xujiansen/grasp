@@ -39,6 +39,7 @@ import com.zxing.android.decoding.InactivityTimer;
 import com.zxing.android.view.ViewfinderView;
 
 import lib.grasp.R;
+import lib.grasp.util.EventBusUtil;
 
 public class CaptureActivity extends Activity implements Callback {
     public static final String QR_RESULT = "RESULT";
@@ -216,7 +217,10 @@ public class CaptureActivity extends Activity implements Callback {
             Intent intent = new Intent();
             intent.putExtras(data);
             setResult(RESULT_OK, intent);
-            finish();
+//            finish();
+
+            EventBusUtil.sendEvent(111, data);
+            restartPreviewAfterDelay(1000L);
             return;
         }
 
@@ -283,14 +287,14 @@ public class CaptureActivity extends Activity implements Callback {
     private static final long VIBRATE_DURATION = 200L;
 
     private void playBeepSoundAndVibrate() {
-//		if (playBeep && mediaPlayer != null) {
-//			mediaPlayer.start();
-//		}
-//
-//		if (vibrate) {
-//			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-//			vibrator.vibrate(VIBRATE_DURATION);
-//		}
+		if (playBeep && mediaPlayer != null) {
+			mediaPlayer.start();
+		}
+
+		if (vibrate) {
+			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+			vibrator.vibrate(VIBRATE_DURATION);
+		}
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(VIBRATE_DURATION);
     }
