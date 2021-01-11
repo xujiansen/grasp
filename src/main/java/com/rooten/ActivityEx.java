@@ -44,6 +44,7 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
 
         LayoutParams lp = getWindow().getAttributes();
         lp.windowAnimations = R.style.ActivityAnim;
+
         getWindow().setAttributes(lp);
 
         mResultListener = new Hashtable<>();
