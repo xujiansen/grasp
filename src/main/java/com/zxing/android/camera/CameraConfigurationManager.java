@@ -36,8 +36,8 @@ import java.util.Collection;
 final class CameraConfigurationManager {
 
     private static final String TAG = "CameraConfiguration";
-    private static final int MIN_PREVIEW_PIXELS = 320 * 240; // small screen
-    private static final int MAX_PREVIEW_PIXELS = 800 * 480; // large/HD screen
+    private static final int MIN_PREVIEW_PIXELS = 640 * 480; // small screen
+    private static final int MAX_PREVIEW_PIXELS = 1280 * 640; // large/HD screen
 
     private final Context context;
     private Point screenResolution;
@@ -69,7 +69,7 @@ final class CameraConfigurationManager {
         screenResolution = new Point(height, width);
         Log.i(TAG, "Screen resolution: " + screenResolution);
 
-        cameraResolution = findBestPreviewSizeValue(parameters, new Point(width, height), false);
+        cameraResolution = findBestPreviewSizeValue(parameters, new Point(width, height), true);
         Log.i(TAG, "Camera resolution: " + cameraResolution);
     }
 
@@ -139,22 +139,23 @@ final class CameraConfigurationManager {
 
     private static Point findBestPreviewSizeValue(Camera.Parameters parameters, Point screenResolution, boolean portrait) {
         Point bestSize = null;
-        int diff = Integer.MAX_VALUE;
+        float diff = Integer.MAX_VALUE;
         for (Camera.Size supportedPreviewSize : parameters.getSupportedPreviewSizes()) {
             int pixels = supportedPreviewSize.height * supportedPreviewSize.width;
             if (pixels < MIN_PREVIEW_PIXELS || pixels > MAX_PREVIEW_PIXELS) {
                 continue;
             }
-            int supportedWidth = portrait ? supportedPreviewSize.height : supportedPreviewSize.width;
-            int supportedHeight = portrait ? supportedPreviewSize.width : supportedPreviewSize.height;
-            int newDiff = Math.abs(screenResolution.x * supportedHeight - supportedWidth * screenResolution.y);
-            if (newDiff == 0) {
-                bestSize = new Point(supportedWidth, supportedHeight);
+            float supportedWidth = portrait ? supportedPreviewSize.width : supportedPreviewSize.height;
+            float supportedHeight = portrait ? supportedPreviewSize.height : supportedPreviewSize.width;
+            float newRateDis = supportedHeight / supportedWidth - (float)screenResolution.y / (float)screenResolution.x;
+            if(newRateDis < 0) newRateDis *= -1;
+            if (newRateDis == 0) {
+                bestSize = new Point((int)supportedWidth, (int)supportedHeight);
                 break;
             }
-            if (newDiff < diff) {
-                bestSize = new Point(supportedWidth, supportedHeight);
-                diff = newDiff;
+            if (newRateDis < diff) {
+                bestSize = new Point((int)supportedWidth, (int)supportedHeight);
+                diff = newRateDis;
             }
         }
         if (bestSize == null) {

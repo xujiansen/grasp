@@ -5,4 +5,6 @@
 
     <item name="btn_clear"  type="id" />
     <item name="btn_search" type="id" />
+    <item type="id" name="statusbarutil_fake_status_bar_view" />
+    <item type="id" name="statusbarutil_translucent_view" />
 </resources>

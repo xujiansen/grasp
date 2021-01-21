@@ -100,6 +100,7 @@ public final class CameraManager {
             camera = theCamera;
         }
         theCamera.setPreviewDisplay(holder);
+//        initPreviewRect(holder.getSurfaceFrame().width(), holder.getSurfaceFrame().height());
 
         if (!initialized) {
             initialized = true;
@@ -114,6 +115,11 @@ public final class CameraManager {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         reverseImage = prefs.getBoolean(KEY_REVERSE_IMAGE, false);
+    }
+
+    public void setRequestedFramingRect(int requestedFramingRectWidth, int requestedFramingRectHeight) {
+        this.requestedFramingRectWidth = requestedFramingRectWidth;
+        this.requestedFramingRectHeight = requestedFramingRectHeight;
     }
 
     /**
@@ -306,6 +312,13 @@ public final class CameraManager {
         // Go ahead and assume it's YUV rather than die.
         return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top, rect.width(), rect.height(),
                 reverseImage);
+    }
+
+    public void initPreviewRect(int width, int height) {
+        if (camera == null) return;
+        Parameters parameter = camera.getParameters();
+        parameter.setPreviewSize(width, height);
+        camera.setParameters(parameter);
     }
 
     public boolean isFlashLight() {

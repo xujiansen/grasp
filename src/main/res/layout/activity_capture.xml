@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <SurfaceView
         android:id="@+id/surfaceview"
@@ -29,6 +30,17 @@
         android:textColor="#66eaeaea"
         android:textSize="40sp" >
     </com.joanzapata.iconify.widget.IconTextView>
+
+
+    <androidx.appcompat.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_toolbar"
+        style="@style/NoSpaceActionBarTheme"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent"
+        app:navigationIcon="?homeAsUpIndicator"
+        app:theme="@style/Theme_Toolbar"/>
 
 
 </RelativeLayout>

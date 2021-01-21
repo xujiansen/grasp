@@ -1,10 +1,5 @@
 package com.zxing.android;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Vector;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -28,23 +23,30 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.joanzapata.iconify.widget.IconTextView;
+import com.rooten.ActivityEx;
 import com.zxing.android.camera.CameraManager;
 import com.zxing.android.decoding.CaptureActivityHandler;
 import com.zxing.android.decoding.InactivityTimer;
 import com.zxing.android.view.ViewfinderView;
 
-import lib.grasp.R;
-import lib.grasp.util.EventBusUtil;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Vector;
 
-public class CaptureActivity extends Activity implements Callback {
+import lib.grasp.R;
+
+public class CaptureActivity extends ActivityEx implements Callback {
     public static final String QR_RESULT = "RESULT";
     public static final String ARG_HINT = "CaptureActivity_ARG_HINT";
 
+    private View mView;
+    private Toolbar mToolbar;
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
     private SurfaceView surfaceView;
@@ -59,26 +61,32 @@ public class CaptureActivity extends Activity implements Callback {
     CameraManager cameraManager;
 
     private IconTextView mIcon;
+    private static final long VIBRATE_DURATION = 200L;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        View v = LayoutInflater.from(this).inflate(R.layout.activity_capture, null);
-        surfaceView = (SurfaceView) v.findViewById(R.id.surfaceview);
-        viewfinderView = (ViewfinderView) v.findViewById(R.id.viewfinderview);
-        initArg();
-        setContentView(v);
-        initCtrl();
-
+//        StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        mView = LayoutInflater.from(this).inflate(R.layout.activity_capture, null);
+        setContentView(mView);
+        initToolbar();
+        initView();
+        initArg();
+        initCtrl();
+    }
+
+    private void initToolbar() {
+        mToolbar = mView.findViewById(R.id.app_toolbar);
+        setSupportActionBar(mToolbar);
+        setTitle("");
+    }
+
+    protected void initView() {
+        surfaceView = (SurfaceView) mView.findViewById(R.id.surfaceview);
+        viewfinderView = (ViewfinderView) mView.findViewById(R.id.viewfinderview);
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
     }
@@ -91,7 +99,7 @@ public class CaptureActivity extends Activity implements Callback {
     }
 
     private void initCtrl() {
-        mIcon = (IconTextView) findViewById(R.id.tv_flashlight);
+        mIcon = (IconTextView) mView.findViewById(R.id.tv_flashlight);
         mIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,9 +225,9 @@ public class CaptureActivity extends Activity implements Callback {
             Intent intent = new Intent();
             intent.putExtras(data);
             setResult(RESULT_OK, intent);
-//            finish();
+            finish();
 
-            EventBusUtil.sendEvent(111, data);
+//            EventBusUtil.sendEvent(111, data);
             restartPreviewAfterDelay(1000L);
             return;
         }
@@ -283,8 +291,6 @@ public class CaptureActivity extends Activity implements Callback {
             }
         }
     }
-
-    private static final long VIBRATE_DURATION = 200L;
 
     private void playBeepSoundAndVibrate() {
 		if (playBeep && mediaPlayer != null) {
