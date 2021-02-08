@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
+
+import androidx.annotation.Nullable;
 
 import java.util.Hashtable;
 
@@ -22,25 +25,31 @@ import com.rooten.util.AppHelper;
 import com.rooten.help.NotificationHelper;
 import com.rooten.util.Util;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import lib.grasp.R;
+import lib.grasp.eventbus.Event;
 import lib.grasp.mvp.BaseMvpActivity;
+import lib.grasp.mvp.BaseMvpPresenter;
 import lib.grasp.mvp.IMvpPresenter;
+import lib.grasp.util.L;
 import lib.grasp.util.ViewUtil;
 import lib.grasp.widget.MessageBoxGrasp;
 
-public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> implements IShowError, IActivityResult, IHandler {
+public class ActivityEx<P extends BaseMvpPresenter>  extends BaseMvpActivity<P> implements IActivityResult {
 
+    /** 页面跳转请求码 */
     private int mResultCode = 1;
+
+    /** 本页面是否可见 */
     private boolean mIsOnResume = false;
-    private boolean mIsExitApp = false;
 
     private Hashtable<Integer, IResultListener> mResultListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mIsExitApp = false;
 
         LayoutParams lp = getWindow().getAttributes();
         lp.windowAnimations = R.style.ActivityAnim;
@@ -49,16 +58,8 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
 
         mResultListener = new Hashtable<>();
 
-        // 防止重复点击多次进入
-//		boolean isSingleTask = AppHelper.isSingleTask(this);
-//		boolean isContainsActivity = mApp.getActivityMgr().containsActivity(getClass());
-//		if (!isSingleTask && isContainsActivity)
-//		{
-//			finish();
-//			return;
-//		}
-
         ActivityMgr.getDefault().addActivity(this);
+        L.log("进入Activity");
     }
 
     @Override
@@ -75,19 +76,28 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
     }
 
     @Override
-    public P onBindPresenter() {
-        return null;
-    }
-
-    @Override
     protected void onDestroy() {
         ActivityMgr.getDefault().removeActivity(this);
         super.onDestroy();
+        L.log("退出Activity");
     }
 
     @Override
     public boolean handleMessage(Message msg) {
         return false; // 已经处理返回true，否则返回false向下处理
+    }
+
+    @Override
+    public void startForResult(Intent intent, IResultListener listener) {
+        int requestCode = addResultListener(listener);
+        startActivityForResult(intent, requestCode);
+    }
+
+    /** 添加页面返回监听 */
+    protected int addResultListener(IResultListener l) {
+        int resultCode = mResultCode++;
+        mResultListener.put(resultCode, l);
+        return resultCode;
     }
 
     @Override
@@ -99,34 +109,13 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
         l.onResult(resultCode, data);
     }
 
-    @Override
-    public void startForResult(Intent intent, IResultListener listener) {
-        int requestCode = addResultListener(listener);
-        startActivityForResult(intent, requestCode);
-    }
-
-    protected int addResultListener(IResultListener l) {
-        int resultCode = mResultCode++;
-        mResultListener.put(resultCode, l);
-        return resultCode;
-    }
-
+    /** 删除指定页面返回监听 */
+    @Nullable
     protected IResultListener removeResultListener(int resultCode) {
         if (mResultListener.containsKey(resultCode)) {
             return mResultListener.remove(resultCode);
         }
         return null;
-    }
-
-    @Override
-    public void showError(final View view, final String errMsg) {
-        if (view != null) {
-            ViewUtil.setFocusView(view);
-        }
-
-        if (!TextUtils.isEmpty(errMsg)) {
-            MessageBoxGrasp.infoMsg(this, errMsg);
-        }
     }
 
     @Override
@@ -159,12 +148,9 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
         BaApp.getApp().runOnUiThread(action, time);
     }
 
-    public void exitApp() {
-        mIsExitApp = true;
-    }
-
-    private Runnable action = () -> {
-        if (mIsOnResume || mIsExitApp) {
+    /** 去除本APP的notification */
+    private final Runnable action = () -> {
+        if (mIsOnResume) {
             NotificationHelper.getDefault().cancelAll();
             return;
         }
@@ -174,4 +160,44 @@ public class ActivityEx<P extends IMvpPresenter>  extends BaseMvpActivity<P> imp
 //				mApp.getNotiHelper().addAppNotification();
 //			}
     };
+
+
+    /* ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇EventBus⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ */
+
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected boolean isRegisterEventBus() {
+        return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventBusCome(Event event) {
+        if (event != null) {
+            receiveEvent(event);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onStickyEventBusCome(Event event) {
+        if (event != null) {
+            receiveStickyEvent(event);
+        }
+    }
+
+    /**
+     * 接收到分发到事件
+     * @param event 事件
+     */
+    protected void receiveEvent(Event event) { }
+
+    /**
+     * 接受到分发的粘性事件
+     * @param event 粘性事件
+     */
+    protected void receiveStickyEvent(Event event) { }
+
+    /* ⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆EventBus⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆ */
 }

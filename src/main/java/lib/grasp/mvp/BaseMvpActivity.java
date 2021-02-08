@@ -1,49 +1,35 @@
 package lib.grasp.mvp;
 
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
+
 /**
- * View基类(MVP)
+ * Activity
+ * 基类(MVP)
  */
-public abstract class  BaseMvpActivity <P extends IMvpPresenter> extends AppCompatActivity implements IMvpView {
+public abstract class BaseMvpActivity <P extends BaseMvpPresenter> extends AppCompatActivity implements IMvpView, IHandler {
 
     /**
      * 持有的Presenter的引用
      */
     private P mPresenter;
 
+    /** 主线程执行 */
+    protected final Handler mHandler = new AppHandler(this);
 
-    /**
-     * 创建/bind Presenter<br/>
-     * 子类需要重写该方法, 返回一个实现IBaseXPresenter接口的Presenter对象(用于完成本View的所有的逻辑业务)
-     */
-    public abstract P onBindPresenter();
+    @Nullable
+    protected void setPresenter(P presenter){
+        mPresenter = presenter;
+    }
 
-    /**
-     * 获取 Presenter 对象，在需要获取时才创建Presenter，起到懒加载作用
-     * <br/>一般给自己(View)调用
-     * @return Presenter对象
-     */
-    protected P getPresenter() {
-        if (mPresenter == null) mPresenter = onBindPresenter();
+    protected P getPresenter(){
         return mPresenter;
-    }
-
-    /**
-     * 获取Activity对象 / 上下文
-     * <br/>一般给Presenter调用
-     */
-    @Override
-    public AppCompatActivity getSelfActivity() {
-        return this;
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (mPresenter != null) mPresenter.attachView(this);    // 绑定宿主view与presenter
     }
 
     /**
@@ -52,6 +38,26 @@ public abstract class  BaseMvpActivity <P extends IMvpPresenter> extends AppComp
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.detachView();
+        if (getPresenter() != null) getPresenter().detachView();
+    }
+
+    /**
+     * 获取Activity对象 / 上下文
+     * <br/>一般给Presenter调用
+     */
+    @Override
+    public AppCompatActivity getHostActivity() {
+        return this;
+    }
+
+
+    @Override
+    public Handler getHostHandler() {
+        return mHandler;
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        return false;
     }
 }

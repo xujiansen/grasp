@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import lib.grasp.R;
 import lib.grasp.eventbus.Event;
+import lib.grasp.mvp.BaseMvpPresenter;
 import lib.grasp.mvp.IMvpPresenter;
 import lib.grasp.util.EventBusUtil;
 
@@ -29,13 +30,22 @@ import com.rooten.util.Util;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class AppActivity<P extends IMvpPresenter> extends ActivityEx<P> implements OnSubmitCompletedListener, IHandler {
-    protected View mRoot;
-    protected MenuItem mItem;
-    public Toolbar mToolbar;
-    protected LinearLayout mLayoutPage;
+public class AppActivity<P extends BaseMvpPresenter> extends ActivityEx<P> implements OnSubmitCompletedListener, IHandler {
 
+    /** 右上角菜单 */
+    protected MenuItem mItem;
+
+    /** 标题栏 */
+    public Toolbar mToolbar;
+
+    /** 标题栏(自定义)资源 */
     protected int mToolbarRes = -1;
+
+    /** 根布局 */
+    protected View mRoot;
+
+    /** 次布局 */
+    protected LinearLayout mLayoutPage;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -203,43 +213,4 @@ public class AppActivity<P extends IMvpPresenter> extends ActivityEx<P> implemen
             getSupportActionBar().setTitle(title);
         }
     }
-
-    /* ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇EventBus⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ */
-
-    /**
-     * 是否注册事件分发
-     *
-     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
-     */
-    protected boolean isRegisterEventBus() {
-        return false;
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventBusCome(Event event) {
-        if (event != null) {
-            receiveEvent(event);
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onStickyEventBusCome(Event event) {
-        if (event != null) {
-            receiveStickyEvent(event);
-        }
-    }
-
-    /**
-     * 接收到分发到事件
-     * @param event 事件
-     */
-    protected void receiveEvent(Event event) { }
-
-    /**
-     * 接受到分发的粘性事件
-     * @param event 粘性事件
-     */
-    protected void receiveStickyEvent(Event event) { }
-
-    /* ⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆EventBus⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆ */
 }

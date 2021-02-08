@@ -7,6 +7,7 @@ import com.rooten.interf.IHandler;
 
 import java.lang.ref.WeakReference;
 
+/** 防止内存泄露 */
 public class AppHandler extends Handler {
     private WeakReference<IHandler> mHandle = null;
 

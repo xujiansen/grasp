@@ -1,35 +1,42 @@
 package lib.grasp.mvp;
 
-import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.rooten.AppHandler;
+import com.rooten.interf.IHandler;
+
 /**
- * View基类(MVP)
+ * Fragment
+ * 基类(MVP)
  */
-public abstract class BaseMvpFragment<P extends IMvpPresenter> extends Fragment implements IMvpView {
+public abstract class BaseMvpFragment<P extends IMvpPresenter> extends Fragment implements IMvpView, IHandler {
 
     /**
      * 持有的Presenter的引用
      */
     private P mPresenter;
 
-    /**
-     * 创建/bind Presenter<br/>
-     * 子类需要重写该方法, 返回一个实现IBaseXPresenter接口的Presenter对象(用于完成本View的所有的逻辑业务)
-     */
-    public abstract P onBindPresenter();
+    /** 主线程执行 */
+    protected final Handler mHandler = new AppHandler(this);
 
-    /**
-     * 获取 Presenter 对象，在需要获取时才创建Presenter，起到懒加载作用
-     * <br/>一般给自己(View)调用
-     */
-    public P getPresenter() {
-        if (mPresenter == null) mPresenter = onBindPresenter();
+    @Nullable
+    protected void setPresenter(P presenter){
+        mPresenter = presenter;
+    }
+
+    protected P getPresenter(){
         return mPresenter;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (getPresenter() != null) getPresenter().detachView();
     }
 
     /**
@@ -37,29 +44,17 @@ public abstract class BaseMvpFragment<P extends IMvpPresenter> extends Fragment 
      * <br/>一般给Presenter调用
      */
     @Override
-    public FragmentActivity getSelfActivity() {
+    public FragmentActivity getHostActivity() {
         return getActivity();
     }
 
-
-    /**
-     * 在生命周期结束时，将 presenter 与 view 之间的联系断开，防止出现内存泄露
-     */
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        if (mPresenter != null) mPresenter.detachView();
-//    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (mPresenter != null) mPresenter.attachView(this);    // 绑定宿主view与presenter
+    public Handler getHostHandler() {
+        return mHandler;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mPresenter != null) mPresenter.detachView();        // 解绑宿主view与presenter
+    public boolean handleMessage(Message msg) {
+        return false;
     }
 }

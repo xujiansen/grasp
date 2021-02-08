@@ -3,6 +3,8 @@ package com.rooten;
 import android.app.Application;
 import android.os.Handler;
 
+import androidx.annotation.Nullable;
+
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.MaterialCommunityModule;
@@ -19,12 +21,12 @@ public class BaApp extends Application {
     /**
      * 主线程执行
      */
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     /**
      * 临时数据
      */
-    private Map<String, Object> mTempParams   = new HashMap<>();
+    private final Map<String, Object> mTempParams   = new HashMap<>();
 
     /**
      * 用户数据
@@ -94,18 +96,21 @@ public class BaApp extends Application {
     }
 
     /** 获取全局参数 */
+    @Nullable
     public Object getArg(String name) {
         if (name == null || name.length() == 0) return null;
         return mTempParams.get(name);
     }
 
     /** 删除全局参数并返回 */
+    @Nullable
     public Object removeArg(String name) {
         if (name == null || name.length() == 0) return null;
         return mTempParams.remove(name);
     }
 
     /** 获取当前用户 */
+    @Nullable
     public UserData getUserData() {
         return mUserData;
     }
