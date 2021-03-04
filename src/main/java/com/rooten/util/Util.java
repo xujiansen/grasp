@@ -174,6 +174,11 @@ final public class Util {
         return value == null ? "" : value;
     }
 
+    public static int getInt(Bundle obj, String name, int defaultValue) {
+        if (obj == null) return defaultValue;
+        return obj.getInt(name);
+    }
+
     public static boolean getBoolean(JSONObject obj, String name) {
         if (obj == null) return false;
         Object object = obj.get(name);

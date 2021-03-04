@@ -30,26 +30,40 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 /*
     OkHttpHelper.with(this)
-        .setURL("http://192.168.11.21:13000/test/http")
-        .setMethod(OkHttpHelper.POST_FORM)
-        .addHeadParam("head1", "head11")
-        .addHeadParam("head2", "head22")
-        .addParam("form1", "form11")
-        .addParam("form2", "form22")
-        .setIsShowProg(true, "测试")
-        .setRequestCode("123")
-        .setSwip(null)
-        .setTimeout(30)
-        .execute(new ResponseCallback<String>() {
-            @Override
-            public void onSuccess(String s) {
-                TOAST.showShort("String:" + s);
-            }
-            @Override
-            public void onFailure(Exception e) {
-                TOAST.showShort("onFailure:" + e);
-            }
-        });
+                .setURL(BizConstant.getUploadUrlNew())
+                .setMethod(OkHttpHelper.POST_JSON)
+                .addParam("collectType", mUploadType)
+                .addParam("data", CollectDay.getUploadData(list))
+                .setIsShowProg(true, "上传中")
+                .setSwip(null)
+                .setTimeout(5 * 60)
+                .setCancelable(true, false)
+                .execute(new ResponseCallback<BizResponse<List<UploadResult>>>() {
+
+                    @Override
+                    public void onSuccess(BizResponse<List<UploadResult>> resultBizResponse) {
+                        // 更新本地DB
+                        CollectDay.uploadUploadStatus(list);
+                        // 更新页面
+                        initData();
+                        if(resultBizResponse.data != null && resultBizResponse.data.size() > 0){
+                            String info = "【提交成功】";
+                            for(UploadResult result : resultBizResponse.data){
+                                info = info.concat(result.toString());
+                            }
+                            MessageBoxGrasp.infoMsg(UploadActivity.this, info);
+                        }
+                        else{
+                            MessageBoxGrasp.infoMsg(UploadActivity.this, "提交成功");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        System.out.println("onFailure:" + e);
+                        TOAST.showShort("提交失败, 请检查网络和电脑端地址," + e.toString());
+                    }
+                });
  */
 
 /**
@@ -69,6 +83,15 @@ public class OkHttpHelper {
     /** JSON_post */
     public static final int POST_JSON = 3;
 
+    /**
+     * 是否点击外面对话框消失
+     */
+    private boolean mCancelable = true;
+
+    /**
+     * 是否显示取消按钮(只有在可取消时才有用)
+     */
+    private boolean mIsShowCancelBtn = false;
 
     /**
      * 是否取消
@@ -151,7 +174,9 @@ public class OkHttpHelper {
 
     private void initProgressDlg() {
         mProgressDlg = new ProgressDlgGrasp(mActivity);
-        mProgressDlg.setCanBeCancel(true);
+        mProgressDlg.setCanBeCancel(mCancelable);
+        if(mCancelable) mProgressDlg.setBtnCancelVisible(mIsShowCancelBtn);
+        else mProgressDlg.setBtnCancelVisible(false);
         mProgressDlg.setCancelListener(v -> {
             mIsCancel = true;
             dismissView();
@@ -165,8 +190,6 @@ public class OkHttpHelper {
             mProgressDlg.show();
             mProgressDlg.setMessage(TextUtils.isEmpty(mInfoStr) ? "正在操作" : mInfoStr);
         }
-
-        mIsCancel = false;
 
         if (mMethod == GET) mURL = encodeParameters(mURL, mParam);
         if (mOkHttpClient == null) initOkHttpClient(mActivity, mTimeout);
@@ -227,7 +250,10 @@ public class OkHttpHelper {
             public void onFailure(Call call, IOException e) {
                 L.log("OkHttp::" + e.getMessage());
                 dismissView();
-                if (mIsCancel) mIsCancel = false;
+                if (mIsCancel) {
+                    mIsCancel = false;
+                    return;
+                }
                 mCallbackInner.onFailure(call, e);
             }
 
@@ -237,7 +263,10 @@ public class OkHttpHelper {
 
                 L.log("OkHttp::" + response.toString());
                 dismissView();
-                if (mIsCancel) mIsCancel = false;
+                if (mIsCancel) {
+                    mIsCancel = false;
+                    return;
+                }
                 mCallbackInner.onResponse(call, response);
             }
         });
@@ -272,6 +301,15 @@ public class OkHttpHelper {
     public OkHttpHelper setIsShowProg(boolean mIsShowProg, String msg) {
         this.mIsShowProg    = mIsShowProg;
         this.mInfoStr       = msg;
+        return this;
+    }
+
+    /**
+     * 设置是否显示加载提示框, 通知栏显示文字
+     */
+    public OkHttpHelper setCancelable(boolean cancelable, boolean isShowCancelBtn) {
+        this.mCancelable        = cancelable;
+        this.mIsShowCancelBtn   = isShowCancelBtn;
         return this;
     }
 

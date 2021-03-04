@@ -30,7 +30,6 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
     private View        line;
 
     private LinearLayout ll;
-    private TextView    tvCancel;
 
     /** 是否显示"取消"按钮 */
     private boolean mIsShowBtnCancel = false;
@@ -68,7 +67,7 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alertdialog_progress);
-        setCanceledOnTouchOutside(mEnableCancel);
+        setCanceledOnTouchOutside(false);
         setCancelable(mEnableCancel);
 
         mStartTime  = Calendar.getInstance().getTime();
@@ -78,11 +77,10 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
         line        = findViewById(R.id.horizontal_line);
 
         ll          = findViewById(R.id.ll_btn);
-        tvCancel    = findViewById(R.id.cancel);
 
-        tvCancel.setOnClickListener(this);
-        ll.setVisibility(mIsShowBtnCancel ? View.VISIBLE : View.GONE);
-        line.setVisibility(mIsShowBtnCancel ? View.VISIBLE : View.GONE);
+        ll.setOnClickListener(this);
+        ll.setVisibility(mEnableCancel && mIsShowBtnCancel ? View.VISIBLE : View.GONE);
+        line.setVisibility(mEnableCancel && mIsShowBtnCancel ? View.VISIBLE : View.GONE);
 
         TimerTask timeTask = new TimerTask() {
             @Override
@@ -106,7 +104,7 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
     @Override
     public void onBackPressed() {
         if (mEnableCancel) {
-            if(mListener != null) mListener.onClick(tvCancel);
+            if(mListener != null) mListener.onClick(ll);
             super.onBackPressed();
         }
     }
@@ -127,7 +125,7 @@ public class ProgressDlgGrasp extends AlertDialog implements IHandler, View.OnCl
     @Override
     public void onClick(View v) {
         // 点击取消按钮
-        if(mListener != null) mListener.onClick(tvCancel);
+        if(mListener != null) mListener.onClick(ll);
         this.dismiss();
     }
 

@@ -53,7 +53,7 @@ public class CaptureActivity extends ActivityEx implements Callback {
     private boolean hasSurface;
     private Vector<BarcodeFormat> decodeFormats;
     private String characterSet;
-    private InactivityTimer inactivityTimer;
+    public InactivityTimer inactivityTimer;
     private MediaPlayer mediaPlayer;
     private boolean playBeep;
     // private static final float BEEP_VOLUME = 0.10f;
@@ -215,7 +215,7 @@ public class CaptureActivity extends ActivityEx implements Callback {
         showResult(obj, barcode);
     }
 
-    private void showResult(final Result rawResult, Bitmap barcode) {
+    protected void showResult(final Result rawResult, Bitmap barcode) {
         boolean isPlugin = getIntent().getBooleanExtra("isPlugin", false);
         if (isPlugin) {
             Bundle data = new Bundle();
@@ -228,7 +228,7 @@ public class CaptureActivity extends ActivityEx implements Callback {
             finish();
 
 //            EventBusUtil.sendEvent(111, data);
-            restartPreviewAfterDelay(1000L);
+//            restartPreviewAfterDelay(1000L);
             return;
         }
 

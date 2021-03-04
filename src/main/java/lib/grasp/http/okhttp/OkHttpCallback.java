@@ -41,7 +41,7 @@ public class OkHttpCallback<T> implements Callback {
     /**
      * errorMsg字段提示信息，实际根据自己接口返回为准
      */
-    protected final String ERROR_MSG    = "errorMsg";
+    protected final String ERROR_MSG    = "msg";
     protected final String NETWORK_MSG  = "请求失败";
     protected final String JSON_MSG     = "解析失败";
 
